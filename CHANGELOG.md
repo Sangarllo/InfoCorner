@@ -25,10 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - ...
 
-## [0.0.1] - 2014-05-31
+## [0.0.1] - 2020-11-15
 
 ### Added
 
 - Create app with `@angular/cli 11.0.0`, `typescript 4.0.2` and `rxjs 6.6.0`.
   > ng new infoCorner
 - Add changelog from `https://github.com/olivierlacan/keep-a-changelog`.
+- Add Angular Material `@angular/material 11.0.0`.
+  > ng add @angular/material
