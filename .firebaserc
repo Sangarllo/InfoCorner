@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "infocorner-2020": {
+      "hosting": {
+        "infoCorner": [
+          "infocorner-2020"
+        ]
+      }
+    }
+  }
+}

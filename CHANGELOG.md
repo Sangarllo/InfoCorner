@@ -34,3 +34,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add changelog from `https://github.com/olivierlacan/keep-a-changelog`.
 - Add Angular Material `@angular/material 11.0.0`.
   > ng add @angular/material
+- Add AngularFire `@angular/fire 6.1.1`
+  > ng add @angular/fire
