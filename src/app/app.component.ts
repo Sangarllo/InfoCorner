@@ -11,7 +11,10 @@ export class AppComponent {
   title = 'infoCorner';
 
   items: Observable<any[]>;
-  constructor(firestore: AngularFirestore) {
+  constructor(
+    firestore: AngularFirestore
+  ) {
     this.items = firestore.collection('items').valueChanges();
   }
+
 }
