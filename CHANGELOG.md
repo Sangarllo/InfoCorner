@@ -36,3 +36,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   > ng add @angular/material
 - Add AngularFire `@angular/fire 6.1.1`
   > ng add @angular/fire
+- Add `bootstrap 4` (dependences `@popperjs/core 2.5.4` and `jQuery 3.5.1`)
+  > npm i bootstrap jquery @popperjs/core
