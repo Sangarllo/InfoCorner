@@ -10,11 +10,9 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'infoCorner';
 
-  items: Observable<any[]>;
   constructor(
-    firestore: AngularFirestore
+    // firestore: AngularFirestore
   ) {
-    this.items = firestore.collection('items').valueChanges();
   }
 
 }

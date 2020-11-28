@@ -1,0 +1,7 @@
+<pre *ngIf="entity$ | async as entity; else noEntityTemplate">
+  {{ entity | json }}
+</pre>
+
+<ng-template #noEntityTemplate>
+    No existe tal entidad
+</ng-template>

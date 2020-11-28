@@ -5,9 +5,18 @@
 html,
 body {
     height: 100%;
-}
-
-body {
+    background-color: black;
+    color: white;
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+    a {
+        color: hotpink;
+        border-bottom: 1px dotted hotpink;
+        text-decoration: none;
+    }
+    a:hover {
+        color: white;
+        border-bottom: 0px;
+        text-decoration: none;
+    }
 }
