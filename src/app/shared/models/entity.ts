@@ -22,9 +22,28 @@ export class Entity implements IEntity {
     {value: Entity.TYPE_DEFAULT, viewValue: 'Otras'}
   ];
 
-  id: string;
-  active: boolean;
-  name: string;
-  image: string;
-  type: string;
+  constructor(
+    public id: string,
+    public active: boolean,
+    public name: string,
+    public type: string,
+    public image: string,
+     ) {
+  }
+
+  static InitDefault(): Entity {
+    return new Entity(
+      '0',
+      true,
+      '',
+      Entity.TYPE_DEFAULT,
+      Entity.IMAGE_DEFAULT
+    );
+  }
+
+  // id: string;
+  // active: boolean;
+  // name: string;
+  // image: string;
+  // type: string;
 }

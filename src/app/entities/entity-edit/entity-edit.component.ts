@@ -57,7 +57,12 @@ export class EntityEditComponent implements OnInit {
 
   private getDetails(idEntity: string): void {
     console.log(`id asked ${idEntity}`);
-    this.entitiesSrv.getOneEntity(idEntity)
+
+    if ( idEntity === '0' ) {
+      this.pageTitle = 'Creación de una nueva entidad';
+      this.entity = Entity.InitDefault();
+    } else {
+      this.entitiesSrv.getOneEntity(idEntity)
       .subscribe({
         next: (entity: IEntity | undefined) => {
           this.entity = entity;
@@ -65,11 +70,11 @@ export class EntityEditComponent implements OnInit {
           console.log(JSON.stringify(this.entity));
         },
         error: err => {
-          this.pageTitle = 'Creación de una nueva entidad';
           this.errorMessage = `Error: ${err}`;
         }
       });
     }
+  }
 
 
   displayEntity(): void {

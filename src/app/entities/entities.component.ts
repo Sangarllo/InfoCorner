@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class EntitiesComponent implements OnInit {
 
   public entities$!: Observable<IEntity[]>;
-  displayedColumns: string[] = [ 'active', 'id', 'name', 'type' , 'actions'];
+  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'type' , 'actions3'];
 
   constructor(
     private router: Router,
