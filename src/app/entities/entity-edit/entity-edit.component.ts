@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs';
 
@@ -8,6 +9,7 @@ import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
 import { Entity, IEntity } from '@shared/models/entity';
+import { finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -20,12 +22,14 @@ export class EntityEditComponent implements OnInit {
   entityForm!: FormGroup;
   pageTitle = 'Creación de una nueva entidad';
   errorMessage = '';
+  uploadPercent: Observable<number>;
 
   // public entity$: Observable<IEntity | undefined> | null = null;
   public entity!: IEntity | undefined;
   public TYPES: any[] = Entity.TYPES;
 
   constructor(
+    private afStorage: AngularFireStorage,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -154,5 +158,38 @@ export class EntityEditComponent implements OnInit {
   //   this.entityForm.reset();
   //   this.router.navigate([`/${Course.PATH_URL}/${this.entity.id}`]);
   // }
+
+  // uploadImage(event): void {
+  //   const file = event.target.files[0];
+  //   const filePath = 'image-path';
+  //   const task = this.storage.upload(filePath, file);
+  // }
+
+  uploadImage(event): void {
+    const file = event.target.files[0];
+    const filePath = file.name;
+    const fileRef = this.afStorage.ref(filePath);
+    const task = this.afStorage.upload(filePath, file);
+
+    // observe percentage changes
+    this.uploadPercent = task.percentageChanges();
+    // get notified when the download URL is available
+    task.snapshotChanges().pipe(
+        finalize(() => {
+          fileRef.getDownloadURL().subscribe(
+            ( imageUrl: string ) => {
+
+              this.entity.image = imageUrl;
+
+              // Update the data on the form
+              this.entityForm.patchValue({
+                image: this.entity.image
+              });
+          });
+        })
+     )
+    .subscribe();
+  }
+
 
 }
