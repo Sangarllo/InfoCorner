@@ -1,0 +1,48 @@
+<mat-card *ngIf="place$ | async as place; else noPlaceTemplate">
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
+            <img [src]="place.image" class="img-thumbnail">
+        </div>
+
+        <div class="col-lg-9 col-md-8 col-12">
+
+            <mat-card-content>
+
+                <div>
+                    <h3>Activa:</h3>
+                    <h2>{{ place.active }}</h2>
+                </div>
+
+                <div>
+                    <h3>Nombre:</h3>
+                    <h2>{{ place.name }}</h2>
+                </div>
+
+                <div>
+                    <h3>Tipo:</h3>
+                    <h2>{{ place.type }}</h2>
+                </div>
+
+                <div>
+                    <h3>Localidad</h3>
+                    <h2>{{ place.locality }}</h2>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+
+                <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button> &nbsp;
+                <button mat-raised-button type="button" (click)="editItem()" color="warn">Editar</button>
+
+            </mat-card-actions>
+
+        </div>
+    </div>
+
+</mat-card>
+
+<ng-template #noPlaceTemplate>
+    No existe tal lugar
+</ng-template>
