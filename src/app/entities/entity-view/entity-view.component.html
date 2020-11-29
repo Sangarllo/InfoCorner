@@ -1,6 +1,42 @@
-<pre *ngIf="entity$ | async as entity; else noEntityTemplate">
-  {{ entity | json }}
-</pre>
+<mat-card *ngIf="entity$ | async as entity; else noEntityTemplate">
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
+            <img [src]="entity.image" class="img-thumbnail">
+        </div>
+
+        <div class="col-lg-9 col-md-8 col-12">
+
+            <mat-card-content>
+
+                <div>
+                    <h3>Activa:</h3>
+                    <h2>{{ entity.active }}</h2>
+                </div>
+
+                <div>
+                    <h3>Nombre:</h3>
+                    <h2>{{ entity.name }}</h2>
+                </div>
+
+                <div>
+                    <h3>Tipo de la entidad</h3>
+                    <h2>{{ entity.type }}</h2>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+
+                <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button> &nbsp;
+                <button mat-raised-button type="button" (click)="editItem()" color="warn">Editar</button>
+
+            </mat-card-actions>
+
+        </div>
+    </div>
+
+</mat-card>
 
 <ng-template #noEntityTemplate>
     No existe tal entidad

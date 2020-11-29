@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { EntityService } from '../../core/services/entities.service';
-import { IEntity } from '../../shared/models/entity';
+import { Entity, IEntity } from '../../shared/models/entity';
 
 
 @Component({
@@ -18,11 +18,12 @@ import { IEntity } from '../../shared/models/entity';
 export class EntityEditComponent implements OnInit {
 
   entityForm!: FormGroup;
-  pageTitle = 'Edición de la Entidad';
+  pageTitle = 'Creación de una nueva entidad';
   errorMessage = '';
 
   // public entity$: Observable<IEntity | undefined> | null = null;
   public entity!: IEntity | undefined;
+  public TYPES: any[] = Entity.TYPES;
 
   constructor(
     private fb: FormBuilder,
@@ -39,53 +40,58 @@ export class EntityEditComponent implements OnInit {
     }
 
     this.entityForm = this.fb.group({
-      id: '0',
+      id: [{value: '0', disabled: true}],
       active: true,
       name: ['', [Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50)]],
-      image: '',
-      type: ['', Validators.required],
+      image: Entity.IMAGE_DEFAULT,
+      type: [ Entity.TYPE_DEFAULT, Validators.required],
     });
 
   }
 
-  getDetails(idEntity: string): void {
+  private getDetails(idEntity: string): void {
     console.log(`id asked ${idEntity}`);
     this.entitiesSrv.getOneEntity(idEntity)
       .subscribe({
         next: (entity: IEntity | undefined) => {
           this.entity = entity;
-          // this.displayCourse();
+          this.displayEntity();
+          console.log(JSON.stringify(this.entity));
         },
-        error: err => this.errorMessage = err
-      });  }
+        error: err => {
+          this.pageTitle = 'Creación de una nueva entidad';
+          this.errorMessage = `Error: ${err}`;
+        }
+      });
+    }
 
 
-  // displayEntity(): void {
+  displayEntity(): void {
 
-  //   if (this.entityForm) {
-  //     this.entityForm.reset();
-  //   }
+    if (this.entityForm) {
+      this.entityForm.reset();
+    }
 
-  //   if (this.entity.id === '0') {
-  //     this.pageTitle = 'Creando una nueva entidad';
-  //   } else {
-  //     this.pageTitle = `Editando la entidad: ${this.entity.name}`;
-  //   }
+    if (this.entity.id === '0') {
+      this.pageTitle = 'Creando una nueva entidad';
+    } else {
+      this.pageTitle = `Editando la entidad ${this.entity.name}`;
+    }
 
-  //   // Update the data on the form
-  //   this.entityForm.patchValue({
-  //     // id: this.entity.id,
-  //     active: this.entity.active,
-  //     name: this.entity.name,
-  //     image: this.entity.image,
-  //     type: this.entity.type
-  //   });
+    // Update the data on the form
+    this.entityForm.patchValue({
+      id: this.entity.id,
+      active: this.entity.active,
+      name: this.entity.name,
+      image: this.entity.image ?? Entity.IMAGE_DEFAULT,
+      type: this.entity.type
+    });
 
-  //   // tslint:disable-next-line:no-string-literal
-  //   this.entityForm.controls['id'].setValue(this.entity.id);
-  // }
+    // tslint:disable-next-line:no-string-literal
+    this.entityForm.controls['id'].setValue(this.entity.id);
+  }
 
   // deleteCourse(): void {
   //   if (this.entity.id === '0') {
@@ -104,9 +110,9 @@ export class EntityEditComponent implements OnInit {
   //   }
   // }
 
-  //  onResetForm(): void {
-  //   this.entityForm.reset();
-  // }
+  onResetForm(): void {
+     this.entityForm.reset();
+  }
 
   onSaveForm(): void {
     if (this.entityForm.valid) {
@@ -115,43 +121,33 @@ export class EntityEditComponent implements OnInit {
 
         if (entityItem.id === '0') {
           this.entitiesSrv.addEntity(entityItem);
-          /*
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: err => this.errorMessage = err
-            });
-          */
         } else {
           this.entitiesSrv.updateEntity(entityItem);
-          /*
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: err => this.errorMessage = err
-            });
-          */
         }
+
+        this.router.navigate([ Entity.PATH_URL]);
+
     } else {
       this.errorMessage = 'Por favor, corrige los mensajes de validación.';
     }
   }
 
-  // onSaveComplete(): void {
-  //   // Reset the form to clear the flags
-  //   this.entityForm.reset();
-  //   Swal.fire({
-  //     icon: 'success',
-  //     title: 'Datos guardados con éxito',
-  //     text: `Los datos de ${this.entity.name} se han guardado correctamente`,
-  //     // footer: '<a href>Why do I have this issue?</a>'
-  //   });
-  //   this.router.navigate([`/${Course.PATH_URL}`]);
-  // }
+  onSaveComplete(): void {
+    // Reset the form to clear the flags
+    this.entityForm.reset();
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos guardados con éxito',
+      text: `Los datos de ${this.entity.name} se han guardado correctamente`,
+      // footer: '<a href>Why do I have this issue?</a>'
+    });
+    this.router.navigate([`/${Entity.PATH_URL}`]);
+  }
 
-  // gotoList(): void {
-  //   // Reset the form to clear the flags
-  //   this.entityForm.reset();
-  //   this.router.navigate([`/${Course.PATH_URL}`]);
-  // }
+  gotoList(): void {
+    this.entityForm.reset();
+    this.router.navigate([`/${Entity.PATH_URL}`]);
+  }
 
   // goBack(): void {
   //   // Reset the form to clear the flags

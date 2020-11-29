@@ -45,6 +45,10 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
+
+    <br/>
+    <button mat-raised-button type="button" (click)="addEntity()" color="warn">Crear nueva</button>
+
 </div>
 
 <ng-template #noEntityTemplate> No hay entidades </ng-template>

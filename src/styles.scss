@@ -7,7 +7,7 @@ body {
     height: 100%;
     background-color: black;
     color: white;
-    margin: 0;
+    margin: 10px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     a {
         color: hotpink;
@@ -19,4 +19,16 @@ body {
         border-bottom: 0px;
         text-decoration: none;
     }
+}
+
+
+/*
+Formularios
+*/
+
+mat-form-field {
+    width: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
 }

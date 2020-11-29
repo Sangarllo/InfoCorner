@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { EntityService } from '../../core/services/entities.service';
-import { IEntity } from '../../shared/models/entity';
+import { IEntity, Entity } from '../../shared/models/entity';
 
 @Component({
   selector: 'app-entity-view',
@@ -14,18 +14,19 @@ import { IEntity } from '../../shared/models/entity';
 export class EntityViewComponent implements OnInit {
 
   public entity$: Observable<IEntity | undefined> | null = null;
+  public idEntity: string;
 
   constructor(
     private route: ActivatedRoute,
-    // private router: Router
+    private router: Router,
     private entitiesSrv: EntityService,
   ) { }
 
   ngOnInit(): void {
-    const idEntity = this.route.snapshot.paramMap.get('id');
-    if ( idEntity ) {
-      console.log(`id asked ${idEntity}`);
-      this.getDetails(idEntity);
+    this.idEntity = this.route.snapshot.paramMap.get('id');
+    if ( this.idEntity ) {
+      console.log(`id asked ${this.idEntity}`);
+      this.getDetails(this.idEntity);
     }
   }
 
@@ -33,4 +34,14 @@ export class EntityViewComponent implements OnInit {
     console.log(`id asked ${idEntity}`);
     this.entity$ = this.entitiesSrv.getOneEntity(idEntity);
   }
+
+  public gotoList(): void {
+    this.router.navigate([`/${Entity.PATH_URL}`]);
+  }
+
+  public editItem(): void {
+    this.router.navigate([`/${Entity.PATH_URL}/${this.idEntity}/editar`]);
+  }
+
+
 }

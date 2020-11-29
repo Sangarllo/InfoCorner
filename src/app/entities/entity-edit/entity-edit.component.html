@@ -1,133 +1,58 @@
-<p>entity-edit works!</p>
+<h2>{{ pageTitle }}</h2>
 
-<div *ngIf="entity; else noEntityTemplate">
-
-    <form [formGroup]="entityForm" (ngSubmit)="onSaveForm()">
-
-
-        <p>
-            <mat-form-field appearance="outline">
-                <mat-label>Id</mat-label>
-                <input matInput type="text" formControlName="Id" placeholder="Id">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-            </mat-form-field>
-        </p>
-
-        <p>
-            <mat-form-field appearance="outline">
-                <mat-label>Activo</mat-label>
-                <input matInput type="text" formControlName="active" placeholder="Active">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-            </mat-form-field>
-        </p>
-
-        <p>
-            <mat-form-field appearance="outline">
-                <mat-label>Nombre de la entidad</mat-label>
-                <input matInput type="text" formControlName="name" placeholder="Nombre">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-            </mat-form-field>
-        </p>
-
-        <p>
-            <mat-form-field appearance="outline">
-                <mat-label>Tipo de la entidad</mat-label>
-                <input matInput type="text" formControlName="type" placeholder="Tipo">
-                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                <mat-hint>Hint</mat-hint>
-            </mat-form-field>
-        </p>
-
-
-    </form>
-
-</div>
-
-<!--
-<mat-card *ngIf="course" class="edit-mode">
-
-    <mat-toolbar color="warn">
-        <span>{{pageTitle}}</span>
-        <span class="fill-remaining-space"></span>
-        <button mat-raised-button color="accent" (click)="goBack()">Ver Curso</button>
-    </mat-toolbar>
-
-    <br/><br/>
+<mat-card *ngIf="entity; else noEntityTemplate">
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-            <img [src]="course.image" class="img-thumbnail">
+            <img [src]="entity.image" class="img-thumbnail">
         </div>
 
         <div class="col-lg-9 col-md-8 col-12">
 
-            <form [formGroup]="courseForm" class="form-container" (ngSubmit)="onSaveForm()">
+            <form [formGroup]="entityForm" (ngSubmit)="onSaveForm()">
+
                 <mat-card-content>
-                    <mat-form-field>
-                        <input matInput type="text" formControlName="name" placeholder="Nombre del Curso">
-                    </mat-form-field>
 
-                    <mat-form-field>
-                        <mat-label>Tipo de Curso</mat-label>
-                        <mat-select formControlName="type" (selectionChange)="changeImage($event)" [value]="courseForm.get('type').value">
-                            <mat-option *ngFor="let type of COURSE_TYPE_ARRAY" [value]="type">
-                                {{type}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Id</mat-label>
+                            <input matInput type="text" formControlName="id" placeholder="Id">
+                        </mat-form-field>
+                    </p>
 
-                    <mat-form-field>
-                        <mat-label>Día de la Semana</mat-label>
-                        <mat-select formControlName="weekDay" [value]="courseForm.get('weekDay').value">
-                            <mat-option *ngFor="let weekDay of WEEK_DAY_ARRAY" [value]="weekDay">
-                                {{weekDay}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                    <p>
+                        <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Entidad activa</mat-slide-toggle>
+                    </p>
 
-                    <mat-form-field>
-                        <input matInput type="time" formControlName="startTime" placeholder="Escoge la hora de inicio">
-                        <mat-error *ngIf="!!courseForm.get('startTime').hasError('required')">Es necesario incluir esta información</mat-error>
-                    </mat-form-field>
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nombre de la entidad</mat-label>
+                            <input matInput type="text" formControlName="name" placeholder="Nombre">
+                        </mat-form-field>
+                    </p>
 
-                    <mat-form-field>
-                        <input matInput type="time" formControlName="endTime" placeholder="Escoge la hora de fin">
-                        <mat-error *ngIf="!!courseForm.get('endTime').hasError('required')">Es necesario incluir esta información</mat-error>
-                    </mat-form-field>
+                    <p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tipo de la entidad</mat-label>
 
-                    <mat-form-field>
-                        <mat-label>Profesor</mat-label>
-                        <mat-select formControlName="teacherId" [value]="courseForm.get('teacherId').value">
-                            <mat-option *ngFor="let teacher of TEACHERS" [value]="teacher.uid">
-                                {{teacher.displayName}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                            <mat-select formControlName="type" [value]="entityForm.get('type').value">
+                                <mat-option *ngFor="let type of TYPES" [value]="type.value">
+                                    {{type.viewValue}}
+                                </mat-option>
+                            </mat-select>
 
-                    <mat-form-field>
-                        <mat-label>Aula</mat-label>
-                        <mat-select formControlName="classRoom" [value]="courseForm.get('classRoom').value">
-                            <mat-option *ngFor="let classRoom of CLASSROOM_ARRAY" [value]="classRoom">
-                                {{classRoom}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                            <mat-hint>Hint</mat-hint>
 
-                    <mat-form-field>
-                        <mat-label>Orden para listados</mat-label>
-                        <input matInput type="number" formControlName="order" placeholder="Orden">
-                    </mat-form-field>
+                        </mat-form-field>
+                    </p>
 
                 </mat-card-content>
 
                 <mat-card-actions>
 
-                    <button mat-raised-button [title]="courseForm.valid ? 'Guardar con los datos introducidos' : 'Dishabilitado hasta que los datos sean válidos'" [disabled]="!courseForm.valid" type="submit" color="warn">Guardar</button>
+                    <button mat-raised-button [title]="entityForm.valid ? 'Guardar con los datos introducidos' : 'Dishabilitado hasta que los datos sean válidos'" [disabled]="!entityForm.valid" type="submit" color="warn">Guardar</button>
 
-                    <button mat-raised-button type="button" (click)="onResetForm()" color="warn">Volver sin guardar</button>
+                    <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button>
 
                 </mat-card-actions>
 
@@ -135,8 +60,12 @@
 
         </div>
     </div>
+
 </mat-card>
--->
+
+<div *ngIf="errorMessage" class="alert-danger">
+    {{ errorMessage }}
+</div>
 
 <ng-template #noEntityTemplate>
     No existe tal entidad

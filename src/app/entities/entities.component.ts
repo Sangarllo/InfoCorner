@@ -28,10 +28,14 @@ export class EntitiesComponent implements OnInit {
   }
 
   public editEntity(entity: IEntity): void {
-    console.log(`editing ${entity.id}`);
+    this.router.navigate([`entidades/${entity.id}/editar`]);
   }
 
   public deleteEntity(entity: IEntity): void {
     console.log(`deleting ${entity.id}`);
+  }
+
+  public addEntity(): void {
+    this.router.navigate([`entidades/0/editar`]);
   }
 }

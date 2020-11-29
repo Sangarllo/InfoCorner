@@ -64,7 +64,8 @@ export class EntityService {
   // }
 
   addEntity(entity: IEntity): void {
-    this.entityCollection.add(entity);
+    entity.id = this.afs.createId();
+    this.entityCollection.doc(entity.id).set(entity);
   }
 
   updateEntity(entity: IEntity): void {
