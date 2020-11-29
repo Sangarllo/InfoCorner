@@ -7,6 +7,9 @@ const routes: Routes = [
   },
   {
     path: 'entidades', loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule)
+  },
+  {
+    path: 'lugares', loadChildren: () => import('./places/places.module').then(m => m.PlacesModule)
   }
 ];
 

@@ -20,8 +20,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['.']);
   }
 
-  public onEntitiesClick(): void {
+  public gotoEntities(): void {
     this.router.navigate(['entidades']);
   }
 
+  public gotoPlaces(): void {
+    this.router.navigate(['lugares']);
+  }
 }

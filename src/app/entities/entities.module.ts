@@ -8,7 +8,11 @@ import { EntityEditComponent } from '@app/entities/entity-edit/entity-edit.compo
 import { SharedModule } from '@shared/shared.module';
 
 @NgModule({
-  declarations: [EntitiesComponent, EntityViewComponent, EntityEditComponent],
+  declarations: [
+    EntitiesComponent,
+    EntityViewComponent,
+    EntityEditComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
