@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IEntity } from '../../shared/models/entity';
+import { IEntity } from '@shared/models/entity';
 
 const ENTITIES_COLLECTION = 'entidades';
 

@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 
 import Swal from 'sweetalert2';
 
-import { EntityService } from '../../core/services/entities.service';
-import { Entity, IEntity } from '../../shared/models/entity';
+import { EntityService } from '@services/entities.service';
+import { Entity, IEntity } from '@shared/models/entity';
 
 
 @Component({

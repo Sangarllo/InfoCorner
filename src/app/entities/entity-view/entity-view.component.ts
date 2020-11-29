@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
 
-import { EntityService } from '../../core/services/entities.service';
-import { IEntity, Entity } from '../../shared/models/entity';
+import { EntityService } from '@services/entities.service';
+import { IEntity, Entity } from '@shared/models/entity';
 
 @Component({
   selector: 'app-entity-view',

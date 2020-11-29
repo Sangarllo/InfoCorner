@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '@app/material/material.module';
 
-import { FooterComponent } from './layout/footer/footer.component';
-import { HeaderComponent } from './layout/header/header.component';
+import { FooterComponent } from '@shared/layout/footer/footer.component';
+import { HeaderComponent } from '@shared/layout/header/header.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,8 @@ import { HeaderComponent } from './layout/header/header.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule,
   ],
   exports: [
     CommonModule,
