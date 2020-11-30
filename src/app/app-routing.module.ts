@@ -37,6 +37,10 @@ const routes: Routes = [
     path: 'avisos',
     loadChildren: () => import('./notices/notices.module').then(m => m.NoticesModule)
   },
+  {
+    path: 'eventos',
+    loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
+  },
 ];
 
 @NgModule({

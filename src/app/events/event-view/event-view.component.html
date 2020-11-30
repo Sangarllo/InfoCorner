@@ -1,0 +1,43 @@
+<mat-card *ngIf="event$ | async as event; else noEventTemplate">
+
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
+            <img [src]="event.image" class="img-thumbnail">
+        </div>
+
+        <div class="col-lg-9 col-md-8 col-12">
+
+            <mat-card-content>
+
+                <div>
+                    <h3>Activo:</h3>
+                    <h2>{{ event.active }}</h2>
+                </div>
+
+                <div>
+                    <h3>Nombre:</h3>
+                    <h2>{{ event.name }}</h2>
+                </div>
+
+                <div>
+                    <h3>Tipo:</h3>
+                    <h2>{{ event.type }}</h2>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+
+                <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button> &nbsp;
+                <button mat-raised-button type="button" (click)="editItem()" color="warn">Editar</button>
+
+            </mat-card-actions>
+
+        </div>
+    </div>
+
+</mat-card>
+
+<ng-template #noEventTemplate>
+    No existe tal evento
+</ng-template>
