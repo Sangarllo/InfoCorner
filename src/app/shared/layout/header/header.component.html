@@ -1,41 +1,37 @@
 <nav class="navbar">
 
     <mat-toolbar>
+
         <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-      <mat-icon>menu</mat-icon>
-    </button>
-        <span>My App</span>
+        <mat-icon>menu</mat-icon>
+      </button>
+
+        <button mat-raised-button color="accent" routerLink="home">
+          <span>My App</span>
+        </button>
+
         <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-      <mat-icon>favorite</mat-icon>
-    </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-      <mat-icon>share</mat-icon>
-    </button>
+
+        <div *ngIf="user$ | async as user; else login">
+
+            <button mat-raised-button color="primary" routerLink="entidades">Entidades</button>
+
+            <button mat-raised-button color="primary" routerLink="lugares">Lugares</button>
+
+            <button mat-raised-button color="warn" (click)="onLogout()">
+              <mat-icon>logout</mat-icon>
+            </button>
+
+        </div>
+
     </mat-toolbar>
 
-    <!-- logo -->
-    <div class="navbar-brand">
-        <a class="navbar-item">
-            <!-- <img src="https://bulma.io/images/bulma-logo.png"> -->
-        </a>
-
-        <button mat-raised-button color="accent" routerLink="/home">Home</button> &nbsp;
-
-        <button mat-raised-button color="primary" routerLink="entidades">Entidades</button> &nbsp;
-
-        <button mat-raised-button color="accent" routerLink="lugares">Lugares</button>
-    </div>
-
-    <div class="example-button-row">
-        <!--
-        <button mat-raised-button color="primary">Primary</button>
-        <button mat-raised-button color="accent">Accent</button>
-        <button mat-raised-button color="warn">Warn</button>
-        <button mat-raised-button disabled>Disabled</button>
-        <a mat-raised-button routerLink=".">Link</a>
-        -->
-    </div>
-
-
 </nav>
+
+<ng-template #login>
+    <div>
+        <button mat-raised-button color="warn" routerLink="login">Login</button>
+
+        <button mat-raised-button color="warn" routerLink="registro">Registro</button>
+    </div>
+</ng-template>

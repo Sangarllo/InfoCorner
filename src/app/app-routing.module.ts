@@ -3,14 +3,36 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
   {
-    path: 'entidades', loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule)
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'lugares', loadChildren: () => import('./places/places.module').then(m => m.PlacesModule)
-  }
+    path: 'login',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'registro',
+    loadChildren: () =>
+      import('./register/register.module').then((m) => m.RegisterModule),
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: 'entidades',
+    loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule)
+  },
+  {
+    path: 'lugares',
+    loadChildren: () => import('./places/places.module').then(m => m.PlacesModule)
+  },
 ];
 
 @NgModule({
