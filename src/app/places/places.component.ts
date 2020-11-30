@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { PlaceService } from '@services/places.service';
 import { Observable } from 'rxjs';
-import { IPlace } from '../shared/models/place';
-import { Router } from '@angular/router';
+import { IPlace } from '@shared/models/place';
 
 @Component({
   selector: 'app-places',
