@@ -1,10 +1,7 @@
-<div *ngIf="auth.user | async as user; else showLogin">
-    <h1>Hello {{ user.displayName }}!</h1>
-    <button (click)="logout()">Logout</button>
-</div>
-<ng-template #showLogin>
-    <p>Please login.</p>
-    <button (click)="login()">Login with Google</button>
-</ng-template>
+<div *ngIf="auth.user | async as user" class="text-center mx-auto mt-3">
 
-<button class="btn btn-primary">HOla</button>
+    <h1>¿Qué vida, {{ user.displayName }}?</h1>
+
+    <img class="img-thumbnail" [src]="user.photoURL" routerLink="profile" />
+
+</div>
