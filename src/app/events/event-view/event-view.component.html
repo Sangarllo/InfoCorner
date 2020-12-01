@@ -7,20 +7,22 @@
 
         <div class="col-lg-9 col-md-8 col-12">
 
-            <mat-card-content>
+            <mat-card-content class="item-view">
 
                 <div>
-                    <h3>Activo:</h3>
-                    <h2>{{ event.active }}</h2>
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip color="primary" selected>{{ event.active ? 'activo' : 'no activo '}}</mat-chip>
+                        <mat-chip color="accent" selected *ngIf="event.status">{{ event.status }}</mat-chip>
+                    </mat-chip-list>
                 </div>
 
                 <div>
-                    <h3>Nombre:</h3>
+                    <span>Nombre:</span>
                     <h2>{{ event.name }}</h2>
                 </div>
 
                 <div>
-                    <h3>Tipo:</h3>
+                    <span>Tipo:</span>
                     <h2>{{ event.type }}</h2>
                 </div>
 

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { EventService } from '@services/events.service';
 import { Event, IEvent } from '@shared/models/event';
 import { finalize } from 'rxjs/operators';
+import { Status } from '@models/status.enum';
 
 
 @Component({
@@ -26,6 +27,12 @@ export class EventEditComponent implements OnInit {
 
   public event!: IEvent | undefined;
   public TYPES: any[] = Event.TYPES;
+  public STATUS: Status[] = [
+    Status.Visible,
+    Status.Editing,
+    Status.Blocked,
+    Status.Deleted
+  ];
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -45,6 +52,7 @@ export class EventEditComponent implements OnInit {
     this.eventForm = this.fb.group({
       id: [{value: '0', disabled: true}],
       active: true,
+      status: [ Status.Editing, Validators.required],
       name: ['', [Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50)]],
@@ -92,6 +100,7 @@ export class EventEditComponent implements OnInit {
     this.eventForm.patchValue({
       id: this.event.id,
       active: this.event.active,
+      status: this.event.status,
       name: this.event.name,
       image: this.event.image ?? Event.IMAGE_DEFAULT,
       type: this.event.type

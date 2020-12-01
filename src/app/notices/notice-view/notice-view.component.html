@@ -7,25 +7,26 @@
 
         <div class="col-lg-9 col-md-8 col-12">
 
-            <mat-card-content>
+            <mat-card-content class="item-view">
 
                 <div>
-                    <h3>Activa:</h3>
-                    <h2>{{ notice.active }}</h2>
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip color="primary" selected>{{ notice.active ? 'activo' : 'no activo '}}</mat-chip>
+                    </mat-chip-list>
                 </div>
 
                 <div>
-                    <h3>Título:</h3>
+                    <span>Título:</span>
                     <h2>{{ notice.name }}</h2>
                 </div>
 
                 <div>
-                    <h3>Tipo:</h3>
+                    <span>Tipo:</span>
                     <h2>{{ notice.type }}</h2>
                 </div>
 
                 <div>
-                    <h3>Texto</h3>
+                    <span>Texto</span>
                     <h2>{{ notice.text }}</h2>
                 </div>
 

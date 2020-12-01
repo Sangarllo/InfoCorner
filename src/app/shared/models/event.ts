@@ -1,3 +1,5 @@
+import { Status } from '@models/status.enum';
+
 export enum EventType {
   Otros = 'otro'
 }
@@ -8,6 +10,7 @@ export interface IEvent {
   name: string;
   image: string;
   type: string;
+  status: Status;
 }
 
 export class Event implements IEvent {
@@ -27,7 +30,8 @@ export class Event implements IEvent {
     public active: boolean,
     public name: string,
     public type: string,
-    public image: string
+    public image: string,
+    public status: Status,
      ) {
   }
 
@@ -37,7 +41,8 @@ export class Event implements IEvent {
       true,
       '',
       Event.TYPE_DEFAULT,
-      Event.IMAGE_DEFAULT
+      Event.IMAGE_DEFAULT,
+      Status.Visible
     );
   }
 }
