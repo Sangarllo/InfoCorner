@@ -1,4 +1,4 @@
-export type Roles = 'SUSCRIPTOR' | 'EDITOR' | 'ADMIN';
+import { Role } from '@models/role.enum';
 
 export interface IUser {
   uid: string;
@@ -7,5 +7,5 @@ export interface IUser {
   emailVerified: boolean;
   password?: string;
   photoURL?: string;
-  role?: Roles;
+  role?: Role;
 }
