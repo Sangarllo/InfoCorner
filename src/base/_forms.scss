@@ -1,0 +1,23 @@
+/*
+Formularios
+*/
+
+mat-form-field {
+    width: 100%;
+    text-align: center;
+}
+
+fieldset.form-editing-fields {
+    border: 1px solid darkgray;
+    background-color: lightgrey;
+    color: black;
+    padding: 20px;
+    margin-bottom: 30px;
+    legend {
+        float: left;
+        font-size: smaller;
+        text-align: right;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
