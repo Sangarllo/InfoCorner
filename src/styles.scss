@@ -2,6 +2,7 @@
 
 @import '~bootstrap/dist/css/bootstrap.css';
 @import 'base/tables';
+@import 'base/forms';
 html,
 body {
     height: 100%;
@@ -19,18 +20,6 @@ body {
         border-bottom: 0px;
         text-decoration: none;
     }
-}
-
-
-/*
-Formularios
-*/
-
-mat-form-field {
-    width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    text-align: center;
 }
 
 

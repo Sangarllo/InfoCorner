@@ -17,31 +17,36 @@
 
                 <mat-card-content>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Id</mat-label>
-                            <input matInput type="text" formControlName="id" placeholder="Id">
-                        </mat-form-field>
-                    </p>
+                    <fieldset class="form-editing-fields">
+                        <legend>Edición del Evento</legend>
 
-                    <p>
-                        <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Lugar activo</mat-slide-toggle>
-                    </p>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Id</mat-label>
+                                <input matInput type="text" formControlName="id" placeholder="Id">
+                            </mat-form-field>
+                        </p>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Estado</mat-label>
+                        <p>
+                            <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Lugar activo</mat-slide-toggle>
+                        </p>
 
-                            <mat-select formControlName="status" [value]="eventForm.get('status')">
-                                <mat-option *ngFor="let status of STATUS" [value]="status">
-                                    {{status}}
-                                </mat-option>
-                            </mat-select>
+                        <p>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Estado</mat-label>
 
-                            <mat-hint>Hint</mat-hint>
+                                <mat-select formControlName="status" [value]="eventForm.get('status')">
+                                    <mat-option *ngFor="let status of STATUS" [value]="status">
+                                        {{status}}
+                                    </mat-option>
+                                </mat-select>
 
-                        </mat-form-field>
-                    </p>
+                                <mat-hint>Hint</mat-hint>
+
+                            </mat-form-field>
+                        </p>
+
+                    </fieldset>
 
                     <p>
                         <mat-form-field appearance="outline">
