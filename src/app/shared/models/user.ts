@@ -1,4 +1,4 @@
-import { Role } from '@models/role.enum';
+import { UserRole } from '@app/shared/models/user-role.enum';
 
 export interface IUser {
   uid: string;
@@ -7,5 +7,5 @@ export interface IUser {
   emailVerified: boolean;
   password?: string;
   photoURL?: string;
-  role?: Role;
+  role?: UserRole;
 }

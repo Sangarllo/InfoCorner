@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { RoleValidator } from '@auth/helpers/roleValidator';
 import { IUser } from '@models/user';
-import { Role } from '@models/role.enum';
+import { UserRole } from '@app/shared/models/user-role.enum';
 
 import firebase from 'firebase/app';
 // Add the Firebase products that you want to use
@@ -99,7 +99,7 @@ export class AuthService extends RoleValidator {
       emailVerified: user.emailVerified,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      role: user.role ?? Role.Lector,
+      role: user.role ?? UserRole.Lector,
     };
 
     return userRef.set(data, { merge: true });

@@ -1,24 +1,24 @@
 import { IUser } from '@models/user';
-import { Role } from '@models/role.enum';
+import { UserRole } from '@app/shared/models/user-role.enum';
 
 export class RoleValidator {
   isSuper(user: IUser): boolean {
-    return user.role === Role.Super;
+    return user.role === UserRole.Super;
   }
 
   isAdmin(user: IUser): boolean {
-    return user.role === Role.Admin;
+    return user.role === UserRole.Admin;
   }
 
   isCensor(user: IUser): boolean {
-    return user.role === Role.Censor;
+    return user.role === UserRole.Censor;
   }
 
   isAutor(user: IUser): boolean {
-    return user.role === Role.Autor;
+    return user.role === UserRole.Autor;
   }
 
   isLector(user: IUser): boolean {
-    return user.role === Role.Lector;
+    return user.role === UserRole.Lector;
   }
 }
