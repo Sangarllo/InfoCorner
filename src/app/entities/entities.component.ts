@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { EntityService } from '../core/services/entities.service';
-import { Observable } from 'rxjs';
-import { IEntity } from '../shared/models/entity';
 import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
+
+import { EntityService } from '@services/entities.service';
+import { IEntity } from '@models/entity';
 
 @Component({
   selector: 'app-entities',

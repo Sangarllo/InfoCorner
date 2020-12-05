@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { IUser } from '@models/user';
-import { AuthService } from '@auth/auth-firebase.service';
+import { AuthService } from '@app/shared/auth/auth.service';
 
 @Component({
   selector: 'app-register',

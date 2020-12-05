@@ -10,9 +10,9 @@ const routes: Routes = [
     component: AdminComponent,
   },
   {
-    path: ':profile',
+    path: ':perfil',
     component: UserProfileComponent
-  },
+  }
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { AuthService } from '@auth/auth-firebase.service';
+import { AuthService } from '@app/shared/auth/auth.service';
 import { IUser } from '@models/user';
 import { Observable } from 'rxjs';
 

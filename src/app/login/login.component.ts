@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService } from '@auth/auth-firebase.service';
+import { AuthService } from '@app/shared/auth/auth.service';
 import { IUser } from '@models/user';
 
 @Component({

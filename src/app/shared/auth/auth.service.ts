@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { RoleValidator } from '@auth/helpers/roleValidator';
 import { IUser } from '@models/user';
-import { UserRole } from '@app/shared/models/user-role.enum';
+import { UserService } from '@services/users.service';
 
 import firebase from 'firebase/app';
 // Add the Firebase products that you want to use
@@ -18,7 +18,11 @@ import firebase from 'firebase/app';
 export class AuthService extends RoleValidator {
   public user$: Observable<IUser>;
 
-  constructor(public afAuth: AngularFireAuth, private afs: AngularFirestore) {
+  constructor(
+    public afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private userSrv: UserService,
+  ) {
     super();
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -35,7 +39,7 @@ export class AuthService extends RoleValidator {
       const { user } = await this.afAuth.signInWithPopup(
         new firebase.auth.GoogleAuthProvider()
       );
-      this.updateUserData(user);
+      this.userSrv.updateUserData(user);
       return user;
     } catch (error) {
       console.log(error);
@@ -60,7 +64,7 @@ export class AuthService extends RoleValidator {
         email,
         password
       );
-      this.updateUserData(user);
+      this.userSrv.updateUserData(user);
       return user;
     } catch (error) {
       console.log(error);
@@ -88,20 +92,5 @@ export class AuthService extends RoleValidator {
     }
   }
 
-  private updateUserData(user: IUser): Promise<void> {
-    const userRef: AngularFirestoreDocument<IUser> = this.afs.doc(
-      `users/${user.uid}`
-    );
 
-    const data: IUser = {
-      uid: user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      role: user.role ?? UserRole.Lector,
-    };
-
-    return userRef.set(data, { merge: true });
-  }
 }
