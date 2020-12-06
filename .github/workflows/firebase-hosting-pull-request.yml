@@ -6,7 +6,7 @@ name: Build and Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main
+      main
 
 jobs:
   build_and_preview:
