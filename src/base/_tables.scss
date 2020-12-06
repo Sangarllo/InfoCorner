@@ -2,6 +2,20 @@ table {
     width: 100%;
 }
 
+.mat-column-id,
+.mat-column-uid {
+    color: gray;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100px;
+    white-space: nowrap;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    font-size: small;
+    font-family: monospace;
+    text-transform: uppercase;
+}
+
 .mat-column-photoURL,
 .mat-column-image {
     text-align: center;
