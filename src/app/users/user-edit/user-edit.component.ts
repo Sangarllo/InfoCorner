@@ -37,14 +37,14 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const idUser = this.route.snapshot.paramMap.get('id');
-    if ( idUser ) {
-      console.log(`id asked ${idUser}`);
-      this.getDetails(idUser);
+    const uidUser = this.route.snapshot.paramMap.get('uid');
+    if ( uidUser ) {
+      console.log(`uid asked ${uidUser}`);
+      this.getDetails(uidUser);
     }
 
     this.userForm = this.fb.group({
-      id: [{value: '0', disabled: true}],
+      uid: [{value: '0', disabled: true}],
       active: true,
       email: ['', [Validators.required,
         Validators.minLength(3),
@@ -61,14 +61,14 @@ export class UserEditComponent implements OnInit {
 
   }
 
-  private getDetails(idUser: string): void {
-    console.log(`id asked ${idUser}`);
+  private getDetails(uidUser: string): void {
+    console.log(`id asked ${uidUser}`);
 
-    if ( idUser === '0' ) {
+    if ( uidUser === '0' ) {
       this.pageTitle = 'Creación de un nuevo usuario';
       this.user = User.InitDefault();
     } else {
-      this.usersSrv.getOneUser(idUser)
+      this.usersSrv.getOneUser(uidUser)
       .subscribe({
         next: (user: IUser | undefined) => {
           this.user = user;
@@ -97,7 +97,7 @@ export class UserEditComponent implements OnInit {
 
     // Update the data on the form
     this.userForm.patchValue({
-      id: this.user.uid,
+      uid: this.user.uid,
       active: this.user.active,
       email: this.user.email,
       emailVerified: this.user.emailVerified,
@@ -109,7 +109,7 @@ export class UserEditComponent implements OnInit {
     });
 
     // tslint:disable-next-line:no-string-literal
-    this.userForm.controls['id'].setValue(this.user.uid);
+    this.userForm.controls['uid'].setValue(this.user.uid);
   }
 
   // deleteCourse(): void {
@@ -138,7 +138,7 @@ export class UserEditComponent implements OnInit {
 
         const userItem = { ...this.user, ...this.userForm.value };
 
-        if (userItem.id === '0') {
+        if (userItem.uid === '0') {
           this.usersSrv.addUser(userItem);
         } else {
           this.usersSrv.updateUser(userItem);

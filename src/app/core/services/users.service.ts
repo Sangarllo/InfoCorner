@@ -24,23 +24,27 @@ export class UserService {
     return this.userCollection.valueChanges();
   }
 
-  getOneUser(idUser: string): Observable<IUser | undefined> {
-    return this.userCollection.doc(idUser).valueChanges({ idField: 'uid' });
+  getOneUser(uidUser: string): Observable<IUser | undefined> {
+    return this.userCollection.doc(uidUser).valueChanges({ uidField: 'uid' });
   }
 
+  // TODO When creating, perhaps existing as authenticated (check email)
   addUser(user: IUser): void {
-    user.uid = this.afs.createId();
+    const uidUser = this.afs.createId();
+    user.uid = uidUser;
+    console.log(`addUser: ${user.uid}`);
+    console.log(`addUser: ${JSON.stringify(user, null, 2)}`);
     this.userCollection.doc(user.uid).set(user);
   }
 
   updateUser(user: IUser): void {
-    const idUser = user.uid;
-    this.userDoc = this.afs.doc<IUser>(`${USERS_COLLECTION}/${idUser}`);
+    const uidUser = user.uid;
+    this.userDoc = this.afs.doc<IUser>(`${USERS_COLLECTION}/${uidUser}`);
     this.userDoc.update(user);
   }
 
-  deleteUser(idUser: string): void {
-    this.userDoc = this.afs.doc<IUser>(`${USERS_COLLECTION}/${idUser}`);
+  deleteUser(uidUser: string): void {
+    this.userDoc = this.afs.doc<IUser>(`${USERS_COLLECTION}/${uidUser}`);
     this.userDoc.delete();
   }
 
@@ -62,4 +66,4 @@ export class UserService {
 
     return userRef.set(data, { merge: true });
   }
-    }
+}

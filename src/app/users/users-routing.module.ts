@@ -12,15 +12,15 @@ const routes: Routes = [
     component: UsersComponent
   },
   {
-    path: ':id',
+    path: ':uid',
     component: UserViewComponent,
   },
   {
-    path: ':id/editar',
+    path: ':uid/editar',
     component: UserEditComponent,
   },
   {
-    path: ':id/entidades',
+    path: ':uid/entidades',
     component: UserEntitiesComponent
   }
 ];

@@ -15,7 +15,7 @@ import { IUser } from '@models/user';
 export class UsersComponent implements OnInit {
 
   public users$!: Observable<IUser[]>;
-  displayedColumns: string[] = [ 'photoURL', 'uid', 'displayName', 'email', 'role' , 'actions3'];
+  displayedColumns: string[] = [ 'photoURL',  'uid', 'displayName', 'email', 'role' , 'actions3'];
 
   constructor(
     private router: Router,
