@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 import { IEntity } from '@models/entity';
 import { IUser } from '@models/user';
@@ -17,8 +18,8 @@ import { EntityService } from '@services/entities.service';
 })
 export class UserEntitiesComponent implements OnInit {
 
-  public idUser: string;
-  public user$!: Observable<IUser>;
+  public uidUser: string;
+  // public user$!: Observable<IUser>;
   public user: IUser;
   public filteredEntities: Observable<IEntity[]>;
 
@@ -56,9 +57,13 @@ export class UserEntitiesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.idUser = this.route.snapshot.paramMap.get('id');
-    if ( this.idUser ) {
-      this.user$ = this.userSrv.getOneUser(this.idUser);
+    this.uidUser = this.route.snapshot.paramMap.get('uid');
+    if ( this.uidUser ) {
+      this.userSrv.getOneUser(this.uidUser)
+        .subscribe( (user: IUser) => {
+          this.user = user;
+          this.user.entitiesAdmin = this.user.entitiesAdmin ?? [];
+        });
     }
   }
 
@@ -72,12 +77,40 @@ export class UserEntitiesComponent implements OnInit {
     this.router.navigate([`entidades/${entity.id}`]);
   }
 
-  public deleteUserEntity(entity: IEntity): void {
-    // TODO
+  public deleteUserEntity(deletedEntity: IEntity): void {
+
+    this.user.entitiesAdmin = this.user.entitiesAdmin.filter( entity => entity.id !== deletedEntity.id );
+
+    this.userSrv.updateUser(this.user);
+
+    Swal.fire({
+        icon: 'success',
+        title: 'Datos guardados con éxito',
+        text: `${this.user.displayName} ya no gestiona la entidad ${deletedEntity.name}`,
+      });
   }
 
   public addUserEntity(): void {
-    console.log(`Asociada!`);
+
+    const filter = this.user.entitiesAdmin.filter( entity => entity.id === this.selectedEntity.id );
+
+    if ( filter.length === 0 ) {
+      this.user.entitiesAdmin.push(this.selectedEntity);
+      this.userSrv.updateUser(this.user);
+      Swal.fire({
+        icon: 'success',
+        title: 'Datos guardados con éxito',
+        text: `${this.user.displayName} ya puede gestionar la entidad ${this.selectedEntity.name}`,
+      });
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No ha sido posible',
+        text: `${this.user.displayName} ya podía gestionar la entidad ${this.selectedEntity.name}`,
+        footer: '<i>En caso de dudas, consulta con el administrador</>'
+      });
+    }
+
     this.selectedEntity = undefined;
   }
 

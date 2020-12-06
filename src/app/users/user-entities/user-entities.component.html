@@ -1,12 +1,11 @@
-<mat-card *ngIf="user$ | async as user; else noUserTemplate">
+<mat-card *ngIf="user; else noUserTemplate">
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
 
-            <div *ngIf="selectedEntity; else listOfEntitiesTemplate">
+            <div *ngIf="selectedEntity; else noSelectedEntityTemplate">
 
                 <img [src]="user.photoURL" class="img-thumbnail mx-1">
-
                 <img [src]="selectedEntity.image" class="img-thumbnail mx-1">
 
                 <hr/>
@@ -20,11 +19,11 @@
 
         <div class="col-lg-9 col-md-8 col-12">
 
+            <h2>{{ user.displayName }} tiene rol {{ user.role }} y las siguientes entidades asociadas:</h2>
+
             <mat-card-content class="item-view">
 
-                <table mat-table [dataSource]="user.entitiesAdmin" class="mat-elevation-z8">
-                    <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
+                <table mat-table class="mat-elevation-z8" *ngIf="user.entitiesAdmin.length > 0; else noEntitiesTemplate" [dataSource]="user.entitiesAdmin">
 
                     <!-- courseImage Column -->
                     <ng-container matColumnDef="image">
@@ -90,8 +89,20 @@
     No existe tal usuario
 </ng-template>
 
-<ng-template #listOfEntitiesTemplate>
+<ng-template #noEntitiesTemplate>
+    <div class="alert alert-warning" role="alert">
+        {{ user.displayName }} aún no tiene entidades asociadas
+    </div>
+</ng-template>
+
+
+<ng-template #noSelectedEntityTemplate>
     <form>
+
+        <img [src]="user.photoURL" class="img-thumbnail mx-1">
+        <img [src]="'assets/images/entities/no-selected.png'" class="img-thumbnail mx-1">
+
+        <hr/>
 
         <mat-card-content>
 
