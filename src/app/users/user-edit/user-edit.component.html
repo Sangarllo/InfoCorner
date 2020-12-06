@@ -2,18 +2,32 @@
 
 <mat-card *ngIf="user; else noUserTemplate">
 
-    <div class="row">
+    <form [formGroup]="userForm" (ngSubmit)="onSaveForm()">
 
-        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-            <img [src]="userForm.get('photoURL').value" class="img-thumbnail" (click)="inputImageProfile.click()">
-            <input hidden type="file" #inputImageProfile (change)="uploadImage($event)">
-            <hr>
-            <span (click)="inputImageProfile.click()" class="small">Clica en la imagen para cambiar la foto</span>
-        </div>
+        <div class="row">
 
-        <div class="col-lg-9 col-md-8 col-12">
+            <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
 
-            <form [formGroup]="userForm" (ngSubmit)="onSaveForm()">
+                <img [src]="userForm.get('photoURL').value" class="img-thumbnail" (click)="inputImageProfile.click()">
+
+                <input hidden type="file" #inputImageProfile (change)="uploadImage($event)">
+
+                <hr>
+
+                <span (click)="inputImageProfile.click()" class="small">Clica en la imagen para cambiar la foto</span>
+
+                <mat-form-field class="data-detail">
+                    <mat-label>Avatar</mat-label>
+                    <mat-select formControlName="photoURL" [value]="userForm.get('photoURL').value">
+                        <mat-option *ngFor="let avatar of AVATARES" [value]="avatar.path">
+                            {{avatar.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+
+            <div class="col-lg-9 col-md-8 col-12">
 
                 <mat-card-content>
 
@@ -67,10 +81,10 @@
 
                 </mat-card-actions>
 
-            </form>
-
+            </div>
         </div>
-    </div>
+
+    </form>
 
 </mat-card>
 

@@ -4,13 +4,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs';
-
+import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { UserService } from '@services/users.service';
 import { IUser, User } from '@shared/models/user';
-import { finalize } from 'rxjs/operators';
 import { UserRole } from '@models/user-role.enum';
+import { Avatar, IFile } from '@app/shared/models/image';
 
 
 @Component({
@@ -27,6 +27,7 @@ export class UserEditComponent implements OnInit {
 
   public user!: IUser | undefined;
   public ROLES: UserRole[] = User.ROLES;
+  public AVATARES: Avatar[] = Avatar.getAvatares();
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -62,7 +63,7 @@ export class UserEditComponent implements OnInit {
   }
 
   private getDetails(uidUser: string): void {
-    console.log(`id asked ${uidUser}`);
+    console.log(`uid asked ${uidUser}`);
 
     if ( uidUser === '0' ) {
       this.pageTitle = 'Creación de un nuevo usuario';
