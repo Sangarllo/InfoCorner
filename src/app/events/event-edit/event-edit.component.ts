@@ -57,7 +57,8 @@ export class EventEditComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)]],
       image: Event.IMAGE_DEFAULT,
-      type: [ Event.TYPE_DEFAULT, Validators.required]
+      type: [ Event.TYPE_DEFAULT, Validators.required],
+      focused: true,
     });
 
   }
@@ -103,7 +104,8 @@ export class EventEditComponent implements OnInit {
       status: this.event.status,
       name: this.event.name,
       image: this.event.image ?? Event.IMAGE_DEFAULT,
-      type: this.event.type
+      type: this.event.type,
+      focused: this.event.focused,
     });
 
     // tslint:disable-next-line:no-string-literal
@@ -174,6 +176,4 @@ export class EventEditComponent implements OnInit {
      )
     .subscribe();
   }
-
-
 }

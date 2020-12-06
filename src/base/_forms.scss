@@ -8,11 +8,24 @@ mat-form-field {
 }
 
 fieldset.form-editing-fields {
-    border: 1px solid darkgray;
-    background-color: lightgrey;
-    color: black;
     padding: 20px;
     margin-bottom: 30px;
+    &.EDITING {
+        border: 1px solid darkgray;
+        background-color: lightgrey;
+        color: black;
+    }
+    &.VISIBLE {
+        border: 1px solid darkgreen;
+        background-color: lightgreen;
+        color: black;
+    }
+    &.DELETED,
+    &.BLOCKED {
+        border: 1px solid darkred;
+        background-color: lightcoral;
+        color: black;
+    }
     legend {
         float: left;
         font-size: smaller;

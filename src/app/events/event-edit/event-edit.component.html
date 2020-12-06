@@ -17,22 +17,17 @@
 
                 <mat-card-content>
 
-                    <fieldset class="form-editing-fields">
-                        <legend>Edición del Evento</legend>
+                    <fieldset class="form-editing-fields" [ngClass]="event.status">
+                        <legend>Estado del Evento</legend>
 
-                        <p>
-                            <mat-form-field appearance="outline">
-                                <mat-label>Id</mat-label>
-                                <input matInput type="text" formControlName="id" placeholder="Id">
-                            </mat-form-field>
-                        </p>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Id</mat-label>
+                            <input matInput type="text" formControlName="id" placeholder="Id">
+                        </mat-form-field>
 
-                        <p>
-                            <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Lugar activo</mat-slide-toggle>
-                        </p>
+                        <div class="row">
 
-                        <p>
-                            <mat-form-field appearance="outline">
+                            <mat-form-field class="col-5" appearance="outline">
                                 <mat-label>Estado</mat-label>
 
                                 <mat-select formControlName="status" [value]="eventForm.get('status')">
@@ -41,10 +36,12 @@
                                     </mat-option>
                                 </mat-select>
 
-                                <mat-hint>Hint</mat-hint>
-
                             </mat-form-field>
-                        </p>
+
+                            <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="active">Evento activo</mat-slide-toggle>
+
+                            <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="focused">Evento de portada</mat-slide-toggle>
+                        </div>
 
                     </fieldset>
 

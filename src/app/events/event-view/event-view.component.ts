@@ -42,6 +42,4 @@ export class EventViewComponent implements OnInit {
   public editItem(): void {
     this.router.navigate([`/${Event.PATH_URL}/${this.idEvent}/editar`]);
   }
-
-
 }

@@ -11,6 +11,7 @@ export interface IEvent {
   image: string;
   type: string;
   status: Status;
+  focused: boolean;
 }
 
 export class Event implements IEvent {
@@ -32,6 +33,7 @@ export class Event implements IEvent {
     public type: string,
     public image: string,
     public status: Status,
+    public focused: boolean,
      ) {
   }
 
@@ -42,7 +44,8 @@ export class Event implements IEvent {
       '',
       Event.TYPE_DEFAULT,
       Event.IMAGE_DEFAULT,
-      Status.Visible
+      Status.Visible,
+      true,
     );
   }
 }
