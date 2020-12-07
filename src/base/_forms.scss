@@ -2,67 +2,57 @@
 Formularios
 */
 
-form {
-    background-color: white;
-    color: black;
-}
-
-mat-slide-toggle {
-    height: 55px;
-    font-size: large;
-    color: rgba(0, 0, 0, .87);
-}
-
-mat-form-field {
-    width: 100%;
-    text-align: center;
-}
-
-fieldset.form-status-fields {
-    padding: 20px;
-    margin-bottom: 30px;
-    &.EDITING {
-        border: 1px solid darkgray;
-        background-color: lightgrey;
-        color: black;
-    }
-    &.VISIBLE {
-        border: 1px solid darkgreen;
-        background-color: lightgreen;
-        color: black;
-    }
-    &.DELETED,
-    &.BLOCKED {
-        border: 1px solid darkred;
-        background-color: lightcoral;
-        color: black;
-    }
-    legend {
-        float: left;
-        font-size: smaller;
-        text-align: right;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-}
-
-fieldset.form-info-fields {
-    padding: 20px;
-    margin-bottom: 30px;
-    border: 1px solid darkmagenta;
-    background-color: lightsalmon;
-    color: black;
-    legend {
-        float: left;
-        font-size: smaller;
-        text-align: right;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-}
-
 mat-card.item-view {
     .mat-standard-chip {
         margin: 10px;
+    }
+}
+
+mat-card.item-edit {
+    mat-form-field {
+        width: 100%;
+    }
+    mat-slide-toggle {
+        height: 55px;
+        font-size: large;
+        color: rgba(0, 0, 0, .87);
+    }
+    .mat-standard-chip {
+        margin: 10px;
+    }
+    form {
+        background-color: white;
+        color: black;
+        fieldset {
+            padding: 20px;
+            margin-bottom: 30px;
+            color: black;
+            &.form-info-fields {
+                border: 1px solid darkmagenta;
+                background-color: lightsalmon;
+            }
+            &.form-status-fields {
+                &.EDITING {
+                    border: 1px solid darkgray;
+                    background-color: lightgrey;
+                }
+                &.VISIBLE {
+                    border: 1px solid darkgreen;
+                    background-color: lightgreen;
+                }
+                &.DELETED,
+                &.BLOCKED {
+                    border: 1px solid darkred;
+                    background-color: lightcoral;
+                }
+            }
+            legend {
+                float: left;
+                font-size: smaller;
+                text-align: right;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
     }
 }
