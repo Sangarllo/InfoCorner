@@ -42,6 +42,4 @@ export class EntityViewComponent implements OnInit {
   public editItem(): void {
     this.router.navigate([`/${Entity.PATH_URL}/${this.idEntity}/editar`]);
   }
-
-
 }

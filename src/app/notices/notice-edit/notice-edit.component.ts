@@ -4,12 +4,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs';
-
+import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { NoticeService } from '@services/notices.service';
 import { Notice, INotice } from '@shared/models/notice';
-import { finalize } from 'rxjs/operators';
 import { Status } from '@models/status.enum';
 import { CATEGORIES, Category } from '@models/category.enum';
 

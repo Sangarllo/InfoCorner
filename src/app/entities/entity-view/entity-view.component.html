@@ -21,8 +21,10 @@
                 </div>
 
                 <div>
-                    <span>Tipo de la entidad</span>
-                    <h2>{{ entity.type }}</h2>
+                    <span>Categorías:</span>
+                    <mat-chip-list aria-label="Categories">
+                        <mat-chip *ngFor="let category of entity.categories">{{ category }} 🍋</mat-chip>
+                    </mat-chip-list>
                 </div>
 
             </mat-card-content>

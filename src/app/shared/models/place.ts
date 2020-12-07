@@ -7,7 +7,7 @@ export interface IPlace {
   active: boolean;
   name: string;
   image: string;
-  type: string;
+  categories?: Category[];
   locality?: string;
 }
 

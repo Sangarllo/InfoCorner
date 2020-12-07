@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs';
-
+import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
 import { Entity, IEntity } from '@shared/models/entity';
-import { finalize } from 'rxjs/operators';
+import { CATEGORIES, Category } from '@models/category.enum';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class EntityEditComponent implements OnInit {
 
   // public entity$: Observable<IEntity | undefined> | null = null;
   public entity!: IEntity | undefined;
-  public TYPES: any[] = Entity.TYPES;
+  public CATEGORIES: Category[] = CATEGORIES;
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -50,7 +50,7 @@ export class EntityEditComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)]],
       image: Entity.IMAGE_DEFAULT,
-      type: [ Entity.TYPE_DEFAULT, Validators.required],
+      categories: [],
     });
 
   }
@@ -95,7 +95,7 @@ export class EntityEditComponent implements OnInit {
       active: this.entity.active,
       name: this.entity.name,
       image: this.entity.image ?? Entity.IMAGE_DEFAULT,
-      type: this.entity.type
+      categories: this.entity.categories ?? [],
     });
 
     // tslint:disable-next-line:no-string-literal
@@ -195,6 +195,4 @@ export class EntityEditComponent implements OnInit {
      )
     .subscribe();
   }
-
-
 }

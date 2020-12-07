@@ -1,13 +1,11 @@
-export enum EntityType {
-  Otros = 'otro'
-}
+import { Category } from '@models/category.enum';
 
 export interface IEntity {
   id: string;
   active: boolean;
   name: string;
   image: string;
-  type: string;
+  categories?: Category[];
 }
 
 export class Entity implements IEntity {
@@ -15,19 +13,12 @@ export class Entity implements IEntity {
   public static IMAGE_DEFAULT = 'assets/images/entities/default.png';
   public static PATH_URL = 'entidades';
 
-  public static TYPE_DEFAULT = 'otras';
-  public static TYPES: any[] = [
-    {value: 'cultural', viewValue: 'Cultural'},
-    {value: 'deportiva', viewValue: 'Deportiva'},
-    {value: Entity.TYPE_DEFAULT, viewValue: 'Otras'}
-  ];
-
   constructor(
     public id: string,
     public active: boolean,
     public name: string,
-    public type: string,
     public image: string,
+    public categories: Category[],
      ) {
   }
 
@@ -36,14 +27,8 @@ export class Entity implements IEntity {
       '0',
       true,
       '',
-      Entity.TYPE_DEFAULT,
-      Entity.IMAGE_DEFAULT
+      Entity.IMAGE_DEFAULT,
+      [],
     );
   }
-
-  // id: string;
-  // active: boolean;
-  // name: string;
-  // image: string;
-  // type: string;
 }
