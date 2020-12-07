@@ -17,46 +17,29 @@
 
                 <mat-card-content>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Id</mat-label>
-                            <input matInput type="text" formControlName="id" placeholder="Id">
-                        </mat-form-field>
-                    </p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Id</mat-label>
+                        <input matInput type="text" formControlName="id" placeholder="Id">
+                    </mat-form-field>
 
-                    <p>
-                        <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Lugar activo</mat-slide-toggle>
-                    </p>
+                    <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Lugar activo</mat-slide-toggle>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Nombre del lugar</mat-label>
-                            <input matInput type="text" formControlName="name" placeholder="Nombre">
-                        </mat-form-field>
-                    </p>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nombre del lugar</mat-label>
+                        <input matInput type="text" formControlName="name" placeholder="Nombre">
+                    </mat-form-field>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Tipo del lugar</mat-label>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select formControlName="type" multiple>
+                            <mat-option *ngFor="let type of TYPES" [value]="type">{{type}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-                            <mat-select formControlName="type" [value]="placeForm.get('type').value">
-                                <mat-option *ngFor="let type of TYPES" [value]="type.value">
-                                    {{type.viewValue}}
-                                </mat-option>
-                            </mat-select>
-
-                            <mat-hint>Hint</mat-hint>
-
-                        </mat-form-field>
-                    </p>
-
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Localidad</mat-label>
-                            <input matInput type="text" formControlName="locality" placeholder="Localidad">
-                        </mat-form-field>
-                    </p>
-
+                    <mat-form-field appearance="outline">
+                        <mat-label>Localidad</mat-label>
+                        <input matInput type="text" formControlName="locality" placeholder="Localidad">
+                    </mat-form-field>
 
                 </mat-card-content>
 

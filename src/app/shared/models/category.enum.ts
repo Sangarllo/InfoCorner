@@ -1,5 +1,5 @@
 export enum Category {
-  Institucional = 'INSTITUCIONAL',
+  Institutional = 'INSTITUCIONAL',
   Culture = 'CULTURA',
   Sport = 'DEPORTE',
   Health = 'SALUD',
@@ -10,11 +10,14 @@ export enum Category {
 }
 
 const CATEGORIES: Category[] = [
+  Category.Institutional,
   Category.Culture,
   Category.Sport,
   Category.Health,
   Category.Child,
   Category.Music,
+  Category.Festive,
+  Category.Religion,
 ];
 
 export { CATEGORIES };

@@ -1,13 +1,10 @@
-export enum PlaceType {
-  Otros = 'otro'
-}
-
+import { PlaceType } from '@models/place-type.enum';
 export interface IPlace {
   id: string;
   active: boolean;
   name: string;
   image: string;
-  categories?: Category[];
+  type?: PlaceType[];
   locality?: string;
 }
 
@@ -17,19 +14,12 @@ export class Place implements IPlace {
   public static LOCALITY_DEFAULT = 'Rincón de Soto';
   public static PATH_URL = 'lugares';
 
-  public static TYPE_DEFAULT = 'otras';
-  public static TYPES: any[] = [
-    {value: 'bar', viewValue: 'Bar'},
-    {value: 'naturaleza', viewValue: 'Naturaleza'},
-    {value: Place.TYPE_DEFAULT, viewValue: 'Otros'}
-  ];
-
   constructor(
     public id: string,
     public active: boolean,
     public name: string,
-    public type: string,
     public image: string,
+    public type?: PlaceType[],
     public locality?: string,
      ) {
   }
@@ -39,8 +29,8 @@ export class Place implements IPlace {
       '0',
       true,
       '',
-      Place.TYPE_DEFAULT,
       Place.IMAGE_DEFAULT,
+      [ PlaceType.Other ],
       Place.LOCALITY_DEFAULT
     );
   }

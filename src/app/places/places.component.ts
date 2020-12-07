@@ -13,7 +13,7 @@ import { IPlace } from '@shared/models/place';
 export class PlacesComponent implements OnInit {
 
   public places$!: Observable<IPlace[]>;
-  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'type' , 'locality', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'locality', 'actions3'];
 
   constructor(
     private router: Router,

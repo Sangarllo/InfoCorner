@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 import { Observable } from 'rxjs';
-
+import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { PlaceService } from '@services/places.service';
 import { Place, IPlace } from '@shared/models/place';
-import { finalize } from 'rxjs/operators';
+import { PlaceType, PLACE_TYPES } from '@models/place-type.enum';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class PlaceEditComponent implements OnInit {
   uploadPercent: Observable<number>;
 
   public place!: IPlace | undefined;
-  public TYPES: any[] = Place.TYPES;
+  public TYPES: PlaceType[] = PLACE_TYPES;
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -49,7 +49,7 @@ export class PlaceEditComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)]],
       image: Place.IMAGE_DEFAULT,
-      type: [ Place.TYPE_DEFAULT, Validators.required],
+      type: [],
       locality: Place.LOCALITY_DEFAULT
     });
 
@@ -95,7 +95,7 @@ export class PlaceEditComponent implements OnInit {
       active: this.place.active,
       name: this.place.name,
       image: this.place.image ?? Place.IMAGE_DEFAULT,
-      type: this.place.type,
+      type: this.place.type ?? [],
       locality: this.place.locality
     });
 
@@ -167,6 +167,4 @@ export class PlaceEditComponent implements OnInit {
      )
     .subscribe();
   }
-
-
 }
