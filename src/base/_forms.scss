@@ -2,12 +2,23 @@
 Formularios
 */
 
+form {
+    background-color: white;
+    color: black;
+}
+
+mat-slide-toggle {
+    height: 55px;
+    font-size: large;
+    color: rgba(0, 0, 0, .87);
+}
+
 mat-form-field {
     width: 100%;
     text-align: center;
 }
 
-fieldset.form-editing-fields {
+fieldset.form-status-fields {
     padding: 20px;
     margin-bottom: 30px;
     &.EDITING {
@@ -32,5 +43,26 @@ fieldset.form-editing-fields {
         text-align: right;
         font-weight: bold;
         text-transform: uppercase;
+    }
+}
+
+fieldset.form-info-fields {
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid darkmagenta;
+    background-color: lightsalmon;
+    color: black;
+    legend {
+        float: left;
+        font-size: smaller;
+        text-align: right;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+mat-card.item-view {
+    .mat-standard-chip {
+        margin: 10px;
     }
 }

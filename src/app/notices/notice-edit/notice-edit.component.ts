@@ -11,6 +11,7 @@ import { NoticeService } from '@services/notices.service';
 import { Notice, INotice } from '@shared/models/notice';
 import { finalize } from 'rxjs/operators';
 import { Status } from '@models/status.enum';
+import { CATEGORIES, Category } from '@models/category.enum';
 
 
 @Component({
@@ -26,8 +27,8 @@ export class NoticeEditComponent implements OnInit {
   uploadPercent: Observable<number>;
 
   public notice!: INotice | undefined;
-  public TYPES: any[] = Notice.TYPES;
   public STATUS: Status[] = Notice.STATUS;
+  public CATEGORIES: Category[] = CATEGORIES;
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -53,10 +54,9 @@ export class NoticeEditComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)]],
       image: Notice.IMAGE_DEFAULT,
-      type: [ Notice.TYPE_DEFAULT, Validators.required],
-      text: ''
+      categories: null,
+      description: ''
     });
-
   }
 
   private getDetails(idNotice: string): void {
@@ -101,8 +101,8 @@ export class NoticeEditComponent implements OnInit {
       focused: this.notice.focused,
       name: this.notice.name,
       image: this.notice.image ?? Notice.IMAGE_DEFAULT,
-      type: this.notice.type,
-      locality: ''
+      categories: this.notice.categories ?? [],
+      description: ''
     });
 
     // tslint:disable-next-line:no-string-literal
@@ -173,6 +173,4 @@ export class NoticeEditComponent implements OnInit {
      )
     .subscribe();
   }
-
-
 }

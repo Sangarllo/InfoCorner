@@ -1,4 +1,4 @@
-<mat-card *ngIf="notice$ | async as notice; else noNoticeTemplate">
+<mat-card class="item-view" *ngIf="notice$ | async as notice; else noNoticeTemplate">
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
@@ -21,13 +21,16 @@
                 </div>
 
                 <div>
-                    <span>Tipo:</span>
-                    <h2>{{ notice.type }}</h2>
+                    <span>Categorías:</span>
+                    <mat-chip-list aria-label="Categories">
+                        <mat-chip *ngFor="let category of notice.categories">{{ category }} 🍎</mat-chip>
+                    </mat-chip-list>
+
                 </div>
 
                 <div>
-                    <span>Texto</span>
-                    <h2>{{ notice.text }}</h2>
+                    <span>Descripción:</span>
+                    <h2>{{ notice.description }}</h2>
                 </div>
 
             </mat-card-content>

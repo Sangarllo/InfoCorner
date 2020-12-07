@@ -1,18 +1,15 @@
 import { Status, STATUS_MODES } from '@models/status.enum';
-
-export enum NoticeType {
-  Otros = 'otro'
-}
+import { Category } from '@models/category.enum';
 
 export interface INotice {
   id: string;
   active: boolean;
   name: string;
   image: string;
-  type: string;
   status: Status;
   focused: boolean;
-  text: string;
+  categories?: Category[];
+  description?: string;
 }
 
 export class Notice implements INotice {
@@ -21,20 +18,15 @@ export class Notice implements INotice {
   public static PATH_URL = 'avisos';
   public static STATUS: Status[] = STATUS_MODES;
 
-  public static TYPE_DEFAULT = 'otros';
-  public static TYPES: any[] = [
-    {value: Notice.TYPE_DEFAULT, viewValue: 'Otros'}
-  ];
-
   constructor(
     public id: string,
     public active: boolean,
     public name: string,
-    public type: string,
     public image: string,
     public status: Status,
     public focused: boolean,
-    public text: string,
+    public categories: Category[],
+    public description: string,
      ) {
   }
 
@@ -43,10 +35,10 @@ export class Notice implements INotice {
       '0',
       true,
       '',
-      Notice.TYPE_DEFAULT,
       Notice.IMAGE_DEFAULT,
       Status.Visible,
       true,
+      [],
       ''
     );
   }

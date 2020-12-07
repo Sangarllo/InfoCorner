@@ -23,18 +23,11 @@
             <td mat-cell *matCellDef="let notice">{{ notice.name }}</td>
         </ng-container>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef>Tipo</th>
-            <td mat-cell *matCellDef="let notice">{{ notice.type }}</td>
-        </ng-container>
-
-        <!-- Locality Column -->
-        <ng-container matColumnDef="text">
-            <th mat-header-cell *matHeaderCellDef>Text</th>
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Desc.</th>
             <td mat-cell *matCellDef="let notice">...</td>
         </ng-container>
-
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="active">

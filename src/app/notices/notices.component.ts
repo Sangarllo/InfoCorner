@@ -13,7 +13,7 @@ import { INotice } from '@shared/models/notice';
 export class NoticesComponent implements OnInit {
 
   public notices$!: Observable<INotice[]>;
-  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'type' , 'text', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'description', 'actions3'];
 
   constructor(
     private router: Router,
