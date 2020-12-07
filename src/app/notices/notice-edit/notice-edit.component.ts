@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { NoticeService } from '@services/notices.service';
 import { Notice, INotice } from '@shared/models/notice';
 import { finalize } from 'rxjs/operators';
+import { Status } from '@models/status.enum';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class NoticeEditComponent implements OnInit {
 
   public notice!: INotice | undefined;
   public TYPES: any[] = Notice.TYPES;
+  public STATUS: Status[] = Notice.STATUS;
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -45,6 +47,8 @@ export class NoticeEditComponent implements OnInit {
     this.noticeForm = this.fb.group({
       id: [{value: '0', disabled: true}],
       active: true,
+      status: [ Status.Editing, Validators.required],
+      focused: true,
       name: ['', [Validators.required,
         Validators.minLength(3),
         Validators.maxLength(50)]],
@@ -93,6 +97,8 @@ export class NoticeEditComponent implements OnInit {
     this.noticeForm.patchValue({
       id: this.notice.id,
       active: this.notice.active,
+      status: this.notice.status,
+      focused: this.notice.focused,
       name: this.notice.name,
       image: this.notice.image ?? Notice.IMAGE_DEFAULT,
       type: this.notice.type,

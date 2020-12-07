@@ -1,3 +1,5 @@
+import { Status, STATUS_MODES } from '@models/status.enum';
+
 export enum NoticeType {
   Otros = 'otro'
 }
@@ -8,6 +10,8 @@ export interface INotice {
   name: string;
   image: string;
   type: string;
+  status: Status;
+  focused: boolean;
   text: string;
 }
 
@@ -15,6 +19,7 @@ export class Notice implements INotice {
 
   public static IMAGE_DEFAULT = 'assets/images/notices/default.png';
   public static PATH_URL = 'avisos';
+  public static STATUS: Status[] = STATUS_MODES;
 
   public static TYPE_DEFAULT = 'otros';
   public static TYPES: any[] = [
@@ -27,6 +32,8 @@ export class Notice implements INotice {
     public name: string,
     public type: string,
     public image: string,
+    public status: Status,
+    public focused: boolean,
     public text: string,
      ) {
   }
@@ -38,6 +45,8 @@ export class Notice implements INotice {
       '',
       Notice.TYPE_DEFAULT,
       Notice.IMAGE_DEFAULT,
+      Status.Visible,
+      true,
       ''
     );
   }

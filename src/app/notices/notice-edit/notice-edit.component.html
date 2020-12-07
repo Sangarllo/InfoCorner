@@ -17,46 +17,57 @@
 
                 <mat-card-content>
 
-                    <p>
+                    <fieldset class="form-editing-fields" [ngClass]="noticeForm.controls.status.value">
+                        <legend>Estado del Aviso</legend>
+
                         <mat-form-field appearance="outline">
                             <mat-label>Id</mat-label>
                             <input matInput type="text" formControlName="id" placeholder="Id">
                         </mat-form-field>
-                    </p>
 
-                    <p>
-                        <mat-slide-toggle class="mb-3 ml-2" formControlName="active">Aviso activo</mat-slide-toggle>
-                    </p>
+                        <div class="row">
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Título del aviso</mat-label>
-                            <input matInput type="text" formControlName="name" placeholder="Título">
-                        </mat-form-field>
-                    </p>
+                            <mat-form-field class="col-5" appearance="outline">
+                                <mat-label>Estado</mat-label>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Tipo del aviso</mat-label>
+                                <mat-select formControlName="status" [value]="noticeForm.get('status')">
+                                    <mat-option *ngFor="let status of STATUS" [value]="status">
+                                        {{status}}
+                                    </mat-option>
+                                </mat-select>
 
-                            <mat-select formControlName="type" [value]="noticeForm.get('type').value">
-                                <mat-option *ngFor="let type of TYPES" [value]="type.value">
-                                    {{type.viewValue}}
-                                </mat-option>
-                            </mat-select>
+                            </mat-form-field>
 
-                            <mat-hint>Hint</mat-hint>
+                            <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="active">Aviso activo</mat-slide-toggle>
 
-                        </mat-form-field>
-                    </p>
+                            <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="focused">Aviso en portada</mat-slide-toggle>
+                        </div>
 
-                    <p>
-                        <mat-form-field appearance="outline">
-                            <mat-label>Texto</mat-label>
-                            <input matInput type="text" formControlName="text" placeholder="text">
-                        </mat-form-field>
-                    </p>
+                    </fieldset>
 
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Título del aviso</mat-label>
+                        <input matInput type="text" formControlName="name" placeholder="Título">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tipo del aviso</mat-label>
+
+                        <mat-select formControlName="type" [value]="noticeForm.get('type').value">
+                            <mat-option *ngFor="let type of TYPES" [value]="type.value">
+                                {{type.viewValue}}
+                            </mat-option>
+                        </mat-select>
+
+                        <mat-hint>Hint</mat-hint>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Texto</mat-label>
+                        <input matInput type="text" formControlName="text" placeholder="text">
+                    </mat-form-field>
 
                 </mat-card-content>
 

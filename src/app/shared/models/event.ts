@@ -1,4 +1,4 @@
-import { Status } from '@models/status.enum';
+import { Status, STATUS_MODES } from '@models/status.enum';
 
 export enum EventType {
   Otros = 'otro'
@@ -18,6 +18,7 @@ export class Event implements IEvent {
 
   public static IMAGE_DEFAULT = 'assets/images/events/default.png';
   public static PATH_URL = 'eventos';
+  public static STATUS: Status[] = STATUS_MODES;
 
   public static TYPE_DEFAULT = 'otros';
   public static TYPES: any[] = [
