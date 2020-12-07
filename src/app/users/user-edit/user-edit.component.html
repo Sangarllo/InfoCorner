@@ -1,6 +1,6 @@
 <h2>{{ pageTitle }}</h2>
 
-<mat-card *ngIf="user; else noUserTemplate">
+<mat-card class="item-edit" *ngIf="user; else noUserTemplate">
 
     <form [formGroup]="userForm" (ngSubmit)="onSaveForm()">
 
