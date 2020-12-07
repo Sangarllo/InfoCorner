@@ -22,7 +22,9 @@
 
                 <div>
                     <span>Tipo:</span>
-                    <h2>{{ place.type }}</h2>
+                    <mat-chip-list aria-label="Tipo">
+                        <mat-chip *ngFor="let type of place.type">{{ type }} 🍇</mat-chip>
+                    </mat-chip-list>
                 </div>
 
                 <div>
