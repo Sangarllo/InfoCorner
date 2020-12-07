@@ -1,6 +1,6 @@
 <h2>{{ pageTitle }}</h2>
 
-<mat-card *ngIf="event; else noEventTemplate">
+<mat-card class="item-edit" *ngIf="event; else noEventTemplate">
 
     <div class="row">
 
@@ -45,23 +45,28 @@
 
                     </fieldset>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Nombre del evento</mat-label>
-                        <input matInput type="text" formControlName="name" placeholder="Nombre">
-                    </mat-form-field>
 
-                    <mat-form-field appearance="outline">
-                        <mat-label>Tipo del evento</mat-label>
+                    <fieldset class="form-info-fields">
+                        <legend>Información del evento</legend>
 
-                        <mat-select formControlName="type" [value]="eventForm.get('type').value">
-                            <mat-option *ngFor="let type of TYPES" [value]="type.value">
-                                {{type.viewValue}}
-                            </mat-option>
-                        </mat-select>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Nombre del evento</mat-label>
+                            <input matInput type="text" formControlName="name" placeholder="Nombre">
+                        </mat-form-field>
 
-                        <mat-hint>Hint</mat-hint>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Categorías</mat-label>
+                            <mat-select formControlName="categories" multiple>
+                                <mat-option *ngFor="let category of CATEGORIES" [value]="category">{{category}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
-                    </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Descripción</mat-label>
+                            <input matInput type="text" formControlName="description" placeholder="Descripción">
+                        </mat-form-field>
+
+                    </fieldset>
 
                 </mat-card-content>
 

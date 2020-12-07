@@ -11,6 +11,7 @@ import { EventService } from '@services/events.service';
 import { Event, IEvent } from '@shared/models/event';
 import { finalize } from 'rxjs/operators';
 import { Status, STATUS_MODES } from '@models/status.enum';
+import { CATEGORIES, Category } from '@models/category.enum';
 
 
 @Component({
@@ -26,8 +27,8 @@ export class EventEditComponent implements OnInit {
   uploadPercent: Observable<number>;
 
   public event!: IEvent | undefined;
-  public TYPES: any[] = Event.TYPES;
   public STATUS: Status[] = Event.STATUS;
+  public CATEGORIES: Category[] = CATEGORIES;
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -53,9 +54,9 @@ export class EventEditComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)]],
       image: Event.IMAGE_DEFAULT,
-      type: [ Event.TYPE_DEFAULT, Validators.required],
+      categories: null,
+      description: ''
     });
-
   }
 
   private getDetails(idEvent: string): void {
@@ -100,8 +101,10 @@ export class EventEditComponent implements OnInit {
       focused: this.event.focused,
       name: this.event.name,
       image: this.event.image ?? Event.IMAGE_DEFAULT,
-      type: this.event.type,
+      categories: this.event.categories ?? [],
+      description: ''
     });
+
 
     // tslint:disable-next-line:no-string-literal
     this.eventForm.controls['id'].setValue(this.event.id);

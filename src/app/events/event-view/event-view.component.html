@@ -1,4 +1,4 @@
-<mat-card *ngIf="event$ | async as event; else noEventTemplate">
+<mat-card class="item-view" *ngIf="event$ | async as event; else noEventTemplate">
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
@@ -23,8 +23,15 @@
                 </div>
 
                 <div>
-                    <span>Tipo:</span>
-                    <h2>{{ event.type }}</h2>
+                    <span>Categorías:</span>
+                    <mat-chip-list aria-label="Categories">
+                        <mat-chip *ngFor="let category of event.categories">{{ category }} 🥝</mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <div *ngIf="event.description">
+                    <span>Descripción:</span>
+                    <h2>{{ event.description }}</h2>
                 </div>
 
             </mat-card-content>

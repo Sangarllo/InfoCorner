@@ -54,7 +54,7 @@
                             <input matInput type="text" formControlName="name" placeholder="Título">
                         </mat-form-field>
 
-                        <mat-form-field appearance="fill">
+                        <mat-form-field appearance="outline">
                             <mat-label>Categorías</mat-label>
                             <mat-select formControlName="categories" multiple>
                                 <mat-option *ngFor="let category of CATEGORIES" [value]="category">{{category}}</mat-option>

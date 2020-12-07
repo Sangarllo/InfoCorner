@@ -13,7 +13,7 @@ import { IEvent } from '@shared/models/event';
 export class EventsComponent implements OnInit {
 
   public events$!: Observable<IEvent[]>;
-  displayedColumns: string[] = [ 'image', 'active', 'status', 'id', 'name', 'type' , 'actions3'];
+  displayedColumns: string[] = [ 'image', 'active', 'status', 'id', 'name', 'actions3'];
 
   constructor(
     private router: Router,

@@ -25,10 +25,9 @@
                     <mat-chip-list aria-label="Categories">
                         <mat-chip *ngFor="let category of notice.categories">{{ category }} 🍎</mat-chip>
                     </mat-chip-list>
-
                 </div>
 
-                <div>
+                <div *ngIf="notice.description">
                     <span>Descripción:</span>
                     <h2>{{ notice.description }}</h2>
                 </div>
