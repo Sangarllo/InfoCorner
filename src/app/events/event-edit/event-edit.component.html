@@ -17,7 +17,7 @@
 
                 <mat-card-content>
 
-                    <fieldset class="form-editing-fields" [ngClass]="event.status">
+                    <fieldset class="form-editing-fields" [ngClass]="eventForm.controls.status.value">
                         <legend>Estado del Evento</legend>
 
                         <mat-form-field appearance="outline">
