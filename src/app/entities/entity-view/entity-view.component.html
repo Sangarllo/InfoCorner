@@ -27,6 +27,10 @@
                     </mat-chip-list>
                 </div>
 
+                <div *ngIf="entity.place">
+                    <span>Lugar por defecto:</span>
+                    <h2>{{ entity.place?.name }}</h2>
+                </div>
             </mat-card-content>
 
             <mat-card-actions>

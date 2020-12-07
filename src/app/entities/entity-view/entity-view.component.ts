@@ -25,13 +25,11 @@ export class EntityViewComponent implements OnInit {
   ngOnInit(): void {
     this.idEntity = this.route.snapshot.paramMap.get('id');
     if ( this.idEntity ) {
-      console.log(`id asked ${this.idEntity}`);
       this.getDetails(this.idEntity);
     }
   }
 
   getDetails(idEntity: string): void {
-    console.log(`id asked ${idEntity}`);
     this.entity$ = this.entitiesSrv.getOneEntity(idEntity);
   }
 

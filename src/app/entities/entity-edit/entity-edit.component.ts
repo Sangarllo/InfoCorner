@@ -8,8 +8,10 @@ import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
-import { Entity, IEntity } from '@shared/models/entity';
+import { Entity, IEntity } from '@models/entity';
 import { CATEGORIES, Category } from '@models/category.enum';
+import { Place } from '@models/place';
+import { PlaceService } from '@services/places.service';
 
 
 @Component({
@@ -27,13 +29,15 @@ export class EntityEditComponent implements OnInit {
   // public entity$: Observable<IEntity | undefined> | null = null;
   public entity!: IEntity | undefined;
   public CATEGORIES: Category[] = CATEGORIES;
+  public places$: Observable<Place[]>;
 
   constructor(
     private afStorage: AngularFireStorage,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private entitiesSrv: EntityService) { }
+    private entitiesSrv: EntityService,
+    private placeSrv: PlaceService) { }
 
   ngOnInit(): void {
 
@@ -41,18 +45,20 @@ export class EntityEditComponent implements OnInit {
     if ( idEntity ) {
       console.log(`id asked ${idEntity}`);
       this.getDetails(idEntity);
+
+      this.entityForm = this.fb.group({
+        id: [{value: '0', disabled: true}],
+        active: true,
+        name: ['', [Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50)]],
+        image: Entity.IMAGE_DEFAULT,
+        categories: [],
+        place: null,
+      });
+
+      this.places$ = this.placeSrv.getAllPlaces();
     }
-
-    this.entityForm = this.fb.group({
-      id: [{value: '0', disabled: true}],
-      active: true,
-      name: ['', [Validators.required,
-        Validators.minLength(3),
-        Validators.maxLength(50)]],
-      image: Entity.IMAGE_DEFAULT,
-      categories: [],
-    });
-
   }
 
   private getDetails(idEntity: string): void {
@@ -96,6 +102,7 @@ export class EntityEditComponent implements OnInit {
       name: this.entity.name,
       image: this.entity.image ?? Entity.IMAGE_DEFAULT,
       categories: this.entity.categories ?? [],
+      place: this.entity.place,
     });
 
     // tslint:disable-next-line:no-string-literal

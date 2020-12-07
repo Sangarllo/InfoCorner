@@ -36,6 +36,13 @@
                         </mat-select>
                     </mat-form-field>
 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lugar por defecto</mat-label>
+                        <mat-select formControlName="place">
+                            <mat-option *ngFor="let place of places$ | async as places" [value]="place.id">{{place.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
                 </mat-card-content>
 
                 <mat-card-actions>

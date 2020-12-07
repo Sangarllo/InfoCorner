@@ -1,4 +1,5 @@
 import { Category } from '@models/category.enum';
+import { Place } from '@models/place';
 
 export interface IEntity {
   id: string;
@@ -6,6 +7,7 @@ export interface IEntity {
   name: string;
   image: string;
   categories?: Category[];
+  place?: Place;
 }
 
 export class Entity implements IEntity {
@@ -18,7 +20,8 @@ export class Entity implements IEntity {
     public active: boolean,
     public name: string,
     public image: string,
-    public categories: Category[],
+    public categories?: Category[],
+    public place?: Place
      ) {
   }
 
@@ -29,6 +32,7 @@ export class Entity implements IEntity {
       '',
       Entity.IMAGE_DEFAULT,
       [],
+      null,
     );
   }
 }
