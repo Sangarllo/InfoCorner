@@ -2,10 +2,9 @@
     Admin
 </mat-toolbar>
 
-<mat-list>
-    <mat-list-item routerLink="usuarios">Usuarios</mat-list-item>
-    <mat-list-item routerLink="avisos">Avisos</mat-list-item>
-    <mat-list-item routerLink="eventos">Eventos</mat-list-item>
-    <mat-list-item routerLink="entidades">Entidades</mat-list-item>
-    <mat-list-item routerLink="lugares">Lugares</mat-list-item>
-</mat-list>
+<mat-nav-list>
+    <mat-list-item [routerLink]="link.path" *ngFor="let link of LINKS">
+        <mat-icon>{{ link.icon }}</mat-icon>
+        <span class="list-item">{{ link.path }}</span>
+    </mat-list-item>
+</mat-nav-list>
