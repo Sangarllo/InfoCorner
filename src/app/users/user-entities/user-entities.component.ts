@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
@@ -9,12 +11,15 @@ import { IEntity, Entity } from '@models/entity';
   templateUrl: './user-entities.component.html',
   styleUrls: ['./user-entities.component.scss']
 })
-export class UserEntitiesComponent implements OnInit {
+export class UserEntitiesComponent implements OnInit, AfterViewInit {
 
   @Input() entities: IEntity[];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   dataSource: MatTableDataSource<IEntity>;
 
-  displayedColumns: string[] = [ 'image', 'active', 'id', 'name'];
+  displayedColumns: string[] = [ 'image', 'id', 'name'];
 
   constructor(
     private router: Router,
@@ -23,6 +28,11 @@ export class UserEntitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.entities);
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   public gotoEntity(entity: IEntity): void {
