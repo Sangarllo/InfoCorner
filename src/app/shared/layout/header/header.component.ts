@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from '@app/shared/auth/auth.service';
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output() toggleSidenav = new EventEmitter<void>();
   public user$: Observable<IUser> = this.authSvc.afAuth.user;
 
   constructor(

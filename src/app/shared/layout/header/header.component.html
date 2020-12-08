@@ -1,40 +1,24 @@
-<nav class="navbar">
+<mat-toolbar color="primary">
 
-    <mat-toolbar>
+    <button mat-button class="sidenav-toggle" (click)="toggleSidenav.emit()">
+          <mat-icon>menu</mat-icon>
+        </button>
 
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
-
-        <button mat-raised-button color="accent" routerLink="home">
+    <button mat-raised-button color="accent" routerLink="home">
           <span>My App</span>
         </button>
 
-        <span class="example-spacer"></span>
+    <span class="header-spacer"></span>
 
-        <div *ngIf="user$ | async as user; else login">
+    <div *ngIf="user$ | async as user; else login">
 
-            <button mat-raised-button color="accent" routerLink="admin">Admin</button>
-
-            <button mat-raised-button color="accent" routerLink="usuarios">Usuarios</button>
-
-            <button mat-raised-button color="primary" routerLink="eventos">Eventos</button>
-
-            <button mat-raised-button color="primary" routerLink="avisos">Avisos</button>
-
-            <button mat-raised-button color="primary" routerLink="entidades">Entidades</button>
-
-            <button mat-raised-button color="primary" routerLink="lugares">Lugares</button>
-
-            <button mat-raised-button color="warn" (click)="onLogout()">
+        <button mat-raised-button color="warn" (click)="onLogout()">
               <mat-icon>logout</mat-icon>
             </button>
 
-        </div>
+    </div>
 
-    </mat-toolbar>
-
-</nav>
+</mat-toolbar>
 
 <ng-template #login>
     <div>
