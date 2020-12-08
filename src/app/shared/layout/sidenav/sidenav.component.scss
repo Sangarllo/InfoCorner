@@ -1,4 +1,8 @@
-.list-item {
+mat-icon {
+    margin: 16px;
+}
+
+mat-list-item {
+    border-bottom: 1px solid linen;
     text-transform: uppercase;
-    margin-left: 10px;
 }
