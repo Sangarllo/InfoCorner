@@ -1,6 +1,11 @@
 <mat-card>
 
-    <table mat-table class="mat-elevation-z8" *ngIf="entities" [dataSource]="entities">
+    <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    </mat-form-field>
+
+    <table mat-table class="mat-elevation-z8" *ngIf="entities" [dataSource]="dataSource">
 
         <ng-container matColumnDef="image">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
