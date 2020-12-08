@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UsersComponent } from '@app/users/users.component';
 import { UserViewComponent } from '@app/users/user-view/user-view.component';
 import { UserEditComponent } from '@app/users/user-edit/user-edit.component';
-import { UserEntitiesComponent } from '@app/users/user-entities/user-entities.component';
+import { UserEntitiesAdminComponent } from '@app/users/user-entities-admin/user-entities-admin.component';
 
 const routes: Routes = [
   {
@@ -20,8 +20,8 @@ const routes: Routes = [
     component: UserEditComponent,
   },
   {
-    path: ':uid/entidades',
-    component: UserEntitiesComponent
+    path: ':uid/entidades-admin',
+    component: UserEntitiesAdminComponent
   }
 ];
 
