@@ -1,19 +1,26 @@
 <mat-card class="item-view" *ngIf="user$ | async as user; else noUserTemplate">
 
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-            <img [src]="user.photoURL" class="img-thumbnail">
-        </div>
+    <mat-card-header>
+        <!--
+    <mat-icon mat-card-avatar svgIcon="{{user.avatar}}"></mat-icon>
+    -->
+        <img [src]="user.photoURL" class="img-thumbnail">
+        <mat-card-title>
+            <h2>{{user.displayName}}</h2>
+        </mat-card-title>
+        <mat-card-subtitle>
+            Rol {{user.role}}
+        </mat-card-subtitle>
 
-        <div class="col-lg-9 col-md-8 col-12">
+    </mat-card-header>
+    <mat-card-content>
 
-            <mat-card-content class="item-view">
+        <mat-chip-list aria-label="User mode">
+            <mat-chip color="primary" selected>{{ user.active ? 'activo' : 'no activo '}}</mat-chip>
+        </mat-chip-list>
 
-                <div>
-                    <mat-chip-list aria-label="User mode">
-                        <mat-chip color="primary" selected>{{ user.active ? 'activo' : 'no activo '}}</mat-chip>
-                    </mat-chip-list>
-                </div>
+        <mat-tab-group>
+            <mat-tab label="Bio">
 
                 <div>
                     <span>Nombre:</span>
@@ -21,24 +28,27 @@
                 </div>
 
                 <div>
+                    <span>Email:</span>
+                    <h2>{{ user.email }}</h2>
+                </div>
+
+                <div>
                     <span>Rol del usuario</span>
                     <h2>{{ user.role }}</h2>
                 </div>
 
-            </mat-card-content>
+            </mat-tab>
+        </mat-tab-group>
 
-            <mat-card-actions>
+    </mat-card-content>
 
-                <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button> &nbsp;
-                <button mat-raised-button type="button" (click)="editItem()" color="warn">Editar</button>
-
-            </mat-card-actions>
-
-        </div>
-    </div>
-
+    <mat-card-actions>
+        <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button> &nbsp;
+        <button mat-raised-button type="button" (click)="editItem()" color="warn">Editar</button>
+    </mat-card-actions>
 </mat-card>
 
+
 <ng-template #noUserTemplate>
-    No existe tal usuario
+    <mat-spinner></mat-spinner>
 </ng-template>
