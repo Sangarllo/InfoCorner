@@ -38,8 +38,35 @@
 
             <mat-card-actions>
 
-                <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button> &nbsp;
-                <button mat-raised-button type="button" (click)="editItem()" color="warn">Editar</button>
+                <div>
+
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                  <mat-icon>edit</mat-icon>
+                </button>
+
+
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                  <mat-icon>add_photo_alternate</mat-icon>
+                </button>
+
+
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                  <mat-icon>person_add</mat-icon>
+                </button>
+
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                  <mat-icon>add_location_alt</mat-icon>
+                </button>
+
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                  <mat-icon>book_online</mat-icon>
+                </button>
+
+                </div>
 
             </mat-card-actions>
 
