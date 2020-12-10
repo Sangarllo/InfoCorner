@@ -1,5 +1,6 @@
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
+import { IPlace } from '@models/place';
 
 export interface IEvent {
   id: string;
@@ -10,6 +11,8 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
+  place?: IPlace;
+  locality?: string;
 }
 
 export class Event implements IEvent {
@@ -25,8 +28,10 @@ export class Event implements IEvent {
     public image: string,
     public status: Status,
     public focused: boolean,
-    public categories: Category[],
-    public description: string,
+    public categories?: Category[],
+    public description?: string,
+    public place?: IPlace,
+    public locality?: string,
      ) {
   }
 
@@ -39,7 +44,9 @@ export class Event implements IEvent {
       Status.Visible,
       true,
       [],
-      ''
+      '',
+      null,
+      '',
     );
   }
 }

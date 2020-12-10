@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { EventService } from '@services/events.service';
 import { IEvent, Event } from '@shared/models/event';
+import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -13,10 +13,12 @@ import { IEvent, Event } from '@shared/models/event';
 })
 export class EventViewComponent implements OnInit {
 
-  public event$: Observable<IEvent | undefined> | null = null;
+  // public event$: Observable<IEvent | undefined> | null = null;
+  public event: IEvent;
   public idEvent: string;
 
   constructor(
+    public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private eventSrv: EventService,
@@ -25,14 +27,15 @@ export class EventViewComponent implements OnInit {
   ngOnInit(): void {
     this.idEvent = this.route.snapshot.paramMap.get('id');
     if ( this.idEvent ) {
-      console.log(`id asked ${this.idEvent}`);
       this.getDetails(this.idEvent);
     }
   }
 
   getDetails(idEvent: string): void {
-    console.log(`id asked ${idEvent}`);
-    this.event$ = this.eventSrv.getOneEvent(idEvent);
+    this.eventSrv.getOneEvent(idEvent)
+    .subscribe((event: IEvent) => {
+      this.event = event;
+    });
   }
 
   public gotoList(): void {
@@ -41,5 +44,16 @@ export class EventViewComponent implements OnInit {
 
   public editItem(): void {
     this.router.navigate([`/${Event.PATH_URL}/${this.idEvent}/editar`]);
+  }
+
+  openPlaceDialog(): void {
+    const dialogRef = this.dialog.open(EventPlaceDialogComponent, {
+      width: '400px',
+      data: this.event
+    });
+
+    dialogRef.afterClosed().subscribe((data: IEvent) => {
+      console.log(`The dialog was closed: ${JSON.stringify(data)}`);
+    });
   }
 }

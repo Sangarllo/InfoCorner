@@ -6,12 +6,14 @@ import { EventsComponent } from './events.component';
 import { EventViewComponent } from '@app/events/event-view/event-view.component';
 import { EventEditComponent } from '@app/events/event-edit/event-edit.component';
 import { SharedModule } from '@shared/shared.module';
+import { EventPlaceDialogComponent } from './event-place-dialog/event-place-dialog.component';
 
 @NgModule({
   declarations: [
     EventsComponent,
     EventViewComponent,
-    EventEditComponent
+    EventEditComponent,
+    EventPlaceDialogComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-<mat-card class="item-view" *ngIf="event$ | async as event; else noEventTemplate">
+<mat-card class="item-view" *ngIf="event; else noEventTemplate">
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
@@ -22,11 +22,21 @@
                     <h2>{{ event.name }}</h2>
                 </div>
 
-                <div>
+                <div *ngIf="event.categories">
                     <span>Categorías:</span>
                     <mat-chip-list aria-label="Categories">
                         <mat-chip *ngFor="let category of event.categories">{{ category }} 🥝</mat-chip>
                     </mat-chip-list>
+                </div>
+
+                <div *ngIf="event.place">
+                    <span>Lugar:</span>
+                    <h2>{{ event?.place?.name }}</h2>
+                </div>
+
+                <div *ngIf="event.locality">
+                    <span>Localidad:</span>
+                    <h2>{{ event.locality }}</h2>
                 </div>
 
                 <div *ngIf="event.description">
@@ -58,7 +68,7 @@
                   <mat-icon>person_add</mat-icon>
                 </button>
 
-                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                    <button mat-fab type="button" (click)="openPlaceDialog()" color="accent">
                   <mat-icon>add_location_alt</mat-icon>
                 </button>
 
@@ -76,5 +86,5 @@
 </mat-card>
 
 <ng-template #noEventTemplate>
-    No existe tal evento
+    <mat-spinner></mat-spinner>
 </ng-template>
