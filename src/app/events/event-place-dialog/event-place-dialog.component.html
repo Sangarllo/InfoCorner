@@ -1,22 +1,16 @@
-<h1 mat-dialog-title>Selección de lugar</h1>
-<div mat-dialog-content>
+<h1 mat-dialog-title>Selecciona la ubicación del evento</h1>
 
-    <pre>
-      {{ data | json }}
-    </pre>
+<mat-dialog-content class="mat-typography" [formGroup]="placeForm">
 
     <mat-form-field appearance="outline">
         <mat-label>Localidad</mat-label>
-        <input matInput [(ngModel)]="data.locality">
+        <input matInput placeholder="Localidad" formControlName="locality">
     </mat-form-field>
 
-
-    <!--
     <mat-form-field appearance="outline">
         <mat-label>Lugar</mat-label>
 
-        <mat-select placeholder="Selecciona la ubicación del evento" (selectionChange)="setLocation()" [formControl]="placeCtrl">
-
+        <mat-select placeholder="Lugar" formControlName="place" [compareWith]="compareFunction">
             <mat-option [value]="SECTION_BLANK">
                 SIN ESPECIFICAR
             </mat-option>
@@ -27,23 +21,10 @@
         </mat-select>
 
     </mat-form-field>
-    -->
 
-    <!--
-    <mat-form-field appearance="outline">
-        <mat-label>Lugar</mat-label>
-
-        <mat-select [(ngModel)]="event.place" name="place">
-            <mat-option *ngFor="let place of places$ | async as places" [value]="place">
-                {{place.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    -->
-
-</div>
+</mat-dialog-content>
 
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <button mat-button (click)="save()" cdkFocusInitial>Ok</button>
 </div>

@@ -4,7 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IPlace } from '@shared/models/place';
+import { IPlace } from '@models/place';
+import { Base } from '@models/base';
 
 const PLACES_COLLECTION = 'lugares';
 
@@ -21,8 +22,20 @@ export class PlaceService {
   }
 
   getAllPlaces(): Observable<IPlace[]> {
-
     return this.placeCollection.valueChanges();
+  }
+
+  getAllPlacesBase(): Observable<Base[]> {
+    return this.placeCollection.valueChanges().pipe(
+      map(places => places.map(place => {
+        const id = place.id;
+        const name = place.name;
+        const image = place.image;
+        return {
+          id, name, image
+        };
+      }))
+    );
   }
 
   getOnePlace(idPlace: string): Observable<IPlace | undefined> {

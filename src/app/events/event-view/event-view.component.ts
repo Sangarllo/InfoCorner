@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { EventService } from '@services/events.service';
 import { IEvent, Event } from '@shared/models/event';
@@ -47,13 +47,20 @@ export class EventViewComponent implements OnInit {
   }
 
   openPlaceDialog(): void {
-    const dialogRef = this.dialog.open(EventPlaceDialogComponent, {
-      width: '400px',
-      data: this.event
-    });
 
-    dialogRef.afterClosed().subscribe((data: IEvent) => {
-      console.log(`The dialog was closed: ${JSON.stringify(data)}`);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '500px';
+    dialogConfig.data = this.event;
+
+    const dialogRef = this.dialog.open(EventPlaceDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
+      this.event.locality = eventDialog.locality;
+      this.event.place = eventDialog.place;
+
+      this.eventSrv.updateEvent(this.event);
     });
   }
 }

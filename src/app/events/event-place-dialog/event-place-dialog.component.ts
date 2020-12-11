@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -14,37 +14,47 @@ import { IEvent } from '@models/event';
   templateUrl: './event-place-dialog.component.html',
   styleUrls: ['./event-place-dialog.component.scss']
 })
-export class EventPlaceDialogComponent {
+export class EventPlaceDialogComponent implements OnInit {
 
-  // pristine: boolean = true;
-  // placeCtrl = new FormControl();
-  // sectionSelected: Base;
-  // readonly SECTION_BLANK: Base = Base.InitDefault();
+  placeForm: FormGroup;
+  placeCtrl = new FormControl();
+  placeSelected: Base;
+  readonly SECTION_BLANK: Base = Base.InitDefault();
 
-  // public places$: Observable<IPlace[]>;
+  places$: Observable<Base[]>;
 
   constructor(
-    // private placeSrv: PlaceService,
+    private fb: FormBuilder,
+    private placeSrv: PlaceService,
     public dialogRef: MatDialogRef<EventPlaceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IEvent) {
+  }
 
-      console.log(`data.locality: ${JSON.stringify(data.locality)}`);
-      /*
-      this.places$ = this.placeSrv.getAllPlaces();
-      */
-    }
+  ngOnInit(): void {
+
+    this.places$ = this.placeSrv.getAllPlacesBase();
+
+    this.placeSelected = ( this.data.place ) ? {
+      id: this.data.place.id,
+      name: this.data.place.name,
+      image: this.data.place.image
+    } : this.SECTION_BLANK;
+
+    this.placeForm = this.fb.group({
+      locality: [ this.data.locality, []],
+      place: [ this.placeSelected, []],
+  });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  // setLocation() {
-  //   this.pristine = false;
-  //   this.sectionSelected = new Base(
-  //       this.placeCtrl.value._id,
-  //       this.placeCtrl.value.name,
-  //       this.placeCtrl.value.image
-  //     );
-  // }
+  save(): void {
+    this.dialogRef.close(this.placeForm.value);
+  }
 
+  compareFunction(o1: any, o2: any): boolean {
+    return (o1.name === o2.name && o1.id === o2.id);
+   }
 }
