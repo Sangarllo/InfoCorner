@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+
+<mat-dialog-content class="mat-typography" [formGroup]="entityForm">
+
+    <div *ngIf="entityBaseSelected.image; else noEntityTemplate">
+        <img [src]="entityBaseSelected.image">
+    </div>
+
+    <ng-template #noEntityTemplate>
+        <div>
+            <img [src]="SECTION_BLANK.image">
+        </div>
+    </ng-template>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Entidad</mat-label>
+        <mat-select placeholder="Entidad" formControlName="entity" [compareWith]="compareFunction" (selectionChange)="onSelectionChanged($event)">
+            <mat-option [value]="SECTION_BLANK">
+                SIN ESPECIFICAR
+            </mat-option>
+            <mat-option *ngFor="let entity of entities$ | async as entities" [value]="entity">
+                {{entity.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Rol de la Entidad</mat-label>
+        <input matInput placeholder="Rol de la entidad" formControlName="entityRol">
+    </mat-form-field>
+
+
+</mat-dialog-content>
+
+<div mat-dialog-actions>
+    <button mat-raised-button color="warn" (click)="save()" cdkFocusInitial>
+      <mat-icon>check_circle_outline</mat-icon> Guardar
+    </button>
+    <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+</div>

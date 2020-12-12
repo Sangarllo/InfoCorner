@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 import { EventService } from '@services/events.service';
 import { IEvent, Event } from '@models/event';
 import { Base } from '@models/base';
+import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
+import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -18,12 +19,18 @@ export class EventViewComponent implements OnInit {
   public idEvent: string;
   readonly SECTION_BLANK: Base = Base.InitDefault();
 
+  public dialogConfig = new MatDialogConfig();
+
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private eventSrv: EventService,
-  ) { }
+  ) {
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.width = '500px';
+  }
 
   ngOnInit(): void {
     this.idEvent = this.route.snapshot.paramMap.get('id');
@@ -48,14 +55,8 @@ export class EventViewComponent implements OnInit {
   }
 
   openPlaceDialog(): void {
-
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '500px';
-    dialogConfig.data = this.event;
-
-    const dialogRef = this.dialog.open(EventPlaceDialogComponent, dialogConfig);
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventPlaceDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
       this.event.place = ( eventDialog.place.id === Base.ID_DEFAULT ) ?
@@ -66,4 +67,18 @@ export class EventViewComponent implements OnInit {
       this.eventSrv.updateEvent(this.event);
     });
   }
+
+  openEntityDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventEntityDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
+      this.event.entity = ( eventDialog.entity.id === Base.ID_DEFAULT ) ?
+        null :
+        eventDialog.entity;
+      this.event.entityRol = eventDialog.entityRol;
+      this.eventSrv.updateEvent(this.event);
+    });
+  }
+
 }

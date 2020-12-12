@@ -8,6 +8,8 @@ import { EventEditComponent } from '@app/events/event-edit/event-edit.component'
 import { SharedModule } from '@shared/shared.module';
 import { EventPlaceDialogComponent } from './event-place-dialog/event-place-dialog.component';
 import { EventPlaceDetailComponent } from './event-place-detail/event-place-detail.component';
+import { EventEntityDialogComponent } from './event-entity-dialog/event-entity-dialog.component';
+import { EventEntityDetailComponent } from './event-entity-detail/event-entity-detail.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { EventPlaceDetailComponent } from './event-place-detail/event-place-deta
     EventViewComponent,
     EventEditComponent,
     EventPlaceDialogComponent,
-    EventPlaceDetailComponent
+    EventPlaceDetailComponent,
+    EventEntityDialogComponent,
+    EventEntityDetailComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,9 @@
+<div class="event-item-detail" *ngIf="event.entity">
+    <img [src]="event.entity.image" class="img-thumbnail">
+
+    <h2>{{ event?.entity?.name }}</h2>
+
+    <h3 *ngIf="event.entityRol">
+        {{ event.entityRol }}
+    </h3>
+</div>

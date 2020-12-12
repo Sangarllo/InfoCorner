@@ -1,6 +1,7 @@
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 import { IPlace } from '@models/place';
+import { IEntity } from '@models/entity';
 
 export interface IEvent {
   id: string;
@@ -14,6 +15,8 @@ export interface IEvent {
   place?: IPlace;
   placeLocality?: string;
   placeDesc?: string;
+  entity?: IEntity;
+  entityRol?: string;
 }
 
 export class Event implements IEvent {
@@ -35,6 +38,9 @@ export class Event implements IEvent {
     public place?: IPlace,
     public placeLocality?: string,
     public placeDesc?: string,
+
+    public entity?: IEntity,
+    public entityRol?: string,
      ) {
   }
 
@@ -49,6 +55,7 @@ export class Event implements IEvent {
       [],
       '',
       null, '', '', // Place
+      null, '', // Entity
     );
   }
 }

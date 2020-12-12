@@ -4,6 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 
 import { IEntity } from '@models/entity';
+import { Base } from '@models/base';
+import { map } from 'rxjs/operators';
 
 const ENTITIES_COLLECTION = 'entidades';
 
@@ -21,6 +23,19 @@ export class EntityService {
 
   getAllEntities(): Observable<IEntity[]> {
     return this.entityCollection.valueChanges();
+  }
+
+  getAllEntitiesBase(): Observable<Base[]> {
+    return this.entityCollection.valueChanges().pipe(
+      map(entities => entities.map(entity => {
+        const id = entity.id;
+        const name = entity.name;
+        const image = entity.image;
+        return {
+          id, name, image
+        };
+      }))
+    );
   }
 
   getOneEntity(idEntity: string): Observable<IEntity | undefined> {
