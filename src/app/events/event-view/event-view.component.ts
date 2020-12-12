@@ -5,8 +5,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { EventService } from '@services/events.service';
 import { IEvent, Event } from '@models/event';
 import { Base } from '@models/base';
+
 import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
 import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
+import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -52,6 +54,18 @@ export class EventViewComponent implements OnInit {
 
   public editItem(): void {
     this.router.navigate([`/${Event.PATH_URL}/${this.idEvent}/editar`]);
+  }
+
+  openEventBasicDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventBasicDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
+      this.event.name = eventDialog.name;
+      this.event.description = eventDialog.description;
+      this.event.categories = eventDialog.categories;
+      this.eventSrv.updateEvent(this.event);
+    });
   }
 
   openPlaceDialog(): void {

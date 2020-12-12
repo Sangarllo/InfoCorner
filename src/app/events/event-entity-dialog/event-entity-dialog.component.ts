@@ -11,8 +11,7 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-entity-dialog',
-  templateUrl: './event-entity-dialog.component.html',
-  styleUrls: ['./event-entity-dialog.component.scss']
+  templateUrl: './event-entity-dialog.component.html'
 })
 export class EventEntityDialogComponent implements OnInit {
 

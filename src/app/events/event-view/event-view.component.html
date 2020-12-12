@@ -3,6 +3,10 @@
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
             <img [src]="event.image" class="img-thumbnail">
+
+            <button mat-fab type="button" (click)="editItem()" color="accent">
+              <mat-icon>add_photo_alternate</mat-icon>
+            </button>
         </div>
 
         <div class="col-lg-9 col-md-8 col-12">
@@ -13,18 +17,12 @@
 
                     <legend>¿Qué?</legend>
 
-                    <h1 style="font-size: xxx-large;">{{ event.name }}</h1>
-                    <span *ngIf="event.description" style="font-size: smaller;">{{ event.description }}</span>
-
-                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                    <button mat-fab type="button" (click)="openEventBasicDialog()" color="accent">
                       <mat-icon>edit</mat-icon>
                     </button>
 
-                    <div *ngIf="event.categories">
-                        <mat-chip-list aria-label="Categories">
-                            <mat-chip *ngFor="let category of event.categories">{{ category }} 🥝</mat-chip>
-                        </mat-chip-list>
-                    </div>
+                    <app-event-basic-detail [event]="event"></app-event-basic-detail>
+
                 </fieldset>
 
                 <fieldset class="event-item-detail type-other">
@@ -71,11 +69,6 @@
                   <mat-icon>visibility</mat-icon>
                 </button>
 
-
-
-                    <button mat-fab type="button" (click)="editItem()" color="accent">
-                  <mat-icon>add_photo_alternate</mat-icon>
-                </button>
 
                     <button mat-fab type="button" (click)="editItem()" color="accent">
                   <mat-icon>book_online</mat-icon>
