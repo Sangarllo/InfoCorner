@@ -61,6 +61,20 @@
 
                 </fieldset>
 
+                <fieldset class="event-item-detail type-other">
+
+                    <legend>¿Cuándo?</legend>
+
+                    <button mat-fab type="button" (click)="openAppointmentDialog()" color="accent">
+                  <mat-icon>book_online</mat-icon>
+                </button>
+
+                    <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
+
+                </fieldset>
+
+
+
             </mat-card-content>
 
             <mat-card-actions>
@@ -69,11 +83,6 @@
 
                     <button mat-fab type="button" (click)="editItem()" color="accent">
                   <mat-icon>visibility</mat-icon>
-                </button>
-
-
-                    <button mat-fab type="button" (click)="editItem()" color="accent">
-                  <mat-icon>book_online</mat-icon>
                 </button>
 
                 </div>

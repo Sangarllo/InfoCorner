@@ -1,0 +1,7 @@
+<div class="event-item-detail" *ngIf="event.entity">
+    <img [src]="'assets/images/appointments/default.png'" class="img-thumbnail">
+
+    <h2 *ngIf="event.dateIni">TODO: {{ event.dateIni | async }}</h2>
+
+    <h2 *ngIf="event.dateEnd">TODO: {{ event.dateEnd | async }}</h2>
+</div>

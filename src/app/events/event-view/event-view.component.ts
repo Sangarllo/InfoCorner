@@ -10,6 +10,7 @@ import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/even
 import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
+import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -21,7 +22,6 @@ export class EventViewComponent implements OnInit {
   public event: IEvent;
   public idEvent: string;
   readonly SECTION_BLANK: Base = Base.InitDefault();
-
   public dialogConfig = new MatDialogConfig();
 
   constructor(
@@ -108,4 +108,14 @@ export class EventViewComponent implements OnInit {
     });
   }
 
+  openAppointmentDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventAppointmentDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
+      this.event.dateIni = eventDialog.dateIni;
+      this.event.dateEnd = eventDialog.dateEnd;
+      this.eventSrv.updateEvent(this.event);
+    });
+  }
 }

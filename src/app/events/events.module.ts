@@ -14,6 +14,8 @@ import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-
 import { EventBasicDetailComponent } from '@app/events/event-basic-detail/event-basic-detail.component';
 import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
 import { EventStatusDetailComponent } from '@app/events/event-status-detail/event-status-detail.component';
+import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
+import { EventAppointmentDetailComponent } from '@app/events/event-appointment-detail/event-appointment-detail.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { EventStatusDetailComponent } from '@app/events/event-status-detail/even
     EventBasicDetailComponent,
     EventStatusDialogComponent,
     EventStatusDetailComponent,
+    EventAppointmentDialogComponent,
+    EventAppointmentDetailComponent,
   ],
   imports: [
     CommonModule,
