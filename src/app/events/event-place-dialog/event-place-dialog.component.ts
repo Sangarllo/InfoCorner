@@ -5,9 +5,9 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { PlaceService } from '@services/places.service';
-import { IPlace } from '@models/place';
 import { Base } from '@models/base';
 import { IEvent } from '@models/event';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-place-dialog',
@@ -16,9 +16,10 @@ import { IEvent } from '@models/event';
 })
 export class EventPlaceDialogComponent implements OnInit {
 
+  title = 'Selecciona la ubicación del evento';
   placeForm: FormGroup;
   placeCtrl = new FormControl();
-  placeSelected: Base;
+  placeBaseSelected: Base;
   readonly SECTION_BLANK: Base = Base.InitDefault();
 
   places$: Observable<Base[]>;
@@ -34,27 +35,42 @@ export class EventPlaceDialogComponent implements OnInit {
 
     this.places$ = this.placeSrv.getAllPlacesBase();
 
-    this.placeSelected = ( this.data.place ) ? {
+    this.placeBaseSelected = ( this.data.place ) ? {
       id: this.data.place.id,
       name: this.data.place.name,
       image: this.data.place.image
     } : this.SECTION_BLANK;
 
     this.placeForm = this.fb.group({
-      locality: [ this.data.locality, []],
-      place: [ this.placeSelected, []],
+      place: [ this.placeBaseSelected, []],
+      placeLocality: [ this.data.placeLocality, []],
+      placeDesc: [ this.data.placeDesc, []],
   });
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  save(): void {
-    this.dialogRef.close(this.placeForm.value);
+  onSelectionChanged(event: any): void {
+    this.placeBaseSelected = event.value;
   }
 
   compareFunction(o1: any, o2: any): boolean {
     return (o1.name === o2.name && o1.id === o2.id);
    }
+
+   onNoClick(): void {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Datos no modificados',
+      text: `Has cerrado la ventana sin guardar ningún cambio`,
+    });
+    this.dialogRef.close();
+  }
+
+  save(): void {
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos guardados con éxito',
+      text: `La ubicación ha sido cambiada correctamente`,
+    });
+    this.dialogRef.close(this.placeForm.value);
+  }
 }

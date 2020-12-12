@@ -57,8 +57,19 @@ mat-card.item-edit {
     }
 }
 
+.mat-dialog-title {
+    text-align: center;
+}
+
 mat-dialog-container {
     mat-form-field {
         width: 100%;
+    }
+    img {
+        width: 200px;
+        margin-left: 120px;
+        margin-bottom: 20px;
+        border: 1px dotted lightgray;
+        padding: 4px;
     }
 }

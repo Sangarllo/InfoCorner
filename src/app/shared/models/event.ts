@@ -12,7 +12,8 @@ export interface IEvent {
   categories?: Category[];
   description?: string;
   place?: IPlace;
-  locality?: string;
+  placeLocality?: string;
+  placeDesc?: string;
 }
 
 export class Event implements IEvent {
@@ -30,8 +31,10 @@ export class Event implements IEvent {
     public focused: boolean,
     public categories?: Category[],
     public description?: string,
+
     public place?: IPlace,
-    public locality?: string,
+    public placeLocality?: string,
+    public placeDesc?: string,
      ) {
   }
 
@@ -45,8 +48,7 @@ export class Event implements IEvent {
       true,
       [],
       '',
-      null,
-      '',
+      null, '', '', // Place
     );
   }
 }

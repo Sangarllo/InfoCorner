@@ -1,30 +1,45 @@
-<h1 mat-dialog-title>Selecciona la ubicación del evento</h1>
+<h1 mat-dialog-title>{{ title }}</h1>
 
 <mat-dialog-content class="mat-typography" [formGroup]="placeForm">
 
-    <mat-form-field appearance="outline">
-        <mat-label>Localidad</mat-label>
-        <input matInput placeholder="Localidad" formControlName="locality">
-    </mat-form-field>
+    <div *ngIf="placeBaseSelected.image; else noPlaceTemplate">
+        <img [src]="placeBaseSelected.image">
+    </div>
+
+    <ng-template #noPlaceTemplate>
+        <div>
+            <img [src]="SECTION_BLANK.image">
+        </div>
+    </ng-template>
 
     <mat-form-field appearance="outline">
         <mat-label>Lugar</mat-label>
-
-        <mat-select placeholder="Lugar" formControlName="place" [compareWith]="compareFunction">
+        <mat-select placeholder="Lugar" formControlName="place" [compareWith]="compareFunction" (selectionChange)="onSelectionChanged($event)">
             <mat-option [value]="SECTION_BLANK">
                 SIN ESPECIFICAR
             </mat-option>
-
             <mat-option *ngFor="let place of places$ | async as places" [value]="place">
                 {{place.name}}
             </mat-option>
         </mat-select>
-
     </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Localidad</mat-label>
+        <input matInput placeholder="Localidad" formControlName="placeLocality">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Descripción</mat-label>
+        <input matInput placeholder="Descripción" formControlName="placeDesc">
+    </mat-form-field>
+
 
 </mat-dialog-content>
 
 <div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="save()" cdkFocusInitial>Ok</button>
+    <button mat-raised-button color="warn" (click)="save()" cdkFocusInitial>
+      <mat-icon>check_circle_outline</mat-icon> Guardar
+    </button>
+    <button mat-raised-button (click)="onNoClick()">Cancelar</button>
 </div>

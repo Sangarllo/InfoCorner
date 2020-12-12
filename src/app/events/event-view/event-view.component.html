@@ -10,16 +10,8 @@
             <mat-card-content class="item-view">
 
                 <div>
-                    <mat-chip-list aria-label="Entity mode">
-                        <mat-chip color="primary" selected>{{ event.active ? 'activo' : 'no activo '}}</mat-chip>
-                        <mat-chip color="secundary" selected>{{ event.focused ? 'focus' : 'no focus '}}</mat-chip>
-                        <mat-chip color="accent" selected *ngIf="event.status">{{ event.status }}</mat-chip>
-                    </mat-chip-list>
-                </div>
-
-                <div>
-                    <span>Nombre:</span>
-                    <h2>{{ event.name }}</h2>
+                    <h1 style="font-size: xxx-large;">{{ event.name }}</h1>
+                    <span *ngIf="event.description" style="font-size: smaller;">{{ event.description }}</span>
                 </div>
 
                 <div *ngIf="event.categories">
@@ -34,15 +26,24 @@
                     <h2>{{ event?.place?.name }}</h2>
                 </div>
 
-                <div *ngIf="event.locality">
+                <div *ngIf="event.placeLocality">
                     <span>Localidad:</span>
-                    <h2>{{ event.locality }}</h2>
+                    <h2>{{ event.placeLocality }}</h2>
                 </div>
 
-                <div *ngIf="event.description">
-                    <span>Descripción:</span>
-                    <h2>{{ event.description }}</h2>
+                <div *ngIf="event.placeDesc">
+                    <span>Descripción del evento:</span>
+                    <h2>{{ event.placeDesc }}</h2>
                 </div>
+
+                <div>
+                    <mat-chip-list aria-label="Entity mode">
+                        <mat-chip color="primary" selected>{{ event.active ? 'activo' : 'no activo '}}</mat-chip>
+                        <mat-chip color="secundary" selected>{{ event.focused ? 'focus' : 'no focus '}}</mat-chip>
+                        <mat-chip color="accent" selected *ngIf="event.status">{{ event.status }}</mat-chip>
+                    </mat-chip-list>
+                </div>
+
 
             </mat-card-content>
 
