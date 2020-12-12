@@ -4,6 +4,7 @@ button {
 
 fieldset {
     padding: 20px;
+    position: relative;
     margin-bottom: 10px;
     color: black;
     border: 1px solid darkgray;
@@ -14,5 +15,10 @@ fieldset {
         text-align: left;
         font-weight: bold;
         text-transform: uppercase;
+    }
+    button {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
     }
 }

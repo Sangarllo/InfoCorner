@@ -1,1 +1,13 @@
-<p>event-place-detail works!</p>
+<div class="event-item-detail" *ngIf="event.place">
+    <img [src]="event.place.image" class="img-thumbnail">
+
+    <h2>{{ event?.place?.name }}</h2>
+
+    <h3 *ngIf="event.placeLocality">
+        {{ event.placeLocality }}
+    </h3>
+
+    <h3 *ngIf="event.placeDesc">
+        {{ event.placeDesc }}
+    </h3>
+</div>
