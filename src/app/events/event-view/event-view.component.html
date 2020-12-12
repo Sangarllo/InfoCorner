@@ -25,6 +25,18 @@
 
                 </fieldset>
 
+                <fieldset class="event-item-detail" [ngClass]="event.status">
+
+                    <legend>¿Estado?</legend>
+
+                    <button mat-fab type="button" (click)="openEventStatusDialog()" color="accent">
+                    <mat-icon>settings</mat-icon>
+                  </button>
+
+                    <app-event-status-detail [event]="event"></app-event-status-detail>
+
+                </fieldset>
+
                 <fieldset class="event-item-detail type-other">
 
                     <legend>¿Dónde?</legend>
@@ -48,16 +60,6 @@
                     <app-event-entity-detail [event]="event"></app-event-entity-detail>
 
                 </fieldset>
-
-
-                <div>
-                    <mat-chip-list aria-label="Entity mode">
-                        <mat-chip color="primary" selected>{{ event.active ? 'activo' : 'no activo '}}</mat-chip>
-                        <mat-chip color="secundary" selected>{{ event.focused ? 'focus' : 'no focus '}}</mat-chip>
-                        <mat-chip color="accent" selected *ngIf="event.status">{{ event.status }}</mat-chip>
-                    </mat-chip-list>
-                </div>
-
 
             </mat-card-content>
 

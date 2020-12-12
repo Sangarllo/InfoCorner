@@ -12,6 +12,8 @@ import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/even
 import { EventEntityDetailComponent } from '@app/events/event-entity-detail/event-entity-detail.component';
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 import { EventBasicDetailComponent } from '@app/events/event-basic-detail/event-basic-detail.component';
+import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
+import { EventStatusDetailComponent } from '@app/events/event-status-detail/event-status-detail.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { EventBasicDetailComponent } from '@app/events/event-basic-detail/event-
     EventEntityDetailComponent,
     EventBasicDialogComponent,
     EventBasicDetailComponent,
+    EventStatusDialogComponent,
+    EventStatusDetailComponent,
   ],
   imports: [
     CommonModule,

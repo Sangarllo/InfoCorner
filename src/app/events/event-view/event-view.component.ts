@@ -9,6 +9,7 @@ import { Base } from '@models/base';
 import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
 import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
+import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -64,6 +65,18 @@ export class EventViewComponent implements OnInit {
       this.event.name = eventDialog.name;
       this.event.description = eventDialog.description;
       this.event.categories = eventDialog.categories;
+      this.eventSrv.updateEvent(this.event);
+    });
+  }
+
+  openEventStatusDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventStatusDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
+      this.event.status = eventDialog.status;
+      this.event.active = eventDialog.active;
+      this.event.focused = eventDialog.focused;
       this.eventSrv.updateEvent(this.event);
     });
   }
