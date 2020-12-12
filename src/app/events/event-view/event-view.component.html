@@ -9,19 +9,25 @@
 
             <mat-card-content class="item-view">
 
-                <div>
+                <fieldset class="event-item-detail type-what">
+
+                    <legend>¿Qué?</legend>
+
                     <h1 style="font-size: xxx-large;">{{ event.name }}</h1>
                     <span *ngIf="event.description" style="font-size: smaller;">{{ event.description }}</span>
-                </div>
 
-                <div *ngIf="event.categories">
-                    <span>Categorías:</span>
-                    <mat-chip-list aria-label="Categories">
-                        <mat-chip *ngFor="let category of event.categories">{{ category }} 🥝</mat-chip>
-                    </mat-chip-list>
-                </div>
+                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                      <mat-icon>edit</mat-icon>
+                    </button>
 
-                <fieldset class="event-item-detail">
+                    <div *ngIf="event.categories">
+                        <mat-chip-list aria-label="Categories">
+                            <mat-chip *ngFor="let category of event.categories">{{ category }} 🥝</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                </fieldset>
+
+                <fieldset class="event-item-detail type-other">
 
                     <legend>¿Dónde?</legend>
 
@@ -33,7 +39,7 @@
 
                 </fieldset>
 
-                <fieldset class="event-item-detail">
+                <fieldset class="event-item-detail type-other">
 
                     <legend>¿Quiénes?</legend>
 
@@ -65,9 +71,7 @@
                   <mat-icon>visibility</mat-icon>
                 </button>
 
-                    <button mat-fab type="button" (click)="editItem()" color="accent">
-                  <mat-icon>edit</mat-icon>
-                </button>
+
 
                     <button mat-fab type="button" (click)="editItem()" color="accent">
                   <mat-icon>add_photo_alternate</mat-icon>
