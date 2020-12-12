@@ -27,11 +27,14 @@ export class Event implements IEvent {
 
   constructor(
     public id: string,
+
     public active: boolean,
-    public name: string,
-    public image: string,
     public status: Status,
     public focused: boolean,
+
+    public image: string,
+
+    public name: string,
     public categories?: Category[],
     public description?: string,
 
@@ -47,13 +50,9 @@ export class Event implements IEvent {
   static InitDefault(): Event {
     return new Event(
       '0',
-      true,
-      '',
-      Event.IMAGE_DEFAULT,
-      Status.Visible,
-      true,
-      [],
-      '',
+      true, Status.Visible, true, // Status
+      Event.IMAGE_DEFAULT, // Image
+      '', [], '', // Basics
       null, '', '', // Place
       null, '', // Entity
     );
