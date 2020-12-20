@@ -37,6 +37,7 @@ export class AppointmentsService {
       timeIni: newAppointment.timeIni,
       dateEnd: newAppointment.dateEnd,
       timeEnd: newAppointment.timeEnd,
+      desc: newAppointment.desc,
     });
   }
 

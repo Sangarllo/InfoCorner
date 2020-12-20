@@ -6,6 +6,7 @@ export interface IAppointment {
   timeIni?: string;
   dateEnd?: string;
   timeEnd?: string;
+  desc?: string;
 }
 
 export class Appointment implements IAppointment {
@@ -21,7 +22,8 @@ export class Appointment implements IAppointment {
     public dateIni: string,
     public timeIni?: string,
     public dateEnd?: string,
-    public timeEnd?: string
+    public timeEnd?: string,
+    public desc?: string
      ) {
   }
 
@@ -38,6 +40,7 @@ export class Appointment implements IAppointment {
       Appointment.HOUR_DEFAULT,
       todayStr,
       Appointment.HOUR_DEFAULT,
+      'Hoy'
     );
 
     return basicAppointment;

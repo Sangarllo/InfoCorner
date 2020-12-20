@@ -1,11 +1,10 @@
-<div class="event-item-detail" *ngIf="event.entity">
+<div class="event-item-detail" *ngIf="appointment$ | async as appointment; else noAppointmentTemplate">
     <img [src]="'assets/images/appointments/default.png'" class="img-thumbnail">
 
-    <h3 *ngIf="event.appointment; else noAppointmentTemplate ">Hay horario para este evento</h3>
+    <h2>El evento se celebra {{ appointment.desc }}</h2>
 
-    <ng-template #noAppointmentTemplate>
-        <h3>Aún no se ha asignado horario</h3>
-    </ng-template>
-
-    <h2 *ngIf="event.appointment">{{ event.appointmentDesc }}</h2>
 </div>
+
+<ng-template #noAppointmentTemplate>
+    <h3>Aún no se ha asignado horario</h3>
+</ng-template>
