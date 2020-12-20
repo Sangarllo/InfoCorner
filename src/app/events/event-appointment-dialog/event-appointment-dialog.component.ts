@@ -2,12 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
-import { EntityService } from '@services/entities.service';
 import { Base } from '@models/base';
 import { IEvent } from '@models/event';
-import Swal from 'sweetalert2';
+import { Appointment, IAppointment } from '@models/appointment';
+import { AppointmentsService } from '@services/appointments.service';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-event-appointment-dialog',
@@ -15,45 +16,89 @@ import Swal from 'sweetalert2';
 })
 export class EventAppointmentDialogComponent implements OnInit {
 
-  title = 'Selecciona los responsables del evento';
-  entityForm: FormGroup;
-  entityBaseSelected: Base;
+  title = 'Indica el horario de este evento';
+  errorMessage = '';
+  appointment: IAppointment;
+  appointmentForm: FormGroup;
   readonly SECTION_BLANK: Base = Base.InitDefault();
-
-  entities$: Observable<Base[]>;
 
   constructor(
     private fb: FormBuilder,
-    private entitySrv: EntityService,
+    private appointmentSrv: AppointmentsService,
     public dialogRef: MatDialogRef<EventAppointmentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IEvent) {
   }
 
   ngOnInit(): void {
 
-    this.entities$ = this.entitySrv.getAllEntitiesBase();
+    const idAppointment = this.data.appointmentId;
+    if ( idAppointment ) {
+      console.log(`id asked ${idAppointment}`);
+      this.getDetails(idAppointment);
 
-    this.entityBaseSelected = ( this.data.entity ) ? {
-      id: this.data.entity.id,
-      name: this.data.entity.name,
-      image: this.data.entity.image
-    } : this.SECTION_BLANK;
-
-    this.entityForm = this.fb.group({
-      entity: [ this.entityBaseSelected, []],
-      entityRol: [ this.data.entityRol, []],
-  });
+      this.appointmentForm = this.fb.group({
+        id: [ idAppointment, []],
+        withDetails: [ false, []],
+        dateIni: [ '', []],
+        timeIni: [ '', []],
+        dateEnd: [ '', []],
+        timeEnd: [ '', []],
+      });
+    }
   }
 
-  onSelectionChanged(event: any): void {
-    this.entityBaseSelected = event.value;
+  getDetails(idAppointment: string): void {
+    console.log(`id asked ${idAppointment}`);
+
+    if ( idAppointment === '0' ) { // TODO: No debería suceder
+      this.title = 'Creación de una nueva entidad';
+      this.appointment = Appointment.InitDefault(this.data.id);
+    } else {
+      this.appointmentSrv.getOneAppointment(idAppointment)
+      .subscribe({
+        next: (appointment: IAppointment | undefined) => {
+          this.appointment = appointment;
+          this.displayAppointment();
+          console.log(JSON.stringify(this.appointment));
+        },
+        error: err => {
+          this.errorMessage = `Error: ${err}`;
+        }
+      });
+    }
   }
 
-  compareFunction(o1: any, o2: any): boolean {
-    return (o1.name === o2.name && o1.id === o2.id);
-   }
+  displayAppointment(): void {
 
-   onNoClick(): void {
+    if (this.appointmentForm) {
+      this.appointmentForm.reset();
+    }
+
+    // Update the data on the form
+    this.appointmentForm.patchValue({
+      id: this.appointment.id,
+      withDetails: this.appointment.withDetails,
+      dateIni: this.appointment.dateIni,
+      timeIni: this.appointment.timeIni,
+      dateEnd: this.appointment.dateEnd,
+      timeEnd: this.appointment.timeEnd,
+    });
+
+    // tslint:disable-next-line:no-string-literal
+    this.appointmentForm.controls['id'].setValue(this.appointment.id);
+  }
+
+  onDateIniChange(type: string, event: MatDatepickerInputEvent<Date>): void {
+    const newDate = this.appointmentSrv.formatDate(event.value);
+    this.appointment.dateIni = newDate;
+  }
+
+  onDateEndChange(type: string, event: MatDatepickerInputEvent<Date>): void {
+    const newDate = this.appointmentSrv.formatDate(event.value);
+    this.appointment.dateEnd = newDate;
+  }
+
+  onNoClick(): void {
     Swal.fire({
       icon: 'warning',
       title: 'Datos no modificados',
@@ -66,8 +111,12 @@ export class EventAppointmentDialogComponent implements OnInit {
     Swal.fire({
       icon: 'success',
       title: 'Datos guardados con éxito',
-      text: `La entidad ha sido cambiada correctamente`,
+      text: `El horario ha sido guardado correctamente`,
     });
-    this.dialogRef.close(this.entityForm.value);
+
+    this.appointmentForm.controls.dateIni.setValue(this.appointment.dateIni);
+    this.appointmentForm.controls.dateEnd.setValue(this.appointment.dateEnd);
+
+    this.dialogRef.close(this.appointmentForm.value);
   }
 }

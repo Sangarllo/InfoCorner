@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { EventService } from '@services/events.service';
+import { AppointmentsService } from '@services/appointments.service';
 import { IEvent, Event } from '@models/event';
+import { IAppointment } from '@models/appointment';
 import { Base } from '@models/base';
 
 import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
@@ -29,6 +31,7 @@ export class EventViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private eventSrv: EventService,
+    private appointmentSrv: AppointmentsService
   ) {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
@@ -112,10 +115,9 @@ export class EventViewComponent implements OnInit {
     this.dialogConfig.data = this.event;
     const dialogRef = this.dialog.open(EventAppointmentDialogComponent, this.dialogConfig);
 
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      this.event.dateIni = eventDialog.dateIni;
-      this.event.dateEnd = eventDialog.dateEnd;
-      this.eventSrv.updateEvent(this.event);
+    dialogRef.afterClosed().subscribe((appointmentDialog: IAppointment) => {
+      console.log(`appointment: ${JSON.stringify(appointmentDialog)}`);
+      this.appointmentSrv.updateAppointment(appointmentDialog);
     });
   }
 }

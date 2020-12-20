@@ -17,8 +17,7 @@ export interface IEvent {
   placeDesc?: string;
   entity?: IEntity;
   entityRol?: string;
-  dateIni?: Date;
-  dateEnd?: Date;
+  appointmentId?: string;
 }
 
 export class Event implements IEvent {
@@ -47,8 +46,7 @@ export class Event implements IEvent {
     public entity?: IEntity,
     public entityRol?: string,
 
-    public dateIni?: Date,
-    public DateEnd?: Date,
+    public appointmentId?: string,
      ) {
   }
 
@@ -60,7 +58,7 @@ export class Event implements IEvent {
       '', [], '', // Basics
       null, '', '', // Place
       null, '', // Entity
-      null, null, // Appointment
+      null, // Appointment
     );
   }
 }

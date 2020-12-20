@@ -1,7 +1,11 @@
 <div class="event-item-detail" *ngIf="event.entity">
     <img [src]="'assets/images/appointments/default.png'" class="img-thumbnail">
 
-    <h2 *ngIf="event.dateIni">TODO: {{ event.dateIni | async }}</h2>
+    <h3 *ngIf="event.appointment; else noAppointmentTemplate ">Hay horario para este evento</h3>
 
-    <h2 *ngIf="event.dateEnd">TODO: {{ event.dateEnd | async }}</h2>
+    <ng-template #noAppointmentTemplate>
+        <h3>Aún no se ha asignado horario</h3>
+    </ng-template>
+
+    <h2 *ngIf="event.appointment">{{ event.appointmentDesc }}</h2>
 </div>

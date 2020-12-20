@@ -3,7 +3,10 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
 import { Observable } from 'rxjs';
 
-import { IEvent } from '@shared/models/event';
+import { IEvent } from '@models/event';
+import { IAppointment } from '@models/appointment';
+import { Appointment } from '../../shared/models/appointment';
+import { AppointmentsService } from '@services/appointments.service';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -15,7 +18,11 @@ export class EventService {
   private eventCollection!: AngularFirestoreCollection<IEvent>;
   private eventDoc!: AngularFirestoreDocument<IEvent>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore,
+    private appointmentSrv: AppointmentsService
+  ) {
+
     this.eventCollection = afs.collection(EVENTS_COLLECTION);
   }
 
@@ -29,15 +36,25 @@ export class EventService {
   }
 
   addEvent(event: IEvent): void {
-    event.id = this.afs.createId();
-    this.eventCollection.doc(event.id).set(event);
+    const id = this.afs.createId();
+    event.id = id;
+    event.appointmentId = id;
+
+    this.appointmentSrv.addAppointment(id);
+    this.eventCollection.doc(event.id).set(event, { merge: true });
   }
 
   updateEvent(event: IEvent): void {
     const idEvent = event.id;
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
-    this.eventDoc.update(event);
+    this.eventDoc.set(event, { merge: true });
   }
+
+  // updateEventAppointment(idEvent: string, appointment: IAppointment): void {
+  //   this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
+
+  //   this.eventDoc.update({appointment});
+  // }
 
   deleteEvent(idEvent: string): void {
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
