@@ -1,3 +1,5 @@
+<app-section-header [title]="'Panel de Configuración de Usuarios'"></app-section-header>
+
 <div *ngIf="users$ | async as users; else noUserTemplate">
     <table mat-table [dataSource]="users" matSort class="mat-elevation-z8">
         <!--- Note that these columns can be defined in any order.

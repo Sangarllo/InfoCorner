@@ -8,12 +8,14 @@ import { MaterialModule } from '@app/material/material.module';
 import { FooterComponent } from '@shared/layout/footer/footer.component';
 import { HeaderComponent } from '@shared/layout/header/header.component';
 import { SidenavComponent } from '@shared/layout/sidenav/sidenav.component';
+import { SectionHeaderComponent } from '@shared/layout/section-header/section-header.component';
 
 @NgModule({
   declarations: [
     FooterComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    SectionHeaderComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { SidenavComponent } from '@shared/layout/sidenav/sidenav.component';
     MaterialModule,
     FooterComponent,
     HeaderComponent,
-    SidenavComponent
+    SidenavComponent,
+    SectionHeaderComponent,
   ]
 })
 export class SharedModule { }

@@ -1,3 +1,5 @@
+<app-section-header [title]="'Panel de Configuración de Eventos'"></app-section-header>
+
 <div *ngIf="events$ | async as events; else noEventTemplate">
     <table mat-table matSort [dataSource]="events" class="mat-elevation-z8">
 

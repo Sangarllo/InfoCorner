@@ -1,3 +1,5 @@
+<app-section-header [title]="'Panel de Configuración de Entidades'"></app-section-header>
+
 <div *ngIf="entities$ | async as entities; else noEntityTemplate">
     <table mat-table matSort [dataSource]="entities" class="mat-elevation-z8">
 

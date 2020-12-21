@@ -1,3 +1,5 @@
+<app-section-header [title]="'Panel de Configuración de Lugares'"></app-section-header>
+
 <div *ngIf="places$ | async as places; else noplaceTemplate">
     <table mat-table matSort [dataSource]="places" class="mat-elevation-z8">
 

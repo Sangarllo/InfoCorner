@@ -1,4 +1,6 @@
-<div *ngIf="auth.user | async as user" class="text-center mx-auto mt-3">
+<app-section-header [title]="'Panel de Administración'"></app-section-header>
+
+<div *ngIf="auth.user | async as user" class="text-center">
 
     <h1>¿Qué vida, {{ user.displayName }}?</h1>
 

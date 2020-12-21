@@ -1,3 +1,5 @@
+<app-section-header [title]="'Panel de Configuración de Avisos'"></app-section-header>
+
 <div *ngIf="notices$ | async as notices; else noNoticeTemplate">
     <table mat-table matSort [dataSource]="notices" class="mat-elevation-z8">
 
