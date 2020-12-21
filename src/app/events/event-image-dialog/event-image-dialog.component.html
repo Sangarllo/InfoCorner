@@ -1,33 +1,33 @@
 <h1 mat-dialog-title>{{ title }}</h1>
 
-<mat-dialog-content class="mat-typography" [formGroup]="entityForm">
+<pre *ngIf="data">
+  {{ data.image | json }}
+  {{ data.images | json }}
+</pre>
 
-    <div *ngIf="entityBaseSelected.image; else noImageTemplate">
-        <img [src]="entityBaseSelected.image">
+<mat-dialog-content class="mat-typography" [formGroup]="imageForm">
+
+    <div *ngIf="imageSelected; else noImageTemplate">
+        <img class="main-image" [src]="imageSelected">
     </div>
 
     <ng-template #noImageTemplate>
         <div>
-            <img [src]="SECTION_BLANK.image">
+            <img class="main-image" alt="Sin imagen definida" [src]="IMAGE_BLANK">
         </div>
     </ng-template>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Entidad</mat-label>
-        <mat-select placeholder="Entidad" formControlName="entity" [compareWith]="compareFunction" (selectionChange)="onSelectionChanged($event)">
-            <mat-option [value]="SECTION_BLANK">
-                SIN ESPECIFICAR
-            </mat-option>
-            <mat-option *ngFor="let entity of entities$ | async as entities" [value]="entity">
-                {{entity.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Rol de la Entidad</mat-label>
-        <input matInput placeholder="Rol de la entidad" formControlName="entityRol">
-    </mat-form-field>
+    <div class="images-container" *ngFor="let image of data.images">
+        <div class="add-button">
+            <button mat-fab type="button" (click)="addImage()" color="accent">
+          <mat-icon>add_photo_alternate</mat-icon>
+        </button>
+        </div>
+        <img alt="Sin imagen" (click)="onSelectedImage(IMAGE_BLANK)" [src]="IMAGE_BLANK" />
+        <img [alt]="image" [src]="image" (click)="onSelectedImage(image)" />
+    </div>
+
 
 
 </mat-dialog-content>

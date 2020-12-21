@@ -1,0 +1,26 @@
+img.main-image {
+    width: 400px;
+    margin-left: 20px;
+}
+
+div.images-container {
+    border: 1px dotted lightgray;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    div.add-button {
+        margin: 10px;
+        border: 1px solid green;
+        width: 100px;
+        display: flex;
+        justify-content: center;
+        button {
+            align-self: center;
+        }
+    }
+    img {
+        margin: 10px;
+        border: 1px solid darkgray;
+        width: 100px;
+    }
+}

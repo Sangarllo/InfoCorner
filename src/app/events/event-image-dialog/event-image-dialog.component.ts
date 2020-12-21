@@ -11,14 +11,15 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-image-dialog',
-  templateUrl: './event-image-dialog.component.html'
+  templateUrl: './event-image-dialog.component.html',
+  styleUrls: ['./event-image-dialog.component.scss']
 })
 export class EventImageDialogComponent implements OnInit {
 
-  title = 'Selecciona los responsables del evento';
-  entityForm: FormGroup;
-  entityBaseSelected: Base;
-  readonly SECTION_BLANK: Base = Base.InitDefault();
+  title = 'Selecciona la imagen del evento';
+  imageForm: FormGroup;
+  imageSelected: string; // TODO: image must be IImage
+  readonly IMAGE_BLANK: string = Base.IMAGE_DEFAULT;
 
   entities$: Observable<Base[]>;
 
@@ -29,31 +30,28 @@ export class EventImageDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: IEvent) {
   }
 
+  addImage(): void {
+    console.log(`adding other image`);
+  }
+
+  onSelectedImage(path: string): void {
+    console.log(`selected image: ${path}`);
+    this.imageSelected = path;
+    this.data.image = path;
+  }
+
   ngOnInit(): void {
 
-    this.entities$ = this.entitySrv.getAllEntitiesBase();
+    this.imageSelected = this.data.image ??
+    this.IMAGE_BLANK;
 
-    this.entityBaseSelected = ( this.data.entity ) ? {
-      id: this.data.entity.id,
-      name: this.data.entity.name,
-      image: this.data.entity.image
-    } : this.SECTION_BLANK;
-
-    this.entityForm = this.fb.group({
-      entity: [ this.entityBaseSelected, []],
-      entityRol: [ this.data.entityRol, []],
+    this.imageForm = this.fb.group({
+      image: [ this.imageSelected, []],
+      images: [ this.data.images, []],
   });
   }
 
-  onSelectionChanged(event: any): void {
-    this.entityBaseSelected = event.value;
-  }
-
-  compareFunction(o1: any, o2: any): boolean {
-    return (o1.name === o2.name && o1.id === o2.id);
-   }
-
-   onNoClick(): void {
+  onNoClick(): void {
     Swal.fire({
       icon: 'warning',
       title: 'Datos no modificados',
@@ -66,8 +64,8 @@ export class EventImageDialogComponent implements OnInit {
     Swal.fire({
       icon: 'success',
       title: 'Datos guardados con éxito',
-      text: `La entidad ha sido cambiada correctamente`,
+      text: `La imagen ha sido cambiada correctamente`,
     });
-    this.dialogRef.close(this.entityForm.value);
+    this.dialogRef.close(this.imageForm.value);
   }
 }
