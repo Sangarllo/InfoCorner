@@ -1,17 +1,15 @@
 <mat-card class="item-view" *ngIf="event; else noEventTemplate">
 
-    <!--
-  <pre>
+    <!-- <pre>
     {{ event | json }}
-  </pre>
-  -->
+  </pre> -->
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
             <app-event-image-detail [event]="event"></app-event-image-detail>
 
             <button mat-fab type="button" (click)="openEventImageDialog()" color="accent">
-              <mat-icon>add_photo_alternate</mat-icon>
+              <mat-icon>photo_view</mat-icon>
             </button>
         </div>
 
