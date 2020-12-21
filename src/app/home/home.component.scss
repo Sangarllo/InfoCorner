@@ -1,0 +1,38 @@
+div.stories-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    height: 132px;
+    // border: 1px solid crimson;
+    background-color: whitesmoke;
+    img {
+        margin: 10px;
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+        padding: 4px;
+        &.news {
+            border: 1px solid #856404;
+            background-color: #fff3cd;
+        }
+        &.notice {
+            border: 1px solid darkgreen;
+            background-color: lightgreen;
+        }
+        &.event {
+            border: 1px solid darkred;
+            background-color: lightcoral;
+        }
+    }
+}
+
+div {
+    color: white;
+    background-color: black;
+}
+
+img {
+    height: 600px;
+}

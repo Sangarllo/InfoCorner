@@ -9,6 +9,10 @@ export class SidenavComponent implements OnInit {
 
   public LINKS = [
     {
+      icon: 'home',
+      path: 'home',
+    },
+    {
       icon: 'apps',
       path: 'admin',
     },
