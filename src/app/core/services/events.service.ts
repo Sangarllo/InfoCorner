@@ -4,8 +4,6 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 
 import { IEvent } from '@models/event';
-import { IAppointment } from '@models/appointment';
-import { Appointment } from '../../shared/models/appointment';
 import { AppointmentsService } from '@services/appointments.service';
 
 const EVENTS_COLLECTION = 'eventos';
@@ -27,7 +25,6 @@ export class EventService {
   }
 
   getAllEvents(): Observable<IEvent[]> {
-
     return this.eventCollection.valueChanges();
   }
 
@@ -49,12 +46,6 @@ export class EventService {
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
     this.eventDoc.set(event, { merge: true });
   }
-
-  // updateEventAppointment(idEvent: string, appointment: IAppointment): void {
-  //   this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
-
-  //   this.eventDoc.update({appointment});
-  // }
 
   deleteEvent(idEvent: string): void {
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);

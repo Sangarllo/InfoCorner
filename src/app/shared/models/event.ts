@@ -8,6 +8,7 @@ export interface IEvent {
   active: boolean;
   name: string;
   image: string;
+  images: string[];
   status: Status;
   focused: boolean;
   categories?: Category[];
@@ -34,6 +35,7 @@ export class Event implements IEvent {
     public focused: boolean,
 
     public image: string,
+    public images: string[],
 
     public name: string,
     public categories?: Category[],
@@ -54,7 +56,7 @@ export class Event implements IEvent {
     return new Event(
       '0',
       true, Status.Visible, true, // Status
-      Event.IMAGE_DEFAULT, // Image
+      Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       '', [], '', // Basics
       null, '', '', // Place
       null, '', // Entity

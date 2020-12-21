@@ -8,9 +8,9 @@
 
     <div class="row">
         <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-            <img [src]="event.image" class="img-thumbnail">
+            <app-event-image-detail [event]="event"></app-event-image-detail>
 
-            <button mat-fab type="button" (click)="editItem()" color="accent">
+            <button mat-fab type="button" (click)="openEventImageDialog()" color="accent">
               <mat-icon>add_photo_alternate</mat-icon>
             </button>
         </div>

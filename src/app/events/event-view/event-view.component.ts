@@ -13,6 +13,7 @@ import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
 import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
+import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-image-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -68,6 +69,17 @@ export class EventViewComponent implements OnInit {
       this.event.name = eventDialog.name;
       this.event.description = eventDialog.description;
       this.event.categories = eventDialog.categories;
+      this.eventSrv.updateEvent(this.event);
+    });
+  }
+
+  openEventImageDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventImageDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
+      this.event.image = eventDialog.image;
+      this.event.images = eventDialog.images;
       this.eventSrv.updateEvent(this.event);
     });
   }
