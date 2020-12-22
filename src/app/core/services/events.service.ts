@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 
 import { IEvent } from '@models/event';
+import { IEntity } from '@models/entity';
 import { AppointmentsService } from '@services/appointments.service';
 
 const EVENTS_COLLECTION = 'eventos';
@@ -33,12 +34,31 @@ export class EventService {
   }
 
   addEvent(event: IEvent): void {
-    const id = this.afs.createId();
+    const id: string = this.afs.createId();
     event.id = id;
     event.appointmentId = id;
-
     this.appointmentSrv.addAppointment(id);
     this.eventCollection.doc(event.id).set(event, { merge: true });
+  }
+
+  addEventFromEntity(event: IEvent, entity: IEntity, entityRol?: string): string {
+    const id: string = this.afs.createId();
+    event.id = id;
+    event.name = `Nuevo evento de ${entity.name}`;
+    event.entity = entity;
+    event.entityRol = entityRol;
+    const newImage = entity.image;
+    if ( newImage ) {
+      event.image = newImage;
+      event.images.push(newImage);
+    }
+
+    event.appointmentId = id;
+    this.appointmentSrv.addAppointment(id);
+
+    const newEvent = { ...event, entity: event.entity };
+    this.eventCollection.doc(event.id).set(newEvent, { merge: true });
+    return id;
   }
 
   updateEvent(event: IEvent): void {

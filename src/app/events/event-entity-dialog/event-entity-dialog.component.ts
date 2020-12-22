@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -40,7 +40,7 @@ export class EventEntityDialogComponent implements OnInit {
     } : this.SECTION_BLANK;
 
     this.entityForm = this.fb.group({
-      entity: [ this.entityBaseSelected, []],
+      entity: [ this.entityBaseSelected, [Validators.required]],
       entityRol: [ this.data.entityRol, []],
   });
   }
@@ -70,4 +70,23 @@ export class EventEntityDialogComponent implements OnInit {
     });
     this.dialogRef.close(this.entityForm.value);
   }
+
+  create(): void {
+    const entityId = this.entityForm.controls.entity.value.id;
+    if ( entityId === '0' ) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Evento no creado',
+        text: `Has de escoger una entidad para poder crear el evento`,
+      });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Evento iniciado con éxito',
+        text: `Completa el resto de datos de este evento`,
+      });
+      this.dialogRef.close(this.entityForm.value);
+    }
+  }
+
 }

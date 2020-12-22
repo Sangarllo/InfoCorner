@@ -55,7 +55,7 @@ export class Event implements IEvent {
   static InitDefault(): Event {
     return new Event(
       '0',
-      true, Status.Visible, true, // Status
+      true, Status.Editing, true, // Status
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       '', [], '', // Basics
       null, '', '', // Place

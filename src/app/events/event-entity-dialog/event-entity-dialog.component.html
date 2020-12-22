@@ -33,8 +33,13 @@
 </mat-dialog-content>
 
 <div mat-dialog-actions>
-    <button mat-raised-button color="warn" (click)="save()" cdkFocusInitial>
+    <button mat-raised-button (click)="onNoClick()">Cancelar</button> &nbsp;
+    <button *ngIf="data.id != '0';else createEventTemplate" mat-raised-button color="warn" (click)="save()" cdkFocusInitial>
       <mat-icon>check_circle_outline</mat-icon> Guardar
     </button>
-    <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+    <ng-template #createEventTemplate>
+        &nbsp;<button mat-raised-button color="warn" [disabled]="" (click)="create()" cdkFocusInitial>
+        <mat-icon>check_circle_outline</mat-icon> Crear
+      </button>
+    </ng-template>
 </div>

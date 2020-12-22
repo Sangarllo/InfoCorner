@@ -41,6 +41,9 @@ import { EventImageDetailComponent } from '@app/events/event-image-detail/event-
     CommonModule,
     SharedModule,
     EventsRoutingModule
+  ],
+  exports: [
+    EventEntityDialogComponent
   ]
 })
 export class EventsModule { }
