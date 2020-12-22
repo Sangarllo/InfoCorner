@@ -28,9 +28,16 @@
                 </div>
 
                 <div *ngIf="entity.place">
+                    <img [src]="entity.place.image" class="img-thumbnail" [alt]="entity.place.name" />
                     <span>Lugar por defecto:</span>
                     <h2>{{ entity.place?.name }}</h2>
                 </div>
+
+                <div *ngIf="entity.roleDefault">
+                    <span>Rol por defecto:</span>
+                    <h2>{{ entity.roleDefault }}</h2>
+                </div>
+
             </mat-card-content>
 
             <mat-card-actions>

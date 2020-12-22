@@ -12,6 +12,8 @@ import { Entity, IEntity } from '@models/entity';
 import { CATEGORIES, Category } from '@models/category.enum';
 import { Place } from '@models/place';
 import { PlaceService } from '@services/places.service';
+import { Base } from '@models/base';
+import { EntityRole } from '@models/entity-role.enum';
 
 
 @Component({
@@ -29,7 +31,11 @@ export class EntityEditComponent implements OnInit {
   // public entity$: Observable<IEntity | undefined> | null = null;
   public entity!: IEntity | undefined;
   public CATEGORIES: Category[] = CATEGORIES;
-  public places$: Observable<Place[]>;
+  public ROLES: EntityRole[] = Entity.ROLES;
+
+  placeBaseSelected: Base;
+  readonly SECTION_BLANK: Base = Base.InitDefault();
+  places$: Observable<Base[]>;
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -54,10 +60,11 @@ export class EntityEditComponent implements OnInit {
           Validators.maxLength(50)]],
         image: Entity.IMAGE_DEFAULT,
         categories: [],
-        place: null,
+        place: [this.SECTION_BLANK, [Validators.required]],
+        roleDefault: [EntityRole.Default],
       });
 
-      this.places$ = this.placeSrv.getAllPlaces();
+      this.places$ = this.placeSrv.getAllPlacesBase();
     }
   }
 
@@ -102,12 +109,25 @@ export class EntityEditComponent implements OnInit {
       name: this.entity.name,
       image: this.entity.image ?? Entity.IMAGE_DEFAULT,
       categories: this.entity.categories ?? [],
-      place: this.entity.place,
+      place: ( this.entity.place ) ? {
+        id: this.entity.place.id,
+        name: this.entity.place.name,
+        image: this.entity.place.image
+      } : this.SECTION_BLANK,
+      roleDefault: this.entity.roleDefault,
     });
 
     // tslint:disable-next-line:no-string-literal
     this.entityForm.controls['id'].setValue(this.entity.id);
   }
+
+  onSelectionChanged(event: any): void {
+    this.placeBaseSelected = event.value;
+  }
+
+  compareFunction(o1: any, o2: any): boolean {
+    return (o1.name === o2.name && o1.id === o2.id);
+   }
 
   // deleteCourse(): void {
   //   if (this.entity.id === '0') {
@@ -134,6 +154,10 @@ export class EntityEditComponent implements OnInit {
     if (this.entityForm.valid) {
 
         const entityItem = { ...this.entity, ...this.entityForm.value };
+        if ( this.compareFunction( entityItem.place, this.SECTION_BLANK ) ) {
+          console.log(`No hay lugar`);
+          entityItem.place = null;
+        }
 
         if (entityItem.id === '0') {
           this.entitiesSrv.addEntity(entityItem);

@@ -50,7 +50,9 @@ export class EntityService {
   updateEntity(entity: IEntity): void {
     const idEntity = entity.id;
     this.entityDoc = this.afs.doc<IEntity>(`${ENTITIES_COLLECTION}/${idEntity}`);
-    this.entityDoc.update(entity);
+
+    const updEntity = { ...entity, place: entity.place };
+    this.entityDoc.set(updEntity, { merge: true });
   }
 
   deleteEntity(idEntity: string): void {

@@ -6,7 +6,8 @@ export enum Category {
   Child = 'INFANTIL',
   Music = 'MÚSICA',
   Festive = 'FESTIVO',
-  Religion = 'RELIGIÓN'
+  Religion = 'RELIGIÓN',
+  Social = 'SOCIAL',
 }
 
 const CATEGORIES: Category[] = [
@@ -18,6 +19,7 @@ const CATEGORIES: Category[] = [
   Category.Music,
   Category.Festive,
   Category.Religion,
+  Category.Social,
 ];
 
 export { CATEGORIES };

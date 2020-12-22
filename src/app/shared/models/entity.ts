@@ -1,5 +1,6 @@
 import { Category } from '@models/category.enum';
 import { Place } from '@models/place';
+import { EntityRole, ENTITY_ROLES } from '@models/entity-role.enum';
 
 export interface IEntity {
   id: string;
@@ -8,12 +9,14 @@ export interface IEntity {
   image: string;
   categories?: Category[];
   place?: Place;
+  roleDefault?: EntityRole;
 }
 
 export class Entity implements IEntity {
 
   public static IMAGE_DEFAULT = 'assets/images/entities/default.png';
   public static PATH_URL = 'entidades';
+  public static ROLES: EntityRole[] = ENTITY_ROLES;
 
   constructor(
     public id: string,
@@ -21,7 +24,8 @@ export class Entity implements IEntity {
     public name: string,
     public image: string,
     public categories?: Category[],
-    public place?: Place
+    public place?: Place,
+    public roleDefault?: EntityRole,
      ) {
   }
 
@@ -32,6 +36,7 @@ export class Entity implements IEntity {
       '',
       Entity.IMAGE_DEFAULT,
       [],
+      null,
       null,
     );
   }

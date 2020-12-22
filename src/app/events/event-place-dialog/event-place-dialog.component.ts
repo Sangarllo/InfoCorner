@@ -21,7 +21,6 @@ export class EventPlaceDialogComponent implements OnInit {
   placeCtrl = new FormControl();
   placeBaseSelected: Base;
   readonly SECTION_BLANK: Base = Base.InitDefault();
-
   places$: Observable<Base[]>;
 
   constructor(

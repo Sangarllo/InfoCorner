@@ -14,7 +14,7 @@ import { IEntity } from '@models/entity';
 export class EntitiesComponent implements OnInit {
 
   public entities$!: Observable<IEntity[]>;
-  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'place', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'place', 'roleDefault', 'actions3'];
 
   constructor(
     private router: Router,

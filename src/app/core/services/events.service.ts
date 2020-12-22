@@ -42,6 +42,9 @@ export class EventService {
   }
 
   addEventFromEntity(event: IEvent, entity: IEntity, entityRol?: string): string {
+
+    console.log(`addEventFromEntity: ${JSON.stringify(entity)}`);
+
     const id: string = this.afs.createId();
     event.id = id;
     event.name = `Nuevo evento de ${entity.name}`;
@@ -52,11 +55,16 @@ export class EventService {
       event.image = newImage;
       event.images.push(newImage);
     }
+    if ( entity.place ) {
+      const placeImage = entity.place.image;
+      event.place = entity.place;
+      event.images.push(placeImage);
+    }
 
     event.appointmentId = id;
     this.appointmentSrv.addAppointment(id);
 
-    const newEvent = { ...event, entity: event.entity };
+    const newEvent = { ...event, entity: event.entity, place: event.place };
     this.eventCollection.doc(event.id).set(newEvent, { merge: true });
     return id;
   }
