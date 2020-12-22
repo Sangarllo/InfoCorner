@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
@@ -13,7 +14,9 @@ export class RoleOptionsComponent  {
 
   @Input() role: UserRole
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   onNotImplementedClick(): void {
     Swal.fire({
@@ -24,4 +27,11 @@ export class RoleOptionsComponent  {
     });
   }
 
+  gotoProfile(): void {
+    this.router.navigate([`admin/perfil`]);
+  }
+
+  gotoNewEventFromScratch(): void {
+    this.router.navigate([`eventos/0/editar`]);
+  }
 }

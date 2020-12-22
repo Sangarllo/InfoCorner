@@ -23,7 +23,11 @@ fieldset {
         border: 1px solid darkgreen;
         background-color: lightgreen;
     }
-    &.DELETED,
+    &.DELETED {
+        color: lightgrey !important;
+        border: 1px solid black;
+        background-color: #202020;
+    }
     &.BLOCKED {
         border: 1px solid darkred;
         background-color: lightcoral;

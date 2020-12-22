@@ -28,13 +28,13 @@ mat-card.item-edit {
             margin-bottom: 30px;
             color: black;
             &.form-info-fields {
-                border: 1px solid darkmagenta;
-                background-color: lightsalmon;
+                border: 1px solid #0C0033;
+                background-color: #D8CCFF;
             }
             &.form-status-fields {
                 &.EDITING {
-                    border: 1px solid darkgray;
-                    background-color: lightgrey;
+                    border: 1px solid #856404;
+                    background-color: #fff3cd;
                 }
                 &.VISIBLE {
                     border: 1px solid darkgreen;
