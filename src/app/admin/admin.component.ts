@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
+
+import { UserService } from '@services/users.service';
+import { IUser } from '@models/user';
 
 @Component({
   selector: 'app-admin',
@@ -10,21 +13,17 @@ import firebase from 'firebase/app';
 })
 export class AdminComponent implements OnInit {
 
+  public userData$: Observable<IUser>;
+
   constructor(
     public auth: AngularFireAuth,
+    private userSrv: UserService
   ) { }
 
   ngOnInit(): void {
+    this.auth.user.subscribe((usr)=>{
+      const uidUser = usr.uid;
+      this.userData$ = this.userSrv.getOneUser(uidUser)
+    });
   }
-
-  // tslint:disable-next-line: typedef
-  public login() {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
-  // tslint:disable-next-line: typedef
-  public logout() {
-    this.auth.signOut();
-  }
-
-
 }

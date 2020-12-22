@@ -1,3 +1,6 @@
+<app-section-header [title]="'Perfil de Usuario'"></app-section-header>
+
+
 <mat-card class="item-view" *ngIf="user$ | async as user; else noUserTemplate">
 
     <div class="row">

@@ -7,3 +7,11 @@
     <img class="img-thumbnail" [src]="user.photoURL" routerLink="profile" />
 
 </div>
+
+<div *ngIf="userData$ | async as user" class="mt-5 text-center">
+
+    <h1>Cómo <span style="text-transform: lowercase;font-weight: bolder;">{{ user.role }}</span> de la aplicación puedes hacer lo siguiente:</h1>
+
+    <app-role-options [role]="user.role"></app-role-options>
+
+</div>

@@ -1,0 +1,25 @@
+<div class="options-wrapper">
+
+    <mat-card class="option-item" *ngIf="role === 'LECTOR'" routerLink="profile">
+        <mat-card-title>Tu cuenta personal</mat-card-title>
+        <div class="option-image">
+            <img alt="'Tu cuenta personal'" [src]="'https://picsum.photos/200?random=1'" class="img-thumbnail" />
+        </div>
+    </mat-card>
+
+    <mat-card class="option-item" *ngIf="role === 'LECTOR'" (click)="onNotImplementedClick()">
+        <mat-card-title>Crear evento</mat-card-title>
+        <div class="option-image">
+            <img alt="'Crear evento'" [src]="'https://picsum.photos/200?random=2'" class="img-thumbnail" />
+        </div>
+    </mat-card>
+
+
+    <mat-card class="option-item" *ngIf="role === 'LECTOR'" (click)="onNotImplementedClick()">
+        <mat-card-title>Tus accesos</mat-card-title>
+        <div class="option-image">
+            <img alt="'Tu cuenta personal'" [src]="'https://picsum.photos/200?random=3'" class="img-thumbnail" />
+        </div>
+    </mat-card>
+
+</div>
