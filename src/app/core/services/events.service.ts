@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { IEvent } from '@models/event';
 import { IEntity } from '@models/entity';
+import { IPlace } from '@models/place';
 import { AppointmentsService } from '@services/appointments.service';
 
 const EVENTS_COLLECTION = 'eventos';
@@ -41,21 +42,20 @@ export class EventService {
     this.eventCollection.doc(event.id).set(event, { merge: true });
   }
 
-  addEventFromEntity(event: IEvent, entity: IEntity, entityRol?: string): string {
-
-    console.log(`addEventFromEntity: ${JSON.stringify(entity)}`);
+  addEventFromEntity(event: IEvent, entity: IEntity, entityRol?: string, place?: IPlace): string {
 
     const id: string = this.afs.createId();
     event.id = id;
     event.name = `Nuevo evento de ${entity.name}`;
     event.entity = entity;
     event.entityRol = entityRol;
+    event.images = [];
     const newImage = entity.image;
     if ( newImage ) {
       event.image = newImage;
       event.images.push(newImage);
     }
-    if ( entity.place ) {
+    if ( place ) {
       const placeImage = entity.place.image;
       event.place = entity.place;
       event.images.push(placeImage);

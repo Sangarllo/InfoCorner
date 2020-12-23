@@ -9,6 +9,7 @@ import { EventEditComponent } from '@app/events/event-edit/event-edit.component'
 import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 import { EventPlaceDetailComponent } from '@app/events/event-place-detail/event-place-detail.component';
 import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
+import { EventEntityPlaceDialogComponent } from '@app/events/event-entity-place-dialog/event-entity-place-dialog.component';
 import { EventEntityDetailComponent } from '@app/events/event-entity-detail/event-entity-detail.component';
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 import { EventBasicDetailComponent } from '@app/events/event-basic-detail/event-basic-detail.component';
@@ -27,6 +28,7 @@ import { EventImageDetailComponent } from '@app/events/event-image-detail/event-
     EventPlaceDialogComponent,
     EventPlaceDetailComponent,
     EventEntityDialogComponent,
+    EventEntityPlaceDialogComponent,
     EventEntityDetailComponent,
     EventBasicDialogComponent,
     EventBasicDetailComponent,
@@ -43,7 +45,7 @@ import { EventImageDetailComponent } from '@app/events/event-image-detail/event-
     EventsRoutingModule
   ],
   exports: [
-    EventEntityDialogComponent
+    EventEntityPlaceDialogComponent
   ]
 })
 export class EventsModule { }

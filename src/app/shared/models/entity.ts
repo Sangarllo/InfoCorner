@@ -15,6 +15,7 @@ export interface IEntity {
 export class Entity implements IEntity {
 
   public static IMAGE_DEFAULT = 'assets/images/entities/default.png';
+  public static NAME_DEFAULT = 'SIN ESPECIFICAR';
   public static PATH_URL = 'entidades';
   public static ROLES: EntityRole[] = ENTITY_ROLES;
 
@@ -33,7 +34,7 @@ export class Entity implements IEntity {
     return new Entity(
       '0',
       true,
-      '',
+      Entity.NAME_DEFAULT,
       Entity.IMAGE_DEFAULT,
       [],
       null,
