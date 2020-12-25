@@ -7,6 +7,7 @@ import { IEvent } from '@models/event';
 import { IEntity } from '@models/entity';
 import { IPlace } from '@models/place';
 import { AppointmentsService } from '@services/appointments.service';
+import { map } from 'rxjs/operators';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -27,7 +28,20 @@ export class EventService {
   }
 
   getAllEvents(): Observable<IEvent[]> {
-    return this.eventCollection.valueChanges();
+    this.eventCollection = this.afs.collection<IEvent>(
+      EVENTS_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.eventCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IEvent;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+      )
+    );
   }
 
   getOneEvent(idEvent: string): Observable<IEvent | undefined> {
@@ -75,8 +89,11 @@ export class EventService {
     this.eventDoc.set(event, { merge: true });
   }
 
-  deleteEvent(idEvent: string): void {
+  deleteEvent(event: IEvent): void {
+    const idEvent = event.id;
+    event.active = false;
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
-    this.eventDoc.delete();
+    this.eventDoc.update(event);
   }
 }
+

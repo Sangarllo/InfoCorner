@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { IUser } from '@shared/models/user';
+import { IUser } from '@models/user';
 import { UserRole } from '@models/user-role.enum';
 
 const USERS_COLLECTION = 'usuarios';
@@ -21,7 +22,20 @@ export class UserService {
   }
 
   getAllUsers(): Observable<IUser[]> {
-    return this.userCollection.valueChanges();
+    this.userCollection = this.afs.collection<IUser>(
+      USERS_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('displayName')
+    );
+
+    return this.userCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IUser;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+      )
+    );
   }
 
   getOneUser(uidUser: string): Observable<IUser | undefined> {
@@ -43,9 +57,11 @@ export class UserService {
     this.userDoc.update(user);
   }
 
-  deleteUser(uidUser: string): void {
+  deleteUser(user: IUser): void {
+    const uidUser = user.uid;
+    user.active = false;
     this.userDoc = this.afs.doc<IUser>(`${USERS_COLLECTION}/${uidUser}`);
-    this.userDoc.delete();
+    this.userDoc.update(user);
   }
 
   updateUserData(user: IUser): Promise<void> {

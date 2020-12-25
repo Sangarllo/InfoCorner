@@ -22,10 +22,29 @@ export class PlaceService {
   }
 
   getAllPlaces(): Observable<IPlace[]> {
-    return this.placeCollection.valueChanges();
+    this.placeCollection = this.afs.collection<IPlace>(
+      PLACES_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.placeCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IPlace;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+      )
+    );
   }
 
   getAllPlacesBase(): Observable<Base[]> {
+    this.placeCollection = this.afs.collection<IPlace>(
+      PLACES_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
     return this.placeCollection.valueChanges().pipe(
       map(places => places.map(place => {
         const id = place.id;
@@ -53,9 +72,11 @@ export class PlaceService {
     this.placeDoc.update(place);
   }
 
-  deletePlace(idPlace: string): void {
+  deletePlace(place: IPlace): void {
+    const idPlace = place.id;
+    place.active = false;
     this.placeDoc = this.afs.doc<IPlace>(`${PLACES_COLLECTION}/${idPlace}`);
-    this.placeDoc.delete();
+    this.placeDoc.update(place);
   }
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { INotice } from '@shared/models/notice';
 
@@ -20,7 +21,20 @@ export class NoticeService {
   }
 
   getAllNotices(): Observable<INotice[]> {
-    return this.noticeCollection.valueChanges();
+    this.noticeCollection = this.afs.collection<INotice>(
+      NOTICES_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.noticeCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as INotice;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+      )
+    );
   }
 
   getOneNotice(idNotice: string): Observable<INotice   | undefined> {
@@ -38,8 +52,10 @@ export class NoticeService {
     this.noticeDoc.update(notice);
   }
 
-  deleteNotice(idNotice: string): void {
+  deleteNotice(notice: INotice): void {
+    const idNotice = notice.id;
+    notice.active = false;
     this.noticeDoc = this.afs.doc<INotice>(`${NOTICES_COLLECTION}/${idNotice}`);
-    this.noticeDoc.delete();
+    this.noticeDoc.update(notice);
   }
 }

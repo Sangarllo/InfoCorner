@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { EntityService } from '@services/entities.service';
 import { IEntity } from '@models/entity';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-entities',
@@ -14,7 +15,7 @@ import { IEntity } from '@models/entity';
 export class EntitiesComponent implements OnInit {
 
   public entities$!: Observable<IEntity[]>;
-  displayedColumns: string[] = [ 'image', 'active', 'id', 'name', 'place', 'roleDefault', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'id', 'name', 'place', 'roleDefault', 'actions3'];
 
   constructor(
     private router: Router,
@@ -34,7 +35,25 @@ export class EntitiesComponent implements OnInit {
   }
 
   public deleteEntity(entity: IEntity): void {
-    console.log(`deleting ${entity.id}`);
+    console.log(`Borrando ${entity.id}`);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás deshacer esta acción de borrado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '¡Sí, bórralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.entitySrv.deleteEntity(entity);
+        Swal.fire(
+          '¡Borrado!',
+          `${entity.name} ha sido borrado`,
+          'success'
+        );
+      }
+    });
   }
 
   public addEntity(): void {

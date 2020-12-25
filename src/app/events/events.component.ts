@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EventService } from '@services/events.service';
 import { Observable } from 'rxjs';
-import { IEvent } from '@shared/models/event';
+import Swal from 'sweetalert2';
+
+import { IEvent } from '@models/event';
+import { EventService } from '@services/events.service';
 
 @Component({
   selector: 'app-events',
@@ -13,7 +15,7 @@ import { IEvent } from '@shared/models/event';
 export class EventsComponent implements OnInit {
 
   public events$!: Observable<IEvent[]>;
-  displayedColumns: string[] = [ 'image', 'active', 'status', 'id', 'name', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions3'];
 
   constructor(
     private router: Router,
@@ -34,6 +36,24 @@ export class EventsComponent implements OnInit {
 
   public deleteItem(event: IEvent): void {
     console.log(`deleting ${event.id}`);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás deshacer esta acción de borrado!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '¡Sí, bórralo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.eventSrv.deleteEvent(event);
+        Swal.fire(
+          '¡Borrado!',
+          `${event.name} ha sido borrado`,
+          'success'
+        );
+      }
+    });
   }
 
   public addItem(): void {

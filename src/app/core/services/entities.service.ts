@@ -22,10 +22,29 @@ export class EntityService {
   }
 
   getAllEntities(): Observable<IEntity[]> {
-    return this.entityCollection.valueChanges();
+    this.entityCollection = this.afs.collection<IEntity>(
+      ENTITIES_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.entityCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IEntity;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+      )
+    );
   }
 
   getAllEntitiesBase(): Observable<Base[]> {
+    this.entityCollection = this.afs.collection<IEntity>(
+      ENTITIES_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
     return this.entityCollection.valueChanges().pipe(
       map(entities => entities.map(entity => {
         const id = entity.id;
@@ -55,8 +74,10 @@ export class EntityService {
     this.entityDoc.set(updEntity, { merge: true });
   }
 
-  deleteEntity(idEntity: string): void {
+  deleteEntity(entity: IEntity): void {
+    const idEntity = entity.id;
+    entity.active = false;
     this.entityDoc = this.afs.doc<IEntity>(`${ENTITIES_COLLECTION}/${idEntity}`);
-    this.entityDoc.delete();
+    this.entityDoc.update(entity);
   }
 }
