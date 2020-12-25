@@ -21,9 +21,9 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.auth.user.subscribe((usr)=>{
+    this.auth.user.subscribe((usr) => {
       const uidUser = usr.uid;
-      this.userData$ = this.userSrv.getOneUser(uidUser)
+      this.userData$ = this.userSrv.getOneUser(uidUser);
     });
   }
 }
