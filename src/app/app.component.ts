@@ -1,6 +1,11 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
+import { Observable } from 'rxjs';
+
+import { AuthService } from '@auth/auth.service';
+import { IUser } from '@models/user';
+
 const SMALL_WIDTH_BREAKPOINT = 720;
 
 @Component({
@@ -11,8 +16,10 @@ const SMALL_WIDTH_BREAKPOINT = 720;
 export class AppComponent implements OnInit {
 
   public isScreenSmall: boolean;
+  public user$: Observable<IUser> = this.authSvc.afAuth.user;
 
   constructor(
+    public authSvc: AuthService,
     private breakpointObserver: BreakpointObserver
   ) {
   }
