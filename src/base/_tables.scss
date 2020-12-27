@@ -22,7 +22,9 @@ table {
     width: 100px;
     border: 2px solid white;
     .img-thumbnail {
+        min-width: 64px;
         width: 64px;
+        min-height: 64px;
         height: 64px;
     }
 }
