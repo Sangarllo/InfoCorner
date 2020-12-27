@@ -67,4 +67,44 @@ export class AppointmentsService {
 
     return [year, month, day].join('-');
   }
+
+  formatDateTime(date: Date): string {
+    const year = date.getFullYear();
+
+    let month = '' + (date.getMonth() + 1);
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+
+    let day = '' + date.getDate();
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    const dateStr = [year, month, day].join('-');
+
+    let hour = '' + date.getHours();
+    if (hour.length < 2) {
+      hour = '0' + hour;
+    }
+
+    let min = '' + date.getMinutes();
+    if (min.length < 2) {
+      min = '0' + min;
+    }
+
+    let sec = '' + date.getSeconds();
+    if (sec.length < 2) {
+      sec = '0' + sec;
+    }
+
+    const timeStr = [hour, min, sec].join(':');
+
+    return `${dateStr} ${timeStr}`;
+  }
+
+  public getTimestamp(): string {
+    var today = new Date();
+    return this.formatDateTime(today);
+  }
 }

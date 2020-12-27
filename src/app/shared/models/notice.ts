@@ -1,3 +1,4 @@
+import { IBase } from '@models/base';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 
@@ -12,7 +13,7 @@ export interface INotice {
   description?: string;
 }
 
-export class Notice implements INotice {
+export class Notice implements INotice, IBase {
 
   public static IMAGE_DEFAULT = 'assets/images/notices/default.png';
   public static PATH_URL = 'avisos';

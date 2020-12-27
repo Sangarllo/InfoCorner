@@ -16,6 +16,7 @@ import firebase from 'firebase/app';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends RoleValidator {
+  public currentUser$: Observable<firebase.User>;
   public user$: Observable<IUser>;
 
   constructor(
@@ -24,6 +25,7 @@ export class AuthService extends RoleValidator {
     private userSrv: UserService,
   ) {
     super();
+    this.currentUser$ = this.afAuth.user;
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
@@ -91,6 +93,4 @@ export class AuthService extends RoleValidator {
       console.log(error);
     }
   }
-
-
 }

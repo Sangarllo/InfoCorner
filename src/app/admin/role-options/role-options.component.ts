@@ -4,27 +4,36 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import Swal from 'sweetalert2';
 
-import { EventEntityPlaceDialogComponent } from '@app/events/event-entity-place-dialog/event-entity-place-dialog.component';
+import { AuthService } from '@auth/auth.service';
 import { UserRole } from '@models/user-role.enum';
 import { IEvent, Event } from '@models/event';
+import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
+
+import { EventEntityPlaceDialogComponent } from '@app/events/event-entity-place-dialog/event-entity-place-dialog.component';
 
 @Component({
   selector: 'app-role-options',
   templateUrl: './role-options.component.html',
   styleUrls: ['./role-options.component.scss']
 })
-export class RoleOptionsComponent  {
+export class RoleOptionsComponent {
 
   @Input() role: UserRole;
 
+  private currentUser: IUser;
   public dialogConfig = new MatDialogConfig();
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
+    private authSrv: AuthService,
     private eventSrv: EventService
-  ) { }
+  ) {
+    this.authSrv.currentUser$.subscribe( (user: any) => {
+      this.currentUser = user;
+    })
+  }
 
   onNotImplementedClick(): void {
     Swal.fire({
@@ -54,7 +63,7 @@ export class RoleOptionsComponent  {
       const entity = eventDialog.entity;
       const entityRol = eventDialog.entityRol;
       const place = eventDialog.place;
-      const eventId = this.eventSrv.addEventFromEntity(event, entity, entityRol, place);
+      const eventId = this.eventSrv.addEventFromEntity(event, this.currentUser, entity, entityRol, place);
       this.router.navigate([`eventos/${eventId}`]);
     });
   }

@@ -13,7 +13,7 @@ export class SidenavComponent {
       path: 'home',
     },
     {
-      icon: 'apps',
+      icon: 'admin_panel_settings',
       path: 'admin',
     },
     {

@@ -1,6 +1,7 @@
 import { Category } from '@models/category.enum';
 import { Place } from '@models/place';
 import { EntityRole, ENTITY_ROLES } from '@models/entity-role.enum';
+import { IBase } from '@models/base';
 
 export interface IEntity {
   id: string;
@@ -12,7 +13,7 @@ export interface IEntity {
   roleDefault?: EntityRole;
 }
 
-export class Entity implements IEntity {
+export class Entity implements IEntity, IBase {
 
   public static IMAGE_DEFAULT = 'assets/images/entities/default.png';
   public static NAME_DEFAULT = 'SIN ESPECIFICAR';

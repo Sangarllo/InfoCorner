@@ -49,7 +49,6 @@ export class EntityEditComponent implements OnInit {
 
     const idEntity = this.route.snapshot.paramMap.get('id');
     if ( idEntity ) {
-      console.log(`id asked ${idEntity}`);
       this.getDetails(idEntity);
 
       this.entityForm = this.fb.group({
@@ -69,7 +68,6 @@ export class EntityEditComponent implements OnInit {
   }
 
   private getDetails(idEntity: string): void {
-    console.log(`id asked ${idEntity}`);
 
     if ( idEntity === '0' ) {
       this.pageTitle = 'Creación de una nueva entidad';

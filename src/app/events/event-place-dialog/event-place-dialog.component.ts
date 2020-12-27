@@ -34,11 +34,9 @@ export class EventPlaceDialogComponent implements OnInit {
 
     this.places$ = this.placeSrv.getAllPlacesBase();
 
-    this.placeBaseSelected = ( this.data.place ) ? {
-      id: this.data.place.id,
-      name: this.data.place.name,
-      image: this.data.place.image
-    } : this.SECTION_BLANK;
+    this.placeBaseSelected = ( this.data.place ) ?
+      this.data.place as Base
+      : this.SECTION_BLANK;
 
     this.placeForm = this.fb.group({
       place: [ this.placeBaseSelected, []],

@@ -1,5 +1,6 @@
 export interface IBase {
   id: string;
+  active: boolean;
   name: string;
   image: string;
 }
@@ -8,11 +9,11 @@ export class Base implements IBase {
 
   public static ID_DEFAULT = '0';
   public static NAME_DEFAULT = 'SIN ESPECIFICAR';
-  // public static NAME_BLANK = '';
   public static IMAGE_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/memento-185617.appspot.com/o/no-image-default.png?alt=media';
 
   constructor(
     public id: string,
+    public active: boolean,
     public name: string,
     public image: string,
   ) { }
@@ -21,6 +22,7 @@ export class Base implements IBase {
   static InitDefault(): Base {
     return new Base(
       Base.ID_DEFAULT,
+      true,
       Base.NAME_DEFAULT,
       Base.IMAGE_DEFAULT,
     );

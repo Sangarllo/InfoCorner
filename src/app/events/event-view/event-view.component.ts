@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
+import { AuthService } from '@auth/auth.service';
+import { Base } from '@models/base';
+import { IAppointment } from '@models/appointment';
+import { IEvent, Event } from '@models/event';
+import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
 import { AppointmentsService } from '@services/appointments.service';
-import { IEvent, Event } from '@models/event';
-import { IAppointment } from '@models/appointment';
-import { Base } from '@models/base';
 
 import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
 import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
@@ -22,6 +24,7 @@ import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-
 })
 export class EventViewComponent implements OnInit {
 
+  private currentUser: IUser;
   public event: IEvent;
   public idEvent: string;
   readonly SECTION_BLANK: Base = Base.InitDefault();
@@ -31,6 +34,7 @@ export class EventViewComponent implements OnInit {
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private authSrv: AuthService,
     private eventSrv: EventService,
     private appointmentSrv: AppointmentsService
   ) {
@@ -40,6 +44,11 @@ export class EventViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.authSrv.currentUser$.subscribe( (user: any) => {
+      this.currentUser = user;
+    })
+
     this.idEvent = this.route.snapshot.paramMap.get('id');
     if ( this.idEvent ) {
       this.getDetails(this.idEvent);
@@ -69,7 +78,7 @@ export class EventViewComponent implements OnInit {
       this.event.name = eventDialog.name;
       this.event.description = eventDialog.description;
       this.event.categories = eventDialog.categories;
-      this.eventSrv.updateEvent(this.event);
+      this.eventSrv.updateEvent(this.event, this.currentUser);
     });
   }
 
@@ -80,7 +89,7 @@ export class EventViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
       this.event.image = eventDialog.image;
       this.event.images = eventDialog.images;
-      this.eventSrv.updateEvent(this.event);
+      this.eventSrv.updateEvent(this.event, this.currentUser);
     });
   }
 
@@ -92,7 +101,7 @@ export class EventViewComponent implements OnInit {
       this.event.status = eventDialog.status;
       this.event.active = eventDialog.active;
       this.event.focused = eventDialog.focused;
-      this.eventSrv.updateEvent(this.event);
+      this.eventSrv.updateEvent(this.event, this.currentUser);
     });
   }
 
@@ -106,7 +115,7 @@ export class EventViewComponent implements OnInit {
         eventDialog.place;
       this.event.placeLocality = eventDialog.placeLocality;
       this.event.placeDesc = eventDialog.placeDesc;
-      this.eventSrv.updateEvent(this.event);
+      this.eventSrv.updateEvent(this.event, this.currentUser);
     });
   }
 
@@ -119,7 +128,7 @@ export class EventViewComponent implements OnInit {
         null :
         eventDialog.entity;
       this.event.entityRol = eventDialog.entityRol;
-      this.eventSrv.updateEvent(this.event);
+      this.eventSrv.updateEvent(this.event, this.currentUser);
     });
   }
 

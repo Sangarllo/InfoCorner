@@ -7,10 +7,12 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
+import { AuthService } from '@auth/auth.service';
 import { EventService } from '@services/events.service';
 import { Event, IEvent } from '@models/event';
-import { Status, STATUS_MODES } from '@models/status.enum';
+import { Status } from '@models/status.enum';
 import { CATEGORIES, Category } from '@models/category.enum';
+import { IUser } from '@models/user';
 
 
 @Component({
@@ -20,6 +22,7 @@ import { CATEGORIES, Category } from '@models/category.enum';
 })
 export class EventEditComponent implements OnInit {
 
+  currentUser: IUser;
   eventForm!: FormGroup;
   pageTitle = 'Creación de un nuevo evento';
   errorMessage = '';
@@ -30,6 +33,7 @@ export class EventEditComponent implements OnInit {
   public CATEGORIES: Category[] = CATEGORIES;
 
   constructor(
+    private authSrv: AuthService,
     private afStorage: AngularFireStorage,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -38,9 +42,12 @@ export class EventEditComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.authSrv.currentUser$.subscribe( (user: any) => {
+      this.currentUser = user;
+    })
+
     const idEvent = this.route.snapshot.paramMap.get('id');
     if ( idEvent ) {
-      console.log(`id asked ${idEvent}`);
       this.getDetails(idEvent);
     }
 
@@ -59,7 +66,6 @@ export class EventEditComponent implements OnInit {
   }
 
   private getDetails(idEvent: string): void {
-    console.log(`id asked ${idEvent}`);
 
     if ( idEvent === '0' ) {
       this.pageTitle = 'Creación de un nuevo evento';
@@ -119,9 +125,9 @@ export class EventEditComponent implements OnInit {
         const eventItem = { ...this.event, ...this.eventForm.value };
 
         if (eventItem.id === '0') {
-          this.EventSrv.addEvent(eventItem);
+          this.EventSrv.addEvent(eventItem, this.currentUser);
         } else {
-          this.EventSrv.updateEvent(eventItem);
+          this.EventSrv.updateEvent(eventItem, this.currentUser);
         }
 
         this.router.navigate([ Event.PATH_URL]);

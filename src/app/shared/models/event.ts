@@ -1,7 +1,10 @@
+import { IBase } from '@models/base';
+import { Audit, AuditType, IAudit } from '@models/audit';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 import { IPlace } from '@models/place';
 import { IEntity } from '@models/entity';
+import { IUser } from './user';
 
 export interface IEvent {
   id: string;
@@ -19,9 +22,14 @@ export interface IEvent {
   entity?: IEntity;
   entityRol?: string;
   appointmentId?: string;
+  createdBy?: string;
+  createdAt?: string;
+  updatedBy?: string;
+  updatedAt?: string;
+  updatedType?: AuditType;
 }
 
-export class Event implements IEvent {
+export class Event implements IEvent, IBase, IAudit {
 
   public static IMAGE_DEFAULT = 'assets/images/events/default.png';
   public static PATH_URL = 'eventos';
@@ -49,6 +57,12 @@ export class Event implements IEvent {
     public entityRol?: string,
 
     public appointmentId?: string,
+
+    public createdBy?: string,
+    public createdAt?: string,
+    public updatedBy?: string,
+    public updatedAt?: string,
+    public updatedType?: AuditType,
      ) {
   }
 
@@ -61,6 +75,7 @@ export class Event implements IEvent {
       null, '', '', // Place
       null, '', // Entity
       null, // Appointment
+      null, null, null, null, null // Audit
     );
   }
 }

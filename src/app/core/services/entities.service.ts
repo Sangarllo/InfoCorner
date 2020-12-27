@@ -47,12 +47,15 @@ export class EntityService {
 
     return this.entityCollection.valueChanges().pipe(
       map(entities => entities.map(entity => {
-        const id = entity.id;
-        const name = entity.name;
-        const image = entity.image;
-        return {
-          id, name, image
-        };
+        if ( entity.active ) {
+          const id = entity.id;
+          const active = entity.active;
+          const name = entity.name;
+          const image = entity.image;
+          return {
+            id, active, name, image
+          };
+        }
       }))
     );
   }

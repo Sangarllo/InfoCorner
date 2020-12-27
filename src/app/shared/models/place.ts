@@ -1,3 +1,4 @@
+import { IBase } from '@models/base';
 import { PlaceType } from '@models/place-type.enum';
 export interface IPlace {
   id: string;
@@ -8,7 +9,7 @@ export interface IPlace {
   locality?: string;
 }
 
-export class Place implements IPlace {
+export class Place implements IPlace, IBase {
 
   public static IMAGE_DEFAULT = 'assets/images/places/default.png';
   public static LOCALITY_DEFAULT = 'Rincón de Soto';
@@ -26,10 +27,7 @@ export class Place implements IPlace {
 
   static InitDefault(): Place {
     return new Place(
-      '0',
-      true,
-      '',
-      Place.IMAGE_DEFAULT,
+      '0', true, '', Place.IMAGE_DEFAULT, // Base
       [ PlaceType.Other ],
       Place.LOCALITY_DEFAULT
     );

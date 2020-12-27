@@ -5,6 +5,7 @@ import { SharedModule } from '@shared/shared.module';
 import { EventsRoutingModule } from '@app/events/events-routing.module';
 import { EventsComponent } from '@app/events/events.component';
 import { EventViewComponent } from '@app/events/event-view/event-view.component';
+import { EventAuditDetailComponent } from '@app/events/event-audit-detail/event-audit-detail.component';
 import { EventEditComponent } from '@app/events/event-edit/event-edit.component';
 import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 import { EventPlaceDetailComponent } from '@app/events/event-place-detail/event-place-detail.component';
@@ -25,6 +26,7 @@ import { EventImageDetailComponent } from '@app/events/event-image-detail/event-
     EventsComponent,
     EventViewComponent,
     EventEditComponent,
+    EventAuditDetailComponent,
     EventPlaceDialogComponent,
     EventPlaceDetailComponent,
     EventEntityDialogComponent,

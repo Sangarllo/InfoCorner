@@ -47,12 +47,15 @@ export class PlaceService {
 
     return this.placeCollection.valueChanges().pipe(
       map(places => places.map(place => {
-        const id = place.id;
-        const name = place.name;
-        const image = place.image;
-        return {
-          id, name, image
-        };
+        if ( place.active ) {
+          const id = place.id;
+          const active = place.active;
+          const name = place.name;
+          const image = place.image;
+          return {
+            id, active, name, image
+          };
+        }
       }))
     );
   }

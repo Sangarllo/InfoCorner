@@ -33,11 +33,9 @@ export class EventEntityDialogComponent implements OnInit {
 
     this.entities$ = this.entitySrv.getAllEntitiesBase();
 
-    this.entityBaseSelected = ( this.data.entity ) ? {
-      id: this.data.entity.id,
-      name: this.data.entity.name,
-      image: this.data.entity.image
-    } : this.SECTION_BLANK;
+    this.entityBaseSelected = ( this.data.entity ) ?
+      this.data.entity as Base
+      : this.SECTION_BLANK;
 
     this.entityForm = this.fb.group({
       entity: [ this.entityBaseSelected, [Validators.required]],

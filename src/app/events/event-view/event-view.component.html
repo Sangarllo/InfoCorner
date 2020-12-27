@@ -43,6 +43,18 @@
 
                 <fieldset class="event-item-detail type-other">
 
+                    <legend>¿Cuándo?</legend>
+
+                    <button mat-fab type="button" (click)="openAppointmentDialog()" color="accent">
+                <mat-icon>book_online</mat-icon>
+              </button>
+
+                    <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
+
+                </fieldset>
+
+                <fieldset class="event-item-detail type-other">
+
                     <legend>¿Dónde?</legend>
 
                     <button mat-fab type="button" (click)="openPlaceDialog()" color="accent">
@@ -65,19 +77,13 @@
 
                 </fieldset>
 
-                <fieldset class="event-item-detail type-other">
+                <fieldset class="event-audit-detail type-other">
 
-                    <legend>¿Cuándo?</legend>
+                    <legend>¿Audit?</legend>
 
-                    <button mat-fab type="button" (click)="openAppointmentDialog()" color="accent">
-                  <mat-icon>book_online</mat-icon>
-                </button>
-
-                    <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
+                    <app-event-audit-detail [event]="event"></app-event-audit-detail>
 
                 </fieldset>
-
-
 
             </mat-card-content>
 

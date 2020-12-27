@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { INotice } from '@shared/models/notice';
+import { Base } from '@models/base';
 
 const NOTICES_COLLECTION = 'avisos';
 
@@ -34,6 +35,28 @@ export class NoticeService {
         return { id, ...data };
       })
       )
+    );
+  }
+
+  getAllNoticesBase(): Observable<Base[]> {
+    this.noticeCollection = this.afs.collection<INotice>(
+      NOTICES_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.noticeCollection.valueChanges().pipe(
+      map(places => places.map(place => {
+        if ( place.active ) {
+          const id = place.id;
+          const active = place.active;
+          const name = place.name;
+          const image = place.image;
+          return {
+            id, active, name, image
+          };
+        }
+      }))
     );
   }
 

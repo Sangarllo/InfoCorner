@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
-
-import { IEvent } from '@models/event';
-import { IEntity } from '@models/entity';
-import { IPlace } from '@models/place';
-import { AppointmentsService } from '@services/appointments.service';
 import { map } from 'rxjs/operators';
+
+import { Base } from '@models/base';
+import { IEntity } from '@models/entity';
+import { IEvent } from '@models/event';
+import { IPlace } from '@models/place';
+import { IUser } from '@models/user';
+import { AppointmentsService } from '@services/appointments.service';
+import { AuditType } from '@app/shared/models/audit';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -23,7 +26,6 @@ export class EventService {
     private afs: AngularFirestore,
     private appointmentSrv: AppointmentsService
   ) {
-
     this.eventCollection = afs.collection(EVENTS_COLLECTION);
   }
 
@@ -44,11 +46,34 @@ export class EventService {
     );
   }
 
+  getAllEventsBase(): Observable<Base[]> {
+    this.eventCollection = this.afs.collection<IEvent>(
+      EVENTS_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.eventCollection.valueChanges().pipe(
+      map(places => places.map(place => {
+        if ( place.active ) {
+          const id = place.id;
+          const active = place.active;
+          const name = place.name;
+          const image = place.image;
+          return {
+            id, active, name, image
+          };
+        }
+      }))
+    );
+  }
+
   getOneEvent(idEvent: string): Observable<IEvent | undefined> {
     return this.eventCollection.doc(idEvent).valueChanges({ idField: 'id' });
   }
 
-  addEvent(event: IEvent): void {
+  addEvent(event: IEvent, currentUser: IUser): void {
+    event = this.setCreationInfo(event, currentUser);
     const id: string = this.afs.createId();
     event.id = id;
     event.appointmentId = id;
@@ -56,10 +81,11 @@ export class EventService {
     this.eventCollection.doc(event.id).set(event, { merge: true });
   }
 
-  addEventFromEntity(event: IEvent, entity: IEntity, entityRol?: string, place?: IPlace): string {
-
+  addEventFromEntity(event: IEvent, currentUser: IUser, entity: IEntity, entityRol?: string, place?: IPlace): string {
+    event = this.setCreationInfo(event, currentUser);
     const id: string = this.afs.createId();
     event.id = id;
+
     event.name = `Nuevo evento de ${entity.name}`;
     event.entity = entity;
     event.entityRol = entityRol;
@@ -70,7 +96,7 @@ export class EventService {
       event.images.push(newImage);
     }
     if ( place ) {
-      const placeImage = entity.place.image;
+      const placeImage = entity.place?.image;
       event.place = entity.place;
       event.images.push(placeImage);
     }
@@ -83,17 +109,43 @@ export class EventService {
     return id;
   }
 
-  updateEvent(event: IEvent): void {
+  updateEvent(event: IEvent, currentUser: IUser): void {
+    event = this.setUpdateInfo(event, currentUser);
     const idEvent = event.id;
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
     this.eventDoc.set(event, { merge: true });
   }
 
-  deleteEvent(event: IEvent): void {
+  deleteEvent(event: IEvent, currentUser: IUser): void {
+    event = this.setDeleteInfo(event, currentUser);
     const idEvent = event.id;
     event.active = false;
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
     this.eventDoc.update(event);
+  }
+
+  private setCreationInfo(event: IEvent, user: IUser): IEvent {
+    const timestamp = this.appointmentSrv.getTimestamp();
+    event.createdBy = user.uid;
+    event.createdAt = timestamp;
+    event.updatedBy = user.uid;
+    event.updatedAt = timestamp;
+    event.updatedType = AuditType.Created;
+    return event;
+  }
+
+  private setUpdateInfo(event: IEvent, user: IUser): IEvent {
+    event.updatedBy = user.uid;
+    event.updatedAt = this.appointmentSrv.getTimestamp();
+    event.updatedType = AuditType.Updated;
+    return event;
+  }
+
+  private setDeleteInfo(event: IEvent, user: IUser): IEvent {
+    event.updatedBy = user.uid;
+    event.updatedAt = this.appointmentSrv.getTimestamp();
+    event.updatedType = AuditType.Deleted;
+    return event;
   }
 }
 

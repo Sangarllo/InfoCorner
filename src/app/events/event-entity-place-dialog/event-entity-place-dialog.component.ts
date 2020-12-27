@@ -60,10 +60,7 @@ export class EventEntityPlaceDialogComponent implements OnInit {
 
     let entityPlace: Base = this.SECTION_BLANK;
     if ( this.entitySelected.place ) {
-      entityPlace = new Base(
-        this.entitySelected.place.id,
-        this.entitySelected.place.name,
-        this.entitySelected.place.image);
+      entityPlace = this.entitySelected.place as Base
     }
     console.log(`entityPlace: ${JSON.stringify(entityPlace)}`);
     this.entityForm.controls.place.setValue( entityPlace );
