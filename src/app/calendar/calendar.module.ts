@@ -17,6 +17,9 @@ import { CalendarHeaderComponent } from '@app/calendar/calendar-header.component
     CommonModule,
     CalendarRoutingModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+  ],
+  exports: [
+    CalendarComponent
   ]
 })
 export class CalendarEventsModule { }

@@ -1,4 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import {
   isSameMonth,
@@ -11,7 +14,6 @@ import {
   endOfDay,
   format,
 } from 'date-fns';
-import { Observable } from 'rxjs';
 import { EventService } from '@services/events.service';
 
 function getTimezoneOffsetString(date: Date): string {
@@ -41,6 +43,7 @@ export class CalendarComponent implements OnInit {
   activeDayIsOpen = false;
 
   constructor(
+    private router: Router,
     private eventsSrv: EventService
   ) {}
 
@@ -61,7 +64,8 @@ export class CalendarComponent implements OnInit {
       day: endOfDay,
     }[this.view];
 
-    this.events$ = this.eventsSrv.getEventCalendar();
+    this.events$ = this.eventsSrv.getAllCalendarEvents();
+    // this.events$ = this.eventsSrv.getEventCalendar();
   }
 
   dayClicked({
@@ -86,6 +90,7 @@ export class CalendarComponent implements OnInit {
 
   eventClicked(event: CalendarEvent): void {
     console.log(`event clicked: ${event}`);
+    this.router.navigate([`eventos/${event.id}`]);
     // window.open(
     //   `https://www.themoviedb.org/movie/${event.meta.film.id}`,
     //   '_blank'

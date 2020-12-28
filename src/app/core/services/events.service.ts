@@ -13,6 +13,7 @@ import { IUser } from '@models/user';
 import { AppointmentsService } from '@services/appointments.service';
 import { AuditType } from '@app/shared/models/audit';
 import { colors } from '@app/shared/utils/colors';
+import { IAppointment } from '@models/appointment';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -43,6 +44,33 @@ export class EventService {
         const data = a.payload.doc.data() as IEvent;
         const id = a.payload.doc.id;
         return { id, ...data };
+      })
+      )
+    );
+  }
+
+  // TODO: paging
+  getAllCalendarEvents(): Observable<CalendarEvent[]> {
+    this.eventCollection = this.afs.collection<IEvent>(
+      EVENTS_COLLECTION,
+      ref => ref.where('active', '==', true)
+                .orderBy('name')
+    );
+
+    return this.eventCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as IEvent;
+        const id = a.payload.doc.id;
+
+        const newCalendarEvent = {
+          id,
+          title: data.name,
+          start: new Date(),
+          color: colors.indigo,
+          allDay: false
+        };
+
+        return newCalendarEvent;
       })
       )
     );
