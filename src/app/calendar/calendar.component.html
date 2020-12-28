@@ -1,7 +1,9 @@
+<app-section-header [title]="'La Agenda Rinconera'"></app-section-header>
+
 <div class="wrapper">
 
-    <mwl-demo-utils-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()" (viewChange)="fetchEvents()">
-    </mwl-demo-utils-calendar-header>
+    <app-calendar-header [(view)]="view" [(viewDate)]="viewDate" (viewDateChange)="fetchEvents()" (viewChange)="fetchEvents()">
+    </app-calendar-header>
 
     <ng-template #loading>
         <div>
