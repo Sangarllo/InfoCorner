@@ -13,6 +13,8 @@ import { AppComponent } from '@app/app.component';
 import { environment } from '@environments/environment';
 import { SharedModule } from '@shared/shared.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AngularFireStorageModule,
     AppRoutingModule,
     SharedModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [],
   bootstrap: [AppComponent]
