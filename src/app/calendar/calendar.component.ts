@@ -64,8 +64,7 @@ export class CalendarComponent implements OnInit {
       day: endOfDay,
     }[this.view];
 
-    this.events$ = this.eventsSrv.getAllCalendarEvents();
-    // this.events$ = this.eventsSrv.getEventCalendar();
+    this.events$ = this.eventsSrv.getAllCalendarEventsAppointments();
   }
 
   dayClicked({
@@ -89,11 +88,6 @@ export class CalendarComponent implements OnInit {
   }
 
   eventClicked(event: CalendarEvent): void {
-    console.log(`event clicked: ${event}`);
     this.router.navigate([`eventos/${event.id}`]);
-    // window.open(
-    //   `https://www.themoviedb.org/movie/${event.meta.film.id}`,
-    //   '_blank'
-    // );
   }
 }

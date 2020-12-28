@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, combineLatest, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
 
 import { Base } from '@models/base';
@@ -73,6 +73,27 @@ export class EventService {
         return newCalendarEvent;
       })
       )
+    );
+  }
+
+  getAllCalendarEventsAppointments(): Observable<CalendarEvent[]> {
+    const events$ = this.getAllEvents();
+    const appointments$ = this.appointmentSrv.getAllAppointments();
+
+    return combineLatest([
+      events$,
+      appointments$
+    ])
+      .pipe(
+        map(([events, appointments]) => events.map(event => ({
+          // ...event,
+          id: event.id,
+          title: event.name,
+          color: colors.indigo,
+          allDay: false,
+          start: new Date(appointments.find(a => a.id === event.id)?.dateIni)
+        }) as CalendarEvent)),
+        // tap(data => console.log('event:  ', JSON.stringify(data))),
     );
   }
 

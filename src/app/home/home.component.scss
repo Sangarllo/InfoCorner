@@ -43,10 +43,11 @@ div.content-wrapper {
             border: 1px solid darkgreen;
             background-color: lightgreen;
         }
-        &.events {
-            border: 1px solid darkred;
-            background-color: lightcoral;
-        }
+    }
+    div.events {
+        border: 1px solid darkred;
+        background-color: lightcoral;
+        padding: 5px !important;
     }
 }
 
