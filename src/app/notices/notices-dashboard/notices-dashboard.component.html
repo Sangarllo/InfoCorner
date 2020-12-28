@@ -1,10 +1,22 @@
+<app-section-header [title]="'La Esquina del tío valero Rinconera'"></app-section-header>
+
+
 <div class="notices-wrapper">
 
-    <mat-card *ngFor="let notice of notices$ | async; index as i" class="notice-item" routerLink="profile">
-        <mat-card-title>{{ notice.name }}</mat-card-title>
+    <mat-card *ngFor="let notice of notices$ | async; index as i" class="notice-item" routerLink="profile" (click)="gotoNotice(notice)">
+        <mat-card-title>
+            <p>{{ notice.name }}</p>
+        </mat-card-title>
         <div class="notice-image">
-            <img alt="'Tu cuenta personal'" [src]="'https://picsum.photos/200?random=' + i" class="img-thumbnail" />
+            <img alt="'Tu cuenta personal'" [src]="'https://picsum.photos/260?random=' + i" class="img-thumbnail" />
         </div>
+        <mat-card-content>
+            <div class="timestamp">{{ notice.timestampDist }}</div>
+            <p>{{ notice.description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button>VER</button>
+        </mat-card-actions>
     </mat-card>
 
 </div>

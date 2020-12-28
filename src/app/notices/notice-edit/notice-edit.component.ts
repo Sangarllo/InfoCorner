@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { NoticeService } from '@services/notices.service';
-import { Notice, INotice } from '@shared/models/notice';
+import { Notice, INotice } from '@models/notice';
 import { Status } from '@models/status.enum';
 import { CATEGORIES, Category } from '@models/category.enum';
-
+import { AppointmentsService } from '@services/appointments.service';
+import { NoticeService } from '@services/notices.service';
 
 @Component({
   selector: 'app-notice-edit',
@@ -34,6 +34,7 @@ export class NoticeEditComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private appointmentSrv: AppointmentsService,
     private NoticeSrv: NoticeService) { }
 
   ngOnInit(): void {
@@ -54,7 +55,8 @@ export class NoticeEditComponent implements OnInit {
         Validators.maxLength(50)]],
       image: Notice.IMAGE_DEFAULT,
       categories: null,
-      description: ''
+      description: '',
+      timestamp: null
     });
   }
 
@@ -101,7 +103,8 @@ export class NoticeEditComponent implements OnInit {
       name: this.notice.name,
       image: this.notice.image ?? Notice.IMAGE_DEFAULT,
       categories: this.notice.categories ?? [],
-      description: ''
+      description: this.notice.description ?? '',
+      timestamp: this.notice.timestamp ?? '',
     });
 
     // tslint:disable-next-line:no-string-literal
@@ -115,15 +118,16 @@ export class NoticeEditComponent implements OnInit {
   onSaveForm(): void {
     if (this.noticeForm.valid) {
 
-        const noticeItem = { ...this.notice, ...this.noticeForm.value };
+      this.notice.timestamp = this.appointmentSrv.getTimestamp();
+      const noticeItem = { ...this.notice, ...this.noticeForm.value };
 
-        if (noticeItem.id === '0') {
+      if (noticeItem.id === '0') {
           this.NoticeSrv.addNotice(noticeItem);
-        } else {
+      } else {
           this.NoticeSrv.updateNotice(noticeItem);
-        }
+      }
 
-        this.router.navigate([ Notice.PATH_URL]);
+      this.router.navigate([ Notice.PATH_URL]);
 
     } else {
       this.errorMessage = 'Por favor, corrige los mensajes de validación.';

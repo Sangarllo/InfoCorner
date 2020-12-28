@@ -6,12 +6,50 @@ div.notices-wrapper {
     background-repeat: repeat;
     min-height: 400px;
     justify-content: center;
-    .notice-item {
+    margin-top: -30px; // TODO: Why it was needed?
+    mat-card.notice-item {
         margin: 20px;
         padding: 10px;
+        max-width: 300px;
         flex-direction: column;
-        .notice-image {
-            margin-top: 12px;
+        mat-card-title {
+            p {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        div.notice-image {
+            img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 12px;
+                margin-bottom: 12px;
+            }
+        }
+        mat-card-content {
+            color: grey;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 60px;
+            border: 1px solid red;
+            div.timestamp {
+                color: blueviolet;
+                text-align: right;
+                margin-bottom: 8px;
+            }
+            p {
+                height: 100%;
+                white-space: wrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+        mat-card-actions {
+            button {
+                text-align: right;
+            }
         }
     }
 }

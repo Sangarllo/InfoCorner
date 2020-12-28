@@ -11,6 +11,9 @@ export interface INotice {
   focused: boolean;
   categories?: Category[];
   description?: string;
+  timestamp?: string;
+  timestampDate?: Date;
+  timestampDist?: string;
 }
 
 export class Notice implements INotice, IBase {
@@ -26,8 +29,11 @@ export class Notice implements INotice, IBase {
     public image: string,
     public status: Status,
     public focused: boolean,
-    public categories: Category[],
-    public description: string,
+    public categories?: Category[],
+    public description?: string,
+    public timestamp?: string,
+    public timestampDate?: Date,
+    public timestampDist?: string,
      ) {
   }
 
@@ -40,7 +46,8 @@ export class Notice implements INotice, IBase {
       Status.Visible,
       true,
       [],
-      ''
+      '',
+      null, null, null // Timestamp
     );
   }
 }
