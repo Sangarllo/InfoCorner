@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CalendarEvent } from 'angular-calendar';
 
 import { Base } from '@models/base';
 import { IEntity } from '@models/entity';
@@ -11,6 +12,7 @@ import { IPlace } from '@models/place';
 import { IUser } from '@models/user';
 import { AppointmentsService } from '@services/appointments.service';
 import { AuditType } from '@app/shared/models/audit';
+import { colors } from '@app/shared/utils/colors';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -147,5 +149,26 @@ export class EventService {
     event.updatedType = AuditType.Deleted;
     return event;
   }
-}
 
+  public getEventCalendar(): Observable<CalendarEvent[]> {
+
+    const EVENTS: CalendarEvent[] = [
+      {
+        title: 'Título 1',
+        start: new Date(),
+        color: colors.indigo,
+        allDay: false,
+        meta: ''
+      },
+      {
+        title: 'Título 2',
+        start: new Date(),
+        color: colors.yellow,
+        allDay: false,
+        meta: ''
+      },
+    ];
+
+    return of(EVENTS);
+  }
+}
