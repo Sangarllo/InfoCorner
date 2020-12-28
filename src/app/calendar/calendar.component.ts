@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -34,9 +34,12 @@ function getTimezoneOffsetString(date: Date): string {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  view: CalendarView = CalendarView.Month;
 
+  @Input() showHeader = true;
+
+  view: CalendarView = CalendarView.Month;
   viewDate: Date = new Date();
+  locale = 'es';
 
   events$: Observable<CalendarEvent[]>;
 
