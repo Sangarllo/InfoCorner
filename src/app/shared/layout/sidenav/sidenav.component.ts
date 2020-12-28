@@ -17,6 +17,10 @@ export class SidenavComponent {
       path: 'admin',
     },
     {
+      icon: 'calendar_today',
+      path: 'calendario',
+    },
+    {
       icon: 'account_circle',
       path: 'usuarios',
     },
