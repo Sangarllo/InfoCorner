@@ -1,0 +1,17 @@
+div.notices-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-image: url("../../../assets/images/base/cork.jpg");
+    background-repeat: repeat;
+    min-height: 400px;
+    justify-content: center;
+    .notice-item {
+        margin: 20px;
+        padding: 10px;
+        flex-direction: column;
+        .notice-image {
+            margin-top: 12px;
+        }
+    }
+}

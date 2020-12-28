@@ -1,0 +1,10 @@
+<div class="notices-wrapper">
+
+    <mat-card *ngFor="let notice of notices$ | async; index as i" class="notice-item" routerLink="profile">
+        <mat-card-title>{{ notice.name }}</mat-card-title>
+        <div class="notice-image">
+            <img alt="'Tu cuenta personal'" [src]="'https://picsum.photos/200?random=' + i" class="img-thumbnail" />
+        </div>
+    </mat-card>
+
+</div>
