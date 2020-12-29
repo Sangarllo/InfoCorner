@@ -29,6 +29,10 @@ export class SidenavComponent {
       path: 'avisos',
     },
     {
+      icon: 'info',
+      path: 'noticias',
+    },
+    {
       icon: 'event',
       path: 'eventos',
     },

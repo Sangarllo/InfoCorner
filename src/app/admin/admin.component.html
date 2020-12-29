@@ -12,7 +12,7 @@
 
 <div *ngIf="userData$ | async as user" class="mt-3 text-center">
 
-    <h1>Cómo <span style="text-transform: lowercase;font-weight: bolder;">{{ user.role }}</span> de la aplicación puedes hacer lo siguiente:</h1>
+    <h1>Con tu rol de <span style="text-transform: lowercase;font-weight: bolder;">{{ user.role }}</span> en la aplicación puedes hacer lo siguiente:</h1>
 
     <app-role-options [role]="user.role"></app-role-options>
 

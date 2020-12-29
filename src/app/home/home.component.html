@@ -15,7 +15,10 @@
             </div>
         </mat-tab>
         <mat-tab label="Noticias">
-            <div class="content news">Noticias</div>
+            <div class="news">
+                <app-news-dashboard [showHeader]="false"></app-news-dashboard>
+            </div>
+
         </mat-tab>
     </mat-tab-group>
 </div>

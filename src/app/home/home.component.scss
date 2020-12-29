@@ -35,10 +35,6 @@ div.content-wrapper {
         text-transform: uppercase;
         text-align: center;
         font-size: xx-large;
-        &.news {
-            border: 1px solid darkgreen;
-            background-color: lightgreen;
-        }
     }
     div.events {
         border: 1px solid darkred;
@@ -48,6 +44,11 @@ div.content-wrapper {
     div.notices {
         border: 1px solid #856404;
         background-color: #fff3cd;
+        padding: 5px !important;
+    }
+    div.news {
+        border: 1px solid darkgreen;
+        background-color: lightgreen;
         padding: 5px !important;
     }
 }

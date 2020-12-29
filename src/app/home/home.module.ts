@@ -5,7 +5,7 @@ import { HomeRoutingModule } from '@app/home/home-routing.module';
 import { HomeComponent } from '@app/home/home.component';
 import { CalendarEventsModule } from '@app/calendar/calendar.module';
 import { NoticesModule } from '@app/notices/notices.module';
-
+import { NewsModule } from '@app/news/news.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -14,6 +14,7 @@ import { NoticesModule } from '@app/notices/notices.module';
     SharedModule,
     CalendarEventsModule,
     NoticesModule,
+    NewsModule,
   ]
 })
 export class HomeModule { }
