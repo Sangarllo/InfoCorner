@@ -5,7 +5,9 @@
 <div class="content-wrapper mat-elevation-z8">
     <mat-tab-group mat-align-tabs="center">
         <mat-tab label="Avisos">
-            <div class="content notices">Avisos</div>
+            <div class="notices">
+                <app-notices-dashboard [showHeader]="false"></app-notices-dashboard>
+            </div>
         </mat-tab>
         <mat-tab label="Eventos">
             <div class="events">

@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
       type: 'event',
     },
     {
-      image: 'https://firebasestorage.googleapis.com/v0/b/infocorner-2020.appspot.com/o/ca-river-ebro.png?alt=media',
+      image: 'https://picsum.photos/100?random=11',
       name: 'story-2',
       type: 'notice',
     },
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
       type: 'news',
     },
     {
-      image: 'https://firebasestorage.googleapis.com/v0/b/infocorner-2020.appspot.com/o/sala-cine.png?alt=media',
+      image: 'https://picsum.photos/100?random=12',
       name: 'story-4',
       type: 'event',
     },

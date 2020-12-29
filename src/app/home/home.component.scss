@@ -36,10 +36,6 @@ div.content-wrapper {
         text-align: center;
         font-size: xx-large;
         &.news {
-            border: 1px solid #856404;
-            background-color: #fff3cd;
-        }
-        &.notices {
             border: 1px solid darkgreen;
             background-color: lightgreen;
         }
@@ -47,6 +43,11 @@ div.content-wrapper {
     div.events {
         border: 1px solid darkred;
         background-color: lightcoral;
+        padding: 5px !important;
+    }
+    div.notices {
+        border: 1px solid #856404;
+        background-color: #fff3cd;
         padding: 5px !important;
     }
 }

@@ -4,14 +4,16 @@ import { SharedModule } from '@shared/shared.module';
 import { HomeRoutingModule } from '@app/home/home-routing.module';
 import { HomeComponent } from '@app/home/home.component';
 import { CalendarEventsModule } from '@app/calendar/calendar.module';
+import { NoticesModule } from '@app/notices/notices.module';
 
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
     HomeRoutingModule,
-    CalendarEventsModule,
     SharedModule,
+    CalendarEventsModule,
+    NoticesModule,
   ]
 })
 export class HomeModule { }
