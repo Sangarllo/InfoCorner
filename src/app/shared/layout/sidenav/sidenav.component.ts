@@ -21,8 +21,8 @@ export class SidenavComponent {
       path: 'calendario',
     },
     {
-      icon: 'account_circle',
-      path: 'usuarios',
+      icon: 'event',
+      path: 'eventos',
     },
     {
       icon: 'campaign',
@@ -33,8 +33,8 @@ export class SidenavComponent {
       path: 'noticias',
     },
     {
-      icon: 'event',
-      path: 'eventos',
+      icon: 'account_circle',
+      path: 'usuarios',
     },
     {
       icon: 'group_work',
