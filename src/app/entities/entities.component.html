@@ -1,6 +1,7 @@
 <app-section-header [title]="'Panel de Configuración de Entidades'"></app-section-header>
 
-<div *ngIf="entities$ | async as entities; else noEntityTemplate">
+<div *ngIf="entities$ | async as entities; else noEntityTemplate" class="section-wrapper">
+
     <table mat-table matSort [dataSource]="entities" class="mat-elevation-z8">
 
         <ng-container matColumnDef="image">

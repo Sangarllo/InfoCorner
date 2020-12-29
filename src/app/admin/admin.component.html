@@ -1,19 +1,23 @@
 <app-section-header [title]="'Panel de Administración'"></app-section-header>
 
-<div *ngIf="auth.user | async as user" class="mb-3 text-center">
+<div class="section-wrapper">
 
-    <h1>¿Qué vida, {{ user.displayName }}?</h1>
+    <div *ngIf="auth.user | async as user" class="mb-3 text-center">
 
-    <img class="img-thumbnail" [src]="user.photoURL" routerLink="profile" />
+        <h1>¿Qué vida, {{ user.displayName }}?</h1>
 
-</div>
+        <img class="img-thumbnail" [src]="user.photoURL" routerLink="profile" />
 
-<mat-divider></mat-divider>
+    </div>
 
-<div *ngIf="userData$ | async as user" class="mt-3 text-center">
+    <mat-divider></mat-divider>
 
-    <h1>Con tu rol de <span style="text-transform: lowercase;font-weight: bolder;">{{ user.role }}</span> en la aplicación puedes hacer lo siguiente:</h1>
+    <div *ngIf="userData$ | async as user" class="mt-3 text-center">
 
-    <app-role-options [role]="user.role"></app-role-options>
+        <h1>Con tu rol de <span style="text-transform: lowercase;font-weight: bolder;">{{ user.role }}</span> en la aplicación puedes hacer lo siguiente:</h1>
+
+        <app-role-options [role]="user.role"></app-role-options>
+
+    </div>
 
 </div>

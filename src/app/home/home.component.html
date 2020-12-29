@@ -6,16 +6,21 @@
     <mat-tab-group mat-align-tabs="center">
         <mat-tab label="Avisos">
             <div class="notices">
+                <!--<div class="title">La Esquina del Tío Valero</div>-->
                 <app-notices-dashboard [showHeader]="false"></app-notices-dashboard>
             </div>
         </mat-tab>
         <mat-tab label="Eventos">
             <div class="events">
-                <app-calendar [showHeader]="false"></app-calendar>
+                <!--<div class="title">La Agenda Rinconera</div>-->
+                <div class="inner-events">
+                    <app-calendar [showHeader]="false"></app-calendar>
+                </div>
             </div>
         </mat-tab>
         <mat-tab label="Noticias">
             <div class="news">
+                <!--<div class="title">Ebro News</div>-->
                 <app-news-dashboard [showHeader]="false"></app-news-dashboard>
             </div>
 

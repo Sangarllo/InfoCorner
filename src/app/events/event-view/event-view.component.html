@@ -1,108 +1,108 @@
-<mat-card class="item-view" *ngIf="event; else noEventTemplate">
+<div class="section-wrapper">
 
-    <!-- <pre>
-    {{ event | json }}
-  </pre> -->
+    <mat-card class="item-view" *ngIf="event; else noEventTemplate">
 
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-            <app-event-image-detail [event]="event"></app-event-image-detail>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
+                <app-event-image-detail [event]="event"></app-event-image-detail>
 
-            <button mat-fab type="button" (click)="openEventImageDialog()" color="accent">
+                <button mat-fab type="button" (click)="openEventImageDialog()" color="accent">
               <mat-icon>photo_view</mat-icon>
             </button>
-        </div>
+            </div>
 
-        <div class="col-lg-9 col-md-8 col-12">
+            <div class="col-lg-9 col-md-8 col-12">
 
-            <mat-card-content class="item-view">
+                <mat-card-content class="item-view">
 
-                <fieldset class="event-item-detail type-what">
+                    <fieldset class="event-item-detail type-what">
 
-                    <legend>¿Qué?</legend>
+                        <legend>¿Qué?</legend>
 
-                    <button mat-fab type="button" (click)="openEventBasicDialog()" color="accent">
+                        <button mat-fab type="button" (click)="openEventBasicDialog()" color="accent">
                       <mat-icon>edit</mat-icon>
                     </button>
 
-                    <app-event-basic-detail [event]="event"></app-event-basic-detail>
+                        <app-event-basic-detail [event]="event"></app-event-basic-detail>
 
-                </fieldset>
+                    </fieldset>
 
-                <fieldset class="event-item-detail" [ngClass]="event.status">
+                    <fieldset class="event-item-detail" [ngClass]="event.status">
 
-                    <legend>¿Estado?</legend>
+                        <legend>¿Estado?</legend>
 
-                    <button mat-fab type="button" (click)="openEventStatusDialog()" color="accent">
+                        <button mat-fab type="button" (click)="openEventStatusDialog()" color="accent">
                     <mat-icon>settings</mat-icon>
                   </button>
 
-                    <app-event-status-detail [event]="event"></app-event-status-detail>
+                        <app-event-status-detail [event]="event"></app-event-status-detail>
 
-                </fieldset>
+                    </fieldset>
 
-                <fieldset class="event-item-detail type-other">
+                    <fieldset class="event-item-detail type-other">
 
-                    <legend>¿Cuándo?</legend>
+                        <legend>¿Cuándo?</legend>
 
-                    <button mat-fab type="button" (click)="openAppointmentDialog()" color="accent">
+                        <button mat-fab type="button" (click)="openAppointmentDialog()" color="accent">
                 <mat-icon>book_online</mat-icon>
               </button>
 
-                    <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
+                        <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
 
-                </fieldset>
+                    </fieldset>
 
-                <fieldset class="event-item-detail type-other">
+                    <fieldset class="event-item-detail type-other">
 
-                    <legend>¿Dónde?</legend>
+                        <legend>¿Dónde?</legend>
 
-                    <button mat-fab type="button" (click)="openPlaceDialog()" color="accent">
+                        <button mat-fab type="button" (click)="openPlaceDialog()" color="accent">
                       <mat-icon>add_location_alt</mat-icon>
                     </button>
 
-                    <app-event-place-detail [event]="event"></app-event-place-detail>
+                        <app-event-place-detail [event]="event"></app-event-place-detail>
 
-                </fieldset>
+                    </fieldset>
 
-                <fieldset class="event-item-detail type-other">
+                    <fieldset class="event-item-detail type-other">
 
-                    <legend>¿Quiénes?</legend>
+                        <legend>¿Quiénes?</legend>
 
-                    <button mat-fab type="button" (click)="openEntityDialog()" color="accent">
+                        <button mat-fab type="button" (click)="openEntityDialog()" color="accent">
                     <mat-icon>person_add</mat-icon>
                   </button>
 
-                    <app-event-entity-detail [event]="event"></app-event-entity-detail>
+                        <app-event-entity-detail [event]="event"></app-event-entity-detail>
 
-                </fieldset>
+                    </fieldset>
 
-                <fieldset class="event-audit-detail type-other">
+                    <fieldset class="event-audit-detail type-other">
 
-                    <legend>¿Audit?</legend>
+                        <legend>¿Audit?</legend>
 
-                    <app-event-audit-detail [event]="event"></app-event-audit-detail>
+                        <app-event-audit-detail [event]="event"></app-event-audit-detail>
 
-                </fieldset>
+                    </fieldset>
 
-            </mat-card-content>
+                </mat-card-content>
 
-            <mat-card-actions>
+                <mat-card-actions>
 
-                <div>
+                    <div>
 
-                    <button mat-fab type="button" (click)="editItem()" color="accent">
+                        <button mat-fab type="button" (click)="editItem()" color="accent">
                   <mat-icon>visibility</mat-icon>
                 </button>
 
-                </div>
+                    </div>
 
-            </mat-card-actions>
+                </mat-card-actions>
 
+            </div>
         </div>
-    </div>
 
-</mat-card>
+    </mat-card>
+
+</div>
 
 <ng-template #noEventTemplate>
     <mat-spinner></mat-spinner>

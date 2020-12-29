@@ -1,102 +1,106 @@
 <app-section-header [title]="pageTitle"></app-section-header>
 
-<mat-card class="item-edit" *ngIf="newsItem; else noNewsTemplate">
+<div class="section-wrapper">
 
-    <div class="row">
+    <mat-card class="item-edit" *ngIf="newsItem; else noNewsTemplate">
 
-        <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-            <img [src]="newsItemForm.get('image').value" class="img-thumbnail" (click)="inputImageProfile.click()">
-            <input hidden type="file" #inputImageProfile (change)="uploadImage($event)">
-            <hr>
-            <span (click)="inputImageProfile.click()" class="small">Clica en la imagen para cambiar la foto</span>
-        </div>
+        <div class="row">
 
-        <div class="col-lg-9 col-md-8 col-12">
+            <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
+                <img [src]="newsItemForm.get('image').value" class="img-thumbnail" (click)="inputImageProfile.click()">
+                <input hidden type="file" #inputImageProfile (change)="uploadImage($event)">
+                <hr>
+                <span (click)="inputImageProfile.click()" class="small">Clica en la imagen para cambiar la foto</span>
+            </div>
 
-            <form [formGroup]="newsItemForm" (ngSubmit)="onSaveForm()">
+            <div class="col-lg-9 col-md-8 col-12">
 
-                <mat-card-content>
+                <form [formGroup]="newsItemForm" (ngSubmit)="onSaveForm()">
 
-                    <fieldset class="form-status-fields" [ngClass]="newsItemForm.controls.status.value">
-                        <legend>Estado de la noticia</legend>
+                    <mat-card-content>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Id</mat-label>
-                            <input matInput type="text" formControlName="id" placeholder="Id">
-                        </mat-form-field>
+                        <fieldset class="form-status-fields" [ngClass]="newsItemForm.controls.status.value">
+                            <legend>Estado de la noticia</legend>
 
-                        <div class="row">
-
-                            <mat-form-field class="col-5" appearance="outline">
-                                <mat-label>Estado</mat-label>
-
-                                <mat-select formControlName="status" [value]="newsItemForm.get('status')">
-                                    <mat-option *ngFor="let status of STATUS" [value]="status">
-                                        {{status}}
-                                    </mat-option>
-                                </mat-select>
-
+                            <mat-form-field appearance="outline">
+                                <mat-label>Id</mat-label>
+                                <input matInput type="text" formControlName="id" placeholder="Id">
                             </mat-form-field>
 
-                            <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="active">Aviso activo</mat-slide-toggle>
+                            <div class="row">
 
-                            <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="focused">Aviso en portada</mat-slide-toggle>
-                        </div>
+                                <mat-form-field class="col-5" appearance="outline">
+                                    <mat-label>Estado</mat-label>
 
-                    </fieldset>
+                                    <mat-select formControlName="status" [value]="newsItemForm.get('status')">
+                                        <mat-option *ngFor="let status of STATUS" [value]="status">
+                                            {{status}}
+                                        </mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+
+                                <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="active">Aviso activo</mat-slide-toggle>
+
+                                <mat-slide-toggle class="col-3 mb-3 ml-2" formControlName="focused">Aviso en portada</mat-slide-toggle>
+                            </div>
+
+                        </fieldset>
 
 
-                    <fieldset class="form-info-fields">
-                        <legend>Información de la noticia</legend>
+                        <fieldset class="form-info-fields">
+                            <legend>Información de la noticia</legend>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Títular de la noticia</mat-label>
-                            <input matInput type="text" formControlName="name" placeholder="Título">
-                        </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Títular de la noticia</mat-label>
+                                <input matInput type="text" formControlName="name" placeholder="Título">
+                            </mat-form-field>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Categorías</mat-label>
-                            <mat-select formControlName="categories" multiple>
-                                <mat-option *ngFor="let category of CATEGORIES" [value]="category">{{category}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Categorías</mat-label>
+                                <mat-select formControlName="categories" multiple>
+                                    <mat-option *ngFor="let category of CATEGORIES" [value]="category">{{category}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Descripción</mat-label>
-                            <input matInput type="text" formControlName="description" placeholder="Descripción">
-                        </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Descripción</mat-label>
+                                <input matInput type="text" formControlName="description" placeholder="Descripción">
+                            </mat-form-field>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>Fuente</mat-label>
-                            <input matInput type="text" formControlName="sourceName" placeholder="Fuente de la Noticia">
-                        </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fuente</mat-label>
+                                <input matInput type="text" formControlName="sourceName" placeholder="Fuente de la Noticia">
+                            </mat-form-field>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>URL original</mat-label>
-                            <input matInput type="text" formControlName="sourceUrl" placeholder="URL de la Noticia">
-                        </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>URL original</mat-label>
+                                <input matInput type="text" formControlName="sourceUrl" placeholder="URL de la Noticia">
+                            </mat-form-field>
 
-                    </fieldset>
+                        </fieldset>
 
-                </mat-card-content>
+                    </mat-card-content>
 
-                <mat-card-actions>
+                    <mat-card-actions>
 
-                    <button mat-raised-button [title]="newsItemForm.valid ? 'Guardar con los datos introducidos' : 'Dishabilitado hasta que los datos sean válidos'" [disabled]="!newsItemForm.valid" type="submit" color="warn">Guardar</button>
+                        <button mat-raised-button [title]="newsItemForm.valid ? 'Guardar con los datos introducidos' : 'Dishabilitado hasta que los datos sean válidos'" [disabled]="!newsItemForm.valid" type="submit" color="warn">Guardar</button>
 
-                    <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button>
+                        <button mat-raised-button type="button" (click)="gotoList()" color="warn">Volver al listado</button>
 
-                </mat-card-actions>
+                    </mat-card-actions>
 
-            </form>
+                </form>
 
+            </div>
         </div>
+
+    </mat-card>
+
+    <div *ngIf="errorMessage" class="alert-danger">
+        {{ errorMessage }}
     </div>
 
-</mat-card>
-
-<div *ngIf="errorMessage" class="alert-danger">
-    {{ errorMessage }}
 </div>
 
 <ng-template #noNewsTemplate>

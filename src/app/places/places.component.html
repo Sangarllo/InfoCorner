@@ -1,10 +1,8 @@
 <app-section-header [title]="'Panel de Configuración de Lugares'">
-
-
-
 </app-section-header>
 
-<div *ngIf="places$ | async as places; else noplaceTemplate">
+<div *ngIf="places$ | async as places; else noplaceTemplate" class="section-wrapper">
+
     <table mat-table matSort [dataSource]="places" class="mat-elevation-z8">
 
         <ng-container matColumnDef="image">

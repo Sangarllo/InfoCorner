@@ -1,6 +1,6 @@
 <app-section-header [title]="'Panel de Configuración de Noticias'"></app-section-header>
 
-<div *ngIf="news$ | async as news; else noNewsTemplate">
+<div *ngIf="news$ | async as news; else noNewsTemplate" class="section-wrapper">
     <table mat-table matSort [dataSource]="news" class="mat-elevation-z8">
 
         <ng-container matColumnDef="image">
