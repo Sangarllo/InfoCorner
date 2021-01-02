@@ -1,9 +1,9 @@
-<div class="event-item-detail" *ngIf="event.entity">
-    <img [src]="event.entity.image" class="img-thumbnail">
+<div class="event-item-detail" *ngIf="event.entityItems; else noEntitiesTemplate">
 
-    <h2>{{ event?.entity?.name }}</h2>
+    <app-base-item-detail *ngFor="let entity of event.entityItems" [baseItem]="entity"></app-base-item-detail>
 
-    <h3 *ngIf="event.entityRol">
-        {{ event.entityRol }}
-    </h3>
 </div>
+
+<ng-template #noEntitiesTemplate>
+    No hay entidades asociadas
+</ng-template>

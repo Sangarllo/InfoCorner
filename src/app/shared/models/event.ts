@@ -21,6 +21,7 @@ export interface IEvent {
   placeDesc?: string;
   entity?: IEntity;
   entityRol?: string;
+  entityItems?: IBase[];
   appointmentId?: string;
   createdBy?: string;
   createdAt?: string;
@@ -55,6 +56,7 @@ export class Event implements IEvent, IBase, IAudit {
 
     public entity?: IEntity,
     public entityRol?: string,
+    public entityItems?: IBase[],
 
     public appointmentId?: string,
 
@@ -73,7 +75,7 @@ export class Event implements IEvent, IBase, IAudit {
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       '', [], '', // Basics
       null, '', '', // Place
-      null, '', // Entity
+      null, '', [], // Entity
       null, // Appointment
       null, null, null, null, null // Audit
     );

@@ -9,6 +9,7 @@ import { FooterComponent } from '@shared/layout/footer/footer.component';
 import { HeaderComponent } from '@shared/layout/header/header.component';
 import { SidenavComponent } from '@shared/layout/sidenav/sidenav.component';
 import { SectionHeaderComponent } from '@shared/layout/section-header/section-header.component';
+import { BaseItemDetailComponent } from '@shared/components/base-item-detail/base-item-detail.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { SectionHeaderComponent } from '@shared/layout/section-header/section-he
     HeaderComponent,
     SidenavComponent,
     SectionHeaderComponent,
+    BaseItemDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { SectionHeaderComponent } from '@shared/layout/section-header/section-he
     HeaderComponent,
     SidenavComponent,
     SectionHeaderComponent,
+    BaseItemDetailComponent,
   ]
 })
 export class SharedModule { }

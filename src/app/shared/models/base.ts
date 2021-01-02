@@ -1,8 +1,16 @@
+export enum BaseType {
+  DEFAULT = '',
+  ENTITY = 'ENTITY',
+  PLACE = 'PLACE'
+}
+
 export interface IBase {
   id: string;
   active: boolean;
   name: string;
   image: string;
+  baseType?: BaseType; // TODO this field is not optional
+  desc?: string;
 }
 
 export class Base implements IBase {
@@ -16,6 +24,8 @@ export class Base implements IBase {
     public active: boolean,
     public name: string,
     public image: string,
+    public baseType?: BaseType,
+    public desc?: string,
   ) { }
 
 
@@ -25,6 +35,8 @@ export class Base implements IBase {
       true,
       Base.NAME_DEFAULT,
       Base.IMAGE_DEFAULT,
+      BaseType.DEFAULT,
+      null,
     );
   }
 

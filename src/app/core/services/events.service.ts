@@ -5,7 +5,7 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
 
-import { Base } from '@models/base';
+import { Base, IBase } from '@models/base';
 import { IEntity } from '@models/entity';
 import { IEvent } from '@models/event';
 import { IPlace } from '@models/place';
@@ -97,7 +97,7 @@ export class EventService {
     );
   }
 
-  getAllEventsBase(): Observable<Base[]> {
+  getAllEventsBase(): Observable<IBase[]> {
     this.eventCollection = this.afs.collection<IEvent>(
       EVENTS_COLLECTION,
       ref => ref.where('active', '==', true)
@@ -138,15 +138,23 @@ export class EventService {
     event.id = id;
 
     event.name = `Nuevo evento de ${entity.name}`;
-    event.entity = entity;
-    event.entityRol = entityRol;
+
+    const newEntityItem: IBase = {
+      id: entity.id,
+      active: true,
+      name: entity.name,
+      image: entity.image,
+      desc: entityRol,
+    };
+    event.entityItems = [ newEntityItem ];
+
     event.images = [];
     const newImage = entity.image;
     if ( newImage ) {
       event.image = newImage;
       event.images.push(newImage);
     }
-    if ( place ) {
+    if ( place.id !== Base.ID_DEFAULT ) {
       const placeImage = entity.place?.image;
       event.place = entity.place;
       event.images.push(placeImage);
@@ -155,7 +163,7 @@ export class EventService {
     event.appointmentId = id;
     this.appointmentSrv.addAppointment(id);
 
-    const newEvent = { ...event, entity: event.entity, place: event.place };
+    const newEvent = { ...event, entityItems: event.entityItems, place: event.place };
     this.eventCollection.doc(event.id).set(newEvent, { merge: true });
     return id;
   }

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
+import Swal from 'sweetalert2';
+
 import { AuthService } from '@auth/auth.service';
-import { Base } from '@models/base';
+import { Base, IBase, BaseType } from '@models/base';
 import { IAppointment } from '@models/appointment';
 import { IEvent, Event } from '@models/event';
 import { IUser } from '@models/user';
@@ -124,11 +126,28 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventEntityDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      this.event.entity = ( eventDialog.entity.id === Base.ID_DEFAULT ) ?
-        null :
-        eventDialog.entity;
-      this.event.entityRol = eventDialog.entityRol;
-      this.eventSrv.updateEvent(this.event, this.currentUser);
+      if ( eventDialog ) {
+        console.log(`closing eventDialog: ${JSON.stringify(eventDialog)}`);
+
+        if ( eventDialog?.entity.id !== Base.ID_DEFAULT ) {
+          const newEntityItem: IBase = {
+            id: eventDialog.entity.id,
+            active: true,
+            name: eventDialog.entity.name,
+            image: eventDialog.entity.image,
+            baseType: BaseType.ENTITY,
+            desc: eventDialog.entityRol,
+          };
+          this.event.entityItems.push(newEntityItem);
+        }
+        this.eventSrv.updateEvent(this.event, this.currentUser);
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Datos no modificados',
+          text: `Has cerrado la ventana sin guardar ningún cambio`,
+        });
+      }
     });
   }
 
