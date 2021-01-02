@@ -112,12 +112,34 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventPlaceDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      this.event.place = ( eventDialog.place.id === Base.ID_DEFAULT ) ?
-        null :
-        eventDialog.place;
-      this.event.placeLocality = eventDialog.placeLocality;
-      this.event.placeDesc = eventDialog.placeDesc;
-      this.eventSrv.updateEvent(this.event, this.currentUser);
+
+      if ( eventDialog ) {
+        console.log(`closing eventDialog: ${JSON.stringify(eventDialog)}`);
+
+        if ( eventDialog?.place.id !== Base.ID_DEFAULT ) {
+          const newPlaceItem: IBase = {
+            id: eventDialog.place.id,
+            active: true,
+            name: eventDialog.place.name,
+            image: eventDialog.place.image,
+            baseType: BaseType.PLACE,
+            desc: '',
+          };
+          this.event.placeItems.push(newPlaceItem);
+        }
+
+        this.event.placeLocality = eventDialog.placeLocality;
+        this.event.placeDesc = eventDialog.placeDesc;
+
+        this.eventSrv.updateEvent(this.event, this.currentUser);
+
+      } else {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Datos no modificados',
+          text: `Has cerrado la ventana sin guardar ningún cambio`,
+        });
+      }
     });
   }
 

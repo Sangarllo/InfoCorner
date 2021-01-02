@@ -19,6 +19,7 @@ export interface IEvent {
   place?: IPlace;
   placeLocality?: string;
   placeDesc?: string;
+  placeItems?: IBase[];
   entity?: IEntity;
   entityRol?: string;
   entityItems?: IBase[];
@@ -53,6 +54,7 @@ export class Event implements IEvent, IBase, IAudit {
     public place?: IPlace,
     public placeLocality?: string,
     public placeDesc?: string,
+    public placeItems?: IBase[],
 
     public entity?: IEntity,
     public entityRol?: string,
@@ -74,7 +76,7 @@ export class Event implements IEvent, IBase, IAudit {
       true, Status.Editing, true, // Status
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       '', [], '', // Basics
-      null, '', '', // Place
+      null, '', '', [], // Place
       null, '', [], // Entity
       null, // Appointment
       null, null, null, null, null // Audit
