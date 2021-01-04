@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-import Swal from 'sweetalert2';
-
 import { AuthService } from '@auth/auth.service';
 import { Base, IBase, BaseType } from '@models/base';
 import { IAppointment } from '@models/appointment';
@@ -11,13 +9,13 @@ import { IEvent, Event } from '@models/event';
 import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
 import { AppointmentsService } from '@services/appointments.service';
+import { SwalMessage, UtilsService } from '@services/utils.service';
 
-import { EventEntityDialogComponent } from '@app/events/event-entity-dialog/event-entity-dialog.component';
-import { EventPlaceDialogComponent } from '@app/events/event-place-dialog/event-place-dialog.component';
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
 import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
 import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-image-dialog.component';
+import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -37,6 +35,7 @@ export class EventViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authSrv: AuthService,
+    private utilsSrv: UtilsService,
     private eventSrv: EventService,
     private appointmentSrv: AppointmentsService
   ) {
@@ -49,7 +48,7 @@ export class EventViewComponent implements OnInit {
 
     this.authSrv.currentUser$.subscribe( (user: any) => {
       this.currentUser = user;
-    })
+    });
 
     this.idEvent = this.route.snapshot.paramMap.get('id');
     if ( this.idEvent ) {
@@ -108,67 +107,30 @@ export class EventViewComponent implements OnInit {
   }
 
   openPlaceDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventPlaceDialogComponent, this.dialogConfig);
+    this.dialogConfig.data = BaseType.PLACE;
+    const dialogRef = this.dialog.open(EventNewBaseDialogComponent, this.dialogConfig);
 
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-
-      if ( eventDialog ) {
-        console.log(`closing eventDialog: ${JSON.stringify(eventDialog)}`);
-
-        if ( eventDialog?.place.id !== Base.ID_DEFAULT ) {
-          const newPlaceItem: IBase = {
-            id: eventDialog.place.id,
-            active: true,
-            name: eventDialog.place.name,
-            image: eventDialog.place.image,
-            baseType: BaseType.PLACE,
-            desc: '',
-          };
-          this.event.placeItems.push(newPlaceItem);
-        }
-
-        this.event.placeLocality = eventDialog.placeLocality;
-        this.event.placeDesc = eventDialog.placeDesc;
-
+    dialogRef.afterClosed().subscribe((newBase: IBase) => {
+      if ( newBase ) {
+        this.event.placeItems.push(newBase);
         this.eventSrv.updateEvent(this.event, this.currentUser);
-
       } else {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Datos no modificados',
-          text: `Has cerrado la ventana sin guardar ningún cambio`,
-        });
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }
     });
   }
 
+
   openEntityDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventEntityDialogComponent, this.dialogConfig);
+    this.dialogConfig.data = BaseType.ENTITY;
+    const dialogRef = this.dialog.open(EventNewBaseDialogComponent, this.dialogConfig);
 
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      if ( eventDialog ) {
-        console.log(`closing eventDialog: ${JSON.stringify(eventDialog)}`);
-
-        if ( eventDialog?.entity.id !== Base.ID_DEFAULT ) {
-          const newEntityItem: IBase = {
-            id: eventDialog.entity.id,
-            active: true,
-            name: eventDialog.entity.name,
-            image: eventDialog.entity.image,
-            baseType: BaseType.ENTITY,
-            desc: eventDialog.entityRol,
-          };
-          this.event.entityItems.push(newEntityItem);
-        }
+    dialogRef.afterClosed().subscribe((newBase: IBase) => {
+      if ( newBase ) {
+        this.event.entityItems.push(newBase);
         this.eventSrv.updateEvent(this.event, this.currentUser);
       } else {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Datos no modificados',
-          text: `Has cerrado la ventana sin guardar ningún cambio`,
-        });
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }
     });
   }

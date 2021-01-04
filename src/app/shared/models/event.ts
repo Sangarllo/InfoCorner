@@ -16,12 +16,12 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
-  place?: IPlace;
-  placeLocality?: string;
-  placeDesc?: string;
+  baseInfo?: IBase;
+  // place?: IPlace;
+  // placeLocality?: string;
+  // placeDesc?: string;
   placeItems?: IBase[];
-  entity?: IEntity;
-  entityRol?: string;
+  entityBase?: IBase;
   entityItems?: IBase[];
   appointmentId?: string;
   createdBy?: string;
@@ -51,13 +51,14 @@ export class Event implements IEvent, IBase, IAudit {
     public categories?: Category[],
     public description?: string,
 
-    public place?: IPlace,
-    public placeLocality?: string,
-    public placeDesc?: string,
+    public baseInfo?: IBase,
+
+    // public place?: IPlace,
+    // public placeLocality?: string,
+    // public placeDesc?: string,
     public placeItems?: IBase[],
 
-    public entity?: IEntity,
-    public entityRol?: string,
+    public entityBase?: IBase,
     public entityItems?: IBase[],
 
     public appointmentId?: string,
@@ -75,9 +76,10 @@ export class Event implements IEvent, IBase, IAudit {
       '0',
       true, Status.Editing, true, // Status
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
-      '', [], '', // Basics
-      null, '', '', [], // Place
-      null, '', [], // Entity
+      '', [], '', // Basics,
+      null,
+      [], // Place
+      null, [], // Entity
       null, // Appointment
       null, null, null, null, null // Audit
     );

@@ -5,11 +5,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
 
-import { Base } from '@models/base';
+import { Base, IBase } from '@models/base';
+import { Entity, IEntity } from '@models/entity';
 import { IEvent } from '@models/event';
 import { EntityService } from '@services/entities.service';
 import { PlaceService } from '@services/places.service';
-import { Entity, IEntity } from '@models/entity';
+import { UtilsService, SwalMessage } from '@services/utils.service';
 
 @Component({
   selector: 'app-event-entity-place-dialog',
@@ -29,6 +30,7 @@ export class EventEntityPlaceDialogComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private utilsSrv: UtilsService,
     private entitySrv: EntityService,
     private placeSrv: PlaceService,
     public dialogRef: MatDialogRef<EventEntityPlaceDialogComponent>,
@@ -44,23 +46,23 @@ export class EventEntityPlaceDialogComponent implements OnInit {
 
     this.entityForm = this.fb.group({
       entity: [ this.entitySelected, [Validators.required]],
-      entityRol: [ this.data.entityRol, []],
+      entityRol: [ this.entitySelected.roleDefault, []],
       place: [ this.SECTION_BLANK, []]
-  });
+    });
   }
 
   onEntitySelectionChanged(event: any): void {
     this.entitySelected = event.value;
 
     let roleDefault = '';
-    if ( !this.compareFunction(this.entitySelected, this.ENTITY_BLANK) ) {
+    if ( !this.utilsSrv.compareFunction(this.entitySelected, this.ENTITY_BLANK) ) {
       roleDefault = this.entitySelected.roleDefault;
     }
     this.entityForm.controls.entityRol.setValue( this.entitySelected.roleDefault );
 
     let entityPlace: Base = this.SECTION_BLANK;
     if ( this.entitySelected.place ) {
-      entityPlace = this.entitySelected.place as Base
+      entityPlace = this.entitySelected.place as Base;
     }
     console.log(`entityPlace: ${JSON.stringify(entityPlace)}`);
     this.entityForm.controls.place.setValue( entityPlace );
@@ -70,16 +72,12 @@ export class EventEntityPlaceDialogComponent implements OnInit {
     this.placeBaseSelected = event.value;
   }
 
-  compareFunction(o1: any, o2: any): boolean {
-    return (o1.name === o2.name && o1.id === o2.id);
-   }
+  compareFunction(o1: IBase, o2: IBase): boolean {
+    return this.utilsSrv.compareFunction(o1, o2);
+  }
 
-   onNoClick(): void {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Datos no modificados',
-      text: `Has cerrado la ventana sin guardar ningún cambio`,
-    });
+  onNoClick(): void {
+    this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
     this.dialogRef.close();
   }
 

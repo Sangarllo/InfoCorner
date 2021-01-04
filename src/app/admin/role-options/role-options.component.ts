@@ -10,7 +10,9 @@ import { IEvent, Event } from '@models/event';
 import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
 
-import { EventEntityPlaceDialogComponent } from '@app/events/event-entity-place-dialog/event-entity-place-dialog.component';
+import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
+import { IBase, BaseType } from '@models/base';
+import { SwalMessage, UtilsService } from '@services/utils.service';
 
 @Component({
   selector: 'app-role-options',
@@ -27,12 +29,13 @@ export class RoleOptionsComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
+    private utilsSrv: UtilsService,
     private authSrv: AuthService,
     private eventSrv: EventService
   ) {
     this.authSrv.currentUser$.subscribe( (user: any) => {
       this.currentUser = user;
-    })
+    });
   }
 
   onNotImplementedClick(): void {
@@ -53,18 +56,19 @@ export class RoleOptionsComponent {
   }
 
   openEntityDialog(): void {
-    this.dialogConfig.data = this.role;
+    this.dialogConfig.data = BaseType.ENTITY;
     this.dialogConfig.width = '500px';
     this.dialogConfig.height = '600px';
-    const dialogRef = this.dialog.open(EventEntityPlaceDialogComponent, this.dialogConfig);
+    const dialogRef = this.dialog.open(EventNewBaseDialogComponent, this.dialogConfig);
 
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      const event = Event.InitDefault();
-      const entity = eventDialog.entity;
-      const entityRol = eventDialog.entityRol;
-      const place = eventDialog.place;
-      const eventId = this.eventSrv.addEventFromEntity(event, this.currentUser, entity, entityRol, place);
-      this.router.navigate([`eventos/${eventId}`]);
+    dialogRef.afterClosed().subscribe((newBase: IBase) => {
+      if ( newBase ) {
+        const newEvent = Event.InitDefault();
+        const eventId = this.eventSrv.addEventFromEntity(newEvent, this.currentUser, newBase);
+        this.router.navigate([`eventos/${eventId}`]);
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
     });
   }
 }

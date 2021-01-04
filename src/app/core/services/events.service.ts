@@ -123,53 +123,41 @@ export class EventService {
     return this.eventCollection.doc(idEvent).valueChanges({ idField: 'id' });
   }
 
-  addEvent(event: IEvent, currentUser: IUser): void {
+  addEvent(event: IEvent, currentUser: IUser): string {
+    // tslint:disable-next-line: no-debugger
+    debugger;
     event = this.setCreationInfo(event, currentUser);
     const id: string = this.afs.createId();
     event.id = id;
     event.appointmentId = id;
     this.appointmentSrv.addAppointment(id);
     this.eventCollection.doc(event.id).set(event, { merge: true });
+    return id;
   }
 
-  addEventFromEntity(event: IEvent, currentUser: IUser, entity: IEntity, entityRol?: string, place?: IPlace): string {
+  addEventFromEntity(event: IEvent, currentUser: IUser, entityBase: IBase): string {
     event = this.setCreationInfo(event, currentUser);
     const id: string = this.afs.createId();
     event.id = id;
 
-    event.name = `Nuevo evento de ${entity.name}`;
+    event.name = `Nuevo evento de ${entityBase.name}`;
 
     const newEntityItem: IBase = {
-      id: entity.id,
+      id: entityBase.id,
       active: true,
-      name: entity.name,
-      image: entity.image,
+      name: entityBase.name,
+      image: entityBase.image,
       baseType: BaseType.ENTITY,
-      desc: entityRol,
+      desc: entityBase.desc,
     };
     event.entityItems = [ newEntityItem ];
 
     event.images = [];
-    const newImage = entity.image;
+    const newImage = entityBase.image;
     if ( newImage ) {
       event.image = newImage;
       event.images.push(newImage);
     }
-    if ( place.id !== Base.ID_DEFAULT ) {
-
-      const newPlaceItem: IBase = {
-        id: entity.place?.id,
-        active: true,
-        name: entity.place?.name,
-        image: entity.place?.image,
-        baseType: BaseType.PLACE,
-        desc: '',
-      };
-      event.placeItems = [ newPlaceItem ];
-      const placeImage = entity.place?.image;
-      event.images.push(placeImage);
-    }
-
     event.appointmentId = id;
     this.appointmentSrv.addAppointment(id);
 

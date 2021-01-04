@@ -52,8 +52,9 @@ export class EntityService {
           const active = entity.active;
           const name = entity.name;
           const image = entity.image;
+          const desc = entity.roleDefault;
           return {
-            id, active, name, image
+            id, active, name, image, desc
           };
         }
       }))

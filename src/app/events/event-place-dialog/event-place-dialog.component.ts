@@ -4,10 +4,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { PlaceService } from '@services/places.service';
-import { Base } from '@models/base';
+import { IBase, Base } from '@models/base';
 import { IEvent } from '@models/event';
-import Swal from 'sweetalert2';
+import { PlaceService } from '@services/places.service';
+import { UtilsService, SwalMessage } from '@services/utils.service';
 
 @Component({
   selector: 'app-event-place-dialog',
@@ -19,12 +19,13 @@ export class EventPlaceDialogComponent implements OnInit {
   title = 'Selecciona la ubicación del evento';
   placeForm: FormGroup;
   placeCtrl = new FormControl();
-  placeBaseSelected: Base;
+  placeBaseSelected: IBase;
   readonly SECTION_BLANK: Base = Base.InitDefault();
-  places$: Observable<Base[]>;
+  places$: Observable<IBase[]>;
 
   constructor(
     private fb: FormBuilder,
+    private utilsSrv: UtilsService,
     private placeSrv: PlaceService,
     public dialogRef: MatDialogRef<EventPlaceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IEvent) {
@@ -34,14 +35,11 @@ export class EventPlaceDialogComponent implements OnInit {
 
     this.places$ = this.placeSrv.getAllPlacesBase();
 
-    this.placeBaseSelected = ( this.data.place ) ?
-      this.data.place as Base
-      : this.SECTION_BLANK;
+    this.placeBaseSelected = this.SECTION_BLANK;
 
     this.placeForm = this.fb.group({
       place: [ this.placeBaseSelected, []],
-      placeLocality: [ this.data.placeLocality, []],
-      placeDesc: [ this.data.placeDesc, []],
+      placeDesc: [ this.placeBaseSelected.desc, []],
   });
   }
 
@@ -49,25 +47,17 @@ export class EventPlaceDialogComponent implements OnInit {
     this.placeBaseSelected = event.value;
   }
 
-  compareFunction(o1: any, o2: any): boolean {
-    return (o1.name === o2.name && o1.id === o2.id);
-   }
+  compareFunction(o1: IBase, o2: IBase): boolean {
+      return this.utilsSrv.compareFunction(o1, o2);
+  }
 
-   onNoClick(): void {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Datos no modificados',
-      text: `Has cerrado la ventana sin guardar ningún cambio`,
-    });
+  onNoClick(): void {
+    this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
     this.dialogRef.close();
   }
 
   save(): void {
-    Swal.fire({
-      icon: 'success',
-      title: 'Datos guardados con éxito',
-      text: `La ubicación ha sido cambiada correctamente`,
-    });
+    this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, 'ubicación');
     this.dialogRef.close(this.placeForm.value);
   }
 }

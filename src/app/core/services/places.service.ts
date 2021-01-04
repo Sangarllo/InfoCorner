@@ -52,8 +52,9 @@ export class PlaceService {
           const active = place.active;
           const name = place.name;
           const image = place.image;
+          const desc = place.locality;
           return {
-            id, active, name, image
+            id, active, name, image, desc
           };
         }
       }))
