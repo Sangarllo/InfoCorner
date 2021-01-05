@@ -8,12 +8,12 @@ import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { AuthService } from '@auth/auth.service';
-import { EventService } from '@services/events.service';
 import { Event, IEvent } from '@models/event';
 import { Status } from '@models/status.enum';
 import { CATEGORIES, Category } from '@models/category.enum';
 import { IUser } from '@models/user';
-
+import { AuditType } from '@models/audit';
+import { EventService } from '@services/events.service';
 
 @Component({
   selector: 'app-event-edit',
@@ -44,7 +44,7 @@ export class EventEditComponent implements OnInit {
 
     this.authSrv.currentUser$.subscribe( (user: any) => {
       this.currentUser = user;
-    })
+    });
 
     const idEvent = this.route.snapshot.paramMap.get('id');
     if ( idEvent ) {
@@ -127,7 +127,7 @@ export class EventEditComponent implements OnInit {
         if (eventItem.id === '0') {
           this.EventSrv.addEvent(eventItem, this.currentUser);
         } else {
-          this.EventSrv.updateEvent(eventItem, this.currentUser);
+          this.EventSrv.updateEvent(eventItem, AuditType.UPDATED_INFO, this.currentUser);
         }
 
         this.router.navigate([ Event.PATH_URL]);

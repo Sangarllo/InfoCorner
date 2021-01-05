@@ -16,6 +16,7 @@ import { EventStatusDialogComponent } from '@app/events/event-status-dialog/even
 import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
 import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-image-dialog.component';
 import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
+import { AuditType } from '@app/shared/models/audit';
 
 @Component({
   selector: 'app-event-view',
@@ -79,7 +80,7 @@ export class EventViewComponent implements OnInit {
       this.event.name = eventDialog.name;
       this.event.description = eventDialog.description;
       this.event.categories = eventDialog.categories;
-      this.eventSrv.updateEvent(this.event, this.currentUser);
+      this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser);
     });
   }
 
@@ -90,7 +91,7 @@ export class EventViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
       this.event.image = eventDialog.image;
       this.event.images = eventDialog.images;
-      this.eventSrv.updateEvent(this.event, this.currentUser);
+      this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Modificada imagen');
     });
   }
 
@@ -102,7 +103,7 @@ export class EventViewComponent implements OnInit {
       this.event.status = eventDialog.status;
       this.event.active = eventDialog.active;
       this.event.focused = eventDialog.focused;
-      this.eventSrv.updateEvent(this.event, this.currentUser);
+      this.eventSrv.updateEvent(this.event, AuditType.UPDATED_STATUS, this.currentUser);
     });
   }
 
@@ -113,7 +114,7 @@ export class EventViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe((newBase: IBase) => {
       if ( newBase ) {
         this.event.placeItems.push(newBase);
-        this.eventSrv.updateEvent(this.event, this.currentUser);
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadida ubicacíon');
       } else {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }
@@ -128,7 +129,7 @@ export class EventViewComponent implements OnInit {
     dialogRef.afterClosed().subscribe((newBase: IBase) => {
       if ( newBase ) {
         this.event.entityItems.push(newBase);
-        this.eventSrv.updateEvent(this.event, this.currentUser);
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadida entidad');
       } else {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }

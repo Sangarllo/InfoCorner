@@ -8,9 +8,9 @@ import { CalendarEvent } from 'angular-calendar';
 import { BaseType, IBase } from '@models/base';
 import { IEvent } from '@models/event';
 import { IUser } from '@models/user';
+import { AuditItem, AuditType } from '@models/audit';
 import { AppointmentsService } from '@services/appointments.service';
-import { AuditType } from '@app/shared/models/audit';
-import { colors } from '@app/shared/utils/colors';
+import { colors } from '@shared/utils/colors';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -122,9 +122,11 @@ export class EventService {
   }
 
   addEvent(event: IEvent, currentUser: IUser): string {
-    // tslint:disable-next-line: no-debugger
-    debugger;
-    event = this.setCreationInfo(event, currentUser);
+
+    const timeStamp = this.appointmentSrv.getTimestamp();
+    const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timeStamp);
+    event.auditItems.push({...auditItem});
+
     const id: string = this.afs.createId();
     event.id = id;
     event.appointmentId = id;
@@ -134,7 +136,11 @@ export class EventService {
   }
 
   addEventFromEntity(event: IEvent, currentUser: IUser, entityBase: IBase): string {
-    event = this.setCreationInfo(event, currentUser);
+
+    const timeStamp = this.appointmentSrv.getTimestamp();
+    const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timeStamp);
+    event.auditItems.push({...auditItem});
+
     const id: string = this.afs.createId();
     event.id = id;
 
@@ -164,43 +170,26 @@ export class EventService {
     return id;
   }
 
-  updateEvent(event: IEvent, currentUser: IUser): void {
-    event = this.setUpdateInfo(event, currentUser);
+  updateEvent(event: IEvent, auditType: AuditType, currentUser: IUser, descExtra?: string): void {
+
+    const timeStamp = this.appointmentSrv.getTimestamp();
+    const auditItem = AuditItem.InitDefault(auditType, currentUser, timeStamp, descExtra);
+    event.auditItems.push({...auditItem});
+
     const idEvent = event.id;
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
     this.eventDoc.set(event, { merge: true });
   }
 
   deleteEvent(event: IEvent, currentUser: IUser): void {
-    event = this.setDeleteInfo(event, currentUser);
+    const timeStamp = this.appointmentSrv.getTimestamp();
+    const auditItem = AuditItem.InitDefault(AuditType.DELETED, currentUser, timeStamp);
+    event.auditItems.push({...auditItem});
+
     const idEvent = event.id;
     event.active = false;
     this.eventDoc = this.afs.doc<IEvent>(`${EVENTS_COLLECTION}/${idEvent}`);
     this.eventDoc.update(event);
-  }
-
-  private setCreationInfo(event: IEvent, user: IUser): IEvent {
-    const timestamp = this.appointmentSrv.getTimestamp();
-    event.createdBy = user.uid;
-    event.createdAt = timestamp;
-    event.updatedBy = user.uid;
-    event.updatedAt = timestamp;
-    event.updatedType = AuditType.Created;
-    return event;
-  }
-
-  private setUpdateInfo(event: IEvent, user: IUser): IEvent {
-    event.updatedBy = user.uid;
-    event.updatedAt = this.appointmentSrv.getTimestamp();
-    event.updatedType = AuditType.Updated;
-    return event;
-  }
-
-  private setDeleteInfo(event: IEvent, user: IUser): IEvent {
-    event.updatedBy = user.uid;
-    event.updatedAt = this.appointmentSrv.getTimestamp();
-    event.updatedType = AuditType.Deleted;
-    return event;
   }
 
   public getEventCalendar(): Observable<CalendarEvent[]> {

@@ -1,5 +1,5 @@
 import { IBase, BaseType } from '@models/base';
-import { Audit, AuditType, IAudit } from '@models/audit';
+// import { Audit, AuditType, IAudit } from '@models/audit';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 import { IUser } from './user';
@@ -18,14 +18,15 @@ export interface IEvent {
   placeItems?: IBase[];
   entityItems?: IBase[];
   appointmentId?: string;
-  createdBy?: string;
-  createdAt?: string;
-  updatedBy?: string;
-  updatedAt?: string;
-  updatedType?: AuditType;
+  auditItems?: IBase[];
+  // createdBy?: string;
+  // createdAt?: string;
+  // updatedBy?: string;
+  // updatedAt?: string;
+  // updatedType?: AuditType;
 }
 
-export class Event implements IEvent, IBase, IAudit {
+export class Event implements IEvent, IBase { // IAudit
 
   public static IMAGE_DEFAULT = 'assets/images/events/default.png';
   public static PATH_URL = 'eventos';
@@ -51,11 +52,12 @@ export class Event implements IEvent, IBase, IAudit {
 
     public appointmentId?: string,
 
-    public createdBy?: string,
-    public createdAt?: string,
-    public updatedBy?: string,
-    public updatedAt?: string,
-    public updatedType?: AuditType,
+    public auditItems?: IBase[],
+    // public createdBy?: string,
+    // public createdAt?: string,
+    // public updatedBy?: string,
+    // public updatedAt?: string,
+    // public updatedType?: AuditType,
      ) {
   }
 
@@ -70,7 +72,7 @@ export class Event implements IEvent, IBase, IAudit {
       [], // Place
       [], // Entity
       null, // Appointment
-      null, null, null, null, null // Audit
+      [] // null, null, null, null, null // Audit
     );
   }
 }
