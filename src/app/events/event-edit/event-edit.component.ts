@@ -76,7 +76,6 @@ export class EventEditComponent implements OnInit {
         next: (event: IEvent | undefined) => {
           this.event = event;
           this.displayEvent();
-          console.log(JSON.stringify(this.event));
         },
         error: err => {
           this.errorMessage = `Error: ${err}`;

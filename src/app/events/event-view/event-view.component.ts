@@ -77,10 +77,14 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventBasicDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      this.event.name = eventDialog.name;
-      this.event.description = eventDialog.description;
-      this.event.categories = eventDialog.categories;
-      this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser);
+      if ( eventDialog ) {
+        this.event.name = eventDialog.name;
+        this.event.description = eventDialog.description;
+        this.event.categories = eventDialog.categories;
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser);
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
     });
   }
 
@@ -89,9 +93,13 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventImageDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      this.event.image = eventDialog.image;
-      this.event.images = eventDialog.images;
-      this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Modificada imagen');
+      if ( eventDialog ) {
+        this.event.image = eventDialog.image;
+        this.event.images = eventDialog.images;
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Modificada imagen');
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
     });
   }
 
@@ -100,10 +108,14 @@ export class EventViewComponent implements OnInit {
     const dialogRef = this.dialog.open(EventStatusDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      this.event.status = eventDialog.status;
-      this.event.active = eventDialog.active;
-      this.event.focused = eventDialog.focused;
-      this.eventSrv.updateEvent(this.event, AuditType.UPDATED_STATUS, this.currentUser);
+      if ( eventDialog ) {
+        this.event.status = eventDialog.status;
+        this.event.active = eventDialog.active;
+        this.event.focused = eventDialog.focused;
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_STATUS, this.currentUser);
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
     });
   }
 
