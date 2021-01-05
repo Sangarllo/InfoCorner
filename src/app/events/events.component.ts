@@ -18,7 +18,7 @@ export class EventsComponent implements OnInit {
 
   private currentUser: IUser;
   public events$!: Observable<IEvent[]>;
-  displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions2'];
 
   constructor(
     private router: Router,
@@ -30,17 +30,13 @@ export class EventsComponent implements OnInit {
 
     this.authSrv.currentUser$.subscribe( (currentUser: IUser) => {
       this.currentUser = currentUser;
-    })
+    });
 
     this.events$ = this.eventSrv.getAllEvents();
   }
 
   public gotoItem(event: IEvent): void {
     this.router.navigate([`eventos/${event.id}`]);
-  }
-
-  public editItem(event: IEvent): void {
-    this.router.navigate([`eventos/${event.id}/editar`]);
   }
 
   public deleteItem(event: IEvent): void {
