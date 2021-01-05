@@ -2,8 +2,6 @@ import { IBase } from '@models/base';
 import { Audit, AuditType, IAudit } from '@models/audit';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
-import { IPlace } from '@models/place';
-import { IEntity } from '@models/entity';
 import { IUser } from './user';
 
 export interface IEvent {
@@ -16,12 +14,7 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
-  baseInfo?: IBase;
-  // place?: IPlace;
-  // placeLocality?: string;
-  // placeDesc?: string;
   placeItems?: IBase[];
-  entityBase?: IBase;
   entityItems?: IBase[];
   appointmentId?: string;
   createdBy?: string;
@@ -51,14 +44,7 @@ export class Event implements IEvent, IBase, IAudit {
     public categories?: Category[],
     public description?: string,
 
-    public baseInfo?: IBase,
-
-    // public place?: IPlace,
-    // public placeLocality?: string,
-    // public placeDesc?: string,
     public placeItems?: IBase[],
-
-    public entityBase?: IBase,
     public entityItems?: IBase[],
 
     public appointmentId?: string,
@@ -77,9 +63,8 @@ export class Event implements IEvent, IBase, IAudit {
       true, Status.Editing, true, // Status
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       '', [], '', // Basics,
-      null,
       [], // Place
-      null, [], // Entity
+      [], // Entity
       null, // Appointment
       null, null, null, null, null // Audit
     );

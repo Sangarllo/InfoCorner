@@ -1,9 +1,0 @@
-<div class="event-item-detail" *ngIf="event.entityItems; else noEntitiesTemplate">
-
-    <app-base-item-detail *ngFor="let entity of event.entityItems" [baseItem]="entity"></app-base-item-detail>
-
-</div>
-
-<ng-template #noEntitiesTemplate>
-    No hay entidades asociadas
-</ng-template>

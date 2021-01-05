@@ -1,9 +1,0 @@
-<div class="event-item-detail" *ngIf="event.placeItems; else noPlacesTemplate">
-
-    <app-base-item-detail *ngFor="let place of event.placeItems" [baseItem]="place"></app-base-item-detail>
-
-</div>
-
-<ng-template #noPlacesTemplate>
-    No hay lugares asociados
-</ng-template>

@@ -56,10 +56,10 @@
                         <legend>¿Dónde?</legend>
 
                         <button mat-fab type="button" (click)="openPlaceDialog()" color="accent">
-                      <mat-icon>add_location_alt</mat-icon>
-                    </button>
+                          <mat-icon>add_location_alt</mat-icon>
+                        </button>
 
-                        <app-event-place-detail [event]="event"></app-event-place-detail>
+                        <app-event-base-items-detail [baseItems]="event.placeItems"></app-event-base-items-detail>
 
                     </fieldset>
 
@@ -68,10 +68,10 @@
                         <legend>¿Quiénes?</legend>
 
                         <button mat-fab type="button" (click)="openEntityDialog()" color="accent">
-                    <mat-icon>person_add</mat-icon>
-                  </button>
+                          <mat-icon>person_add</mat-icon>
+                        </button>
 
-                        <app-event-entity-detail [event]="event"></app-event-entity-detail>
+                        <app-event-base-items-detail [baseItems]="event.entityItems"></app-event-base-items-detail>
 
                     </fieldset>
 
