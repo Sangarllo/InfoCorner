@@ -30,7 +30,7 @@ export class NoticeService {
     this.noticeCollection = this.afs.collection<INotice>(
       NOTICES_COLLECTION,
       ref => ref.where('active', '==', true)
-                .orderBy('name')
+                .orderBy('timestamp', 'desc')
     );
 
     return this.noticeCollection.snapshotChanges().pipe(

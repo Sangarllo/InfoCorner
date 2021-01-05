@@ -8,13 +8,12 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-notices',
-  templateUrl: './notices.component.html',
-  styleUrls: ['./notices.component.css']
+  templateUrl: './notices.component.html'
 })
 export class NoticesComponent implements OnInit {
 
   public notices$!: Observable<INotice[]>;
-  displayedColumns: string[] = [ 'image', 'id', 'name', 'description', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'id', 'timestamp', 'name', 'actions3'];
 
   constructor(
     private router: Router,
