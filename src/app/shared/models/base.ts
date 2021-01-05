@@ -1,7 +1,12 @@
 export enum BaseType {
   DEFAULT = '',
   ENTITY = 'ENTITY',
-  PLACE = 'PLACE'
+  EVENT = 'EVENT',
+  PLACE = 'PLACE',
+  NEWS_ITEM = 'NEWS_ITEM',
+  NOTICE = 'NOTICE',
+  USER = 'USER',
+  AUDIT = 'AUDIT',
 }
 
 export interface IBase {
@@ -9,7 +14,7 @@ export interface IBase {
   active: boolean;
   name: string;
   image: string;
-  baseType?: BaseType; // TODO this field is not optional
+  baseType: BaseType;
   desc?: string;
 }
 
@@ -24,7 +29,7 @@ export class Base implements IBase {
     public active: boolean,
     public name: string,
     public image: string,
-    public baseType?: BaseType,
+    public baseType: BaseType,
     public desc?: string,
   ) { }
 

@@ -1,4 +1,4 @@
-import { IBase } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { Audit, AuditType, IAudit } from '@models/audit';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
@@ -10,6 +10,7 @@ export interface IEvent {
   name: string;
   image: string;
   images: string[];
+  baseType: BaseType;
   status: Status;
   focused: boolean;
   categories?: Category[];
@@ -37,10 +38,11 @@ export class Event implements IEvent, IBase, IAudit {
     public status: Status,
     public focused: boolean,
 
+    public name: string,
     public image: string,
     public images: string[],
+    public baseType: BaseType,
 
-    public name: string,
     public categories?: Category[],
     public description?: string,
 
@@ -61,8 +63,10 @@ export class Event implements IEvent, IBase, IAudit {
     return new Event(
       '0',
       true, Status.Editing, true, // Status
+      '', // Name
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
-      '', [], '', // Basics,
+      BaseType.EVENT, // BaseType
+      [], '', // Basics,
       [], // Place
       [], // Entity
       null, // Appointment

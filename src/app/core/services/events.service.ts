@@ -5,15 +5,12 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
 
-import { Base, BaseType, IBase } from '@models/base';
-import { IEntity } from '@models/entity';
+import { BaseType, IBase } from '@models/base';
 import { IEvent } from '@models/event';
-import { IPlace } from '@models/place';
 import { IUser } from '@models/user';
 import { AppointmentsService } from '@services/appointments.service';
 import { AuditType } from '@app/shared/models/audit';
 import { colors } from '@app/shared/utils/colors';
-import { IAppointment } from '@models/appointment';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -105,14 +102,15 @@ export class EventService {
     );
 
     return this.eventCollection.valueChanges().pipe(
-      map(places => places.map(place => {
-        if ( place.active ) {
-          const id = place.id;
-          const active = place.active;
-          const name = place.name;
-          const image = place.image;
+      map(events => events.map(event => {
+        if ( event.active ) {
           return {
-            id, active, name, image
+            id: event.id,
+            active: event.active,
+            name: event.name,
+            image: event.image,
+            baseType: BaseType.EVENT,
+            desc: event.description
           };
         }
       }))

@@ -1,4 +1,4 @@
-import { IBase } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 
@@ -7,6 +7,7 @@ export interface INotice {
   active: boolean;
   name: string;
   image: string;
+  baseType: BaseType;
   status: Status;
   focused: boolean;
   categories?: Category[];
@@ -27,6 +28,7 @@ export class Notice implements INotice, IBase {
     public active: boolean,
     public name: string,
     public image: string,
+    public baseType: BaseType,
     public status: Status,
     public focused: boolean,
     public categories?: Category[],
@@ -39,10 +41,7 @@ export class Notice implements INotice, IBase {
 
   static InitDefault(): Notice {
     return new Notice(
-      '0',
-      true,
-      '',
-      Notice.IMAGE_DEFAULT,
+      '0', true, '', Notice.IMAGE_DEFAULT, BaseType.NOTICE, // Base
       Status.Visible,
       true,
       [],

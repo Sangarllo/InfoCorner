@@ -1,10 +1,11 @@
-import { IBase } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { PlaceType } from '@models/place-type.enum';
 export interface IPlace {
   id: string;
   active: boolean;
   name: string;
   image: string;
+  baseType: BaseType;
   type?: PlaceType[];
   locality?: string;
 }
@@ -20,6 +21,7 @@ export class Place implements IPlace, IBase {
     public active: boolean,
     public name: string,
     public image: string,
+    public baseType: BaseType,
     public type?: PlaceType[],
     public locality?: string,
      ) {
@@ -27,7 +29,7 @@ export class Place implements IPlace, IBase {
 
   static InitDefault(): Place {
     return new Place(
-      '0', true, '', Place.IMAGE_DEFAULT, // Base
+      '0', true, '', Place.IMAGE_DEFAULT, BaseType.PLACE, // Base
       [ PlaceType.Other ],
       Place.LOCALITY_DEFAULT
     );

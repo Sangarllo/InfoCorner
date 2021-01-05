@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { IPlace } from '@models/place';
-import { Base } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 
 const PLACES_COLLECTION = 'lugares';
 
@@ -38,7 +38,7 @@ export class PlaceService {
     );
   }
 
-  getAllPlacesBase(): Observable<Base[]> {
+  getAllPlacesBase(): Observable<IBase[]> {
     this.placeCollection = this.afs.collection<IPlace>(
       PLACES_COLLECTION,
       ref => ref.where('active', '==', true)
@@ -48,13 +48,13 @@ export class PlaceService {
     return this.placeCollection.valueChanges().pipe(
       map(places => places.map(place => {
         if ( place.active ) {
-          const id = place.id;
-          const active = place.active;
-          const name = place.name;
-          const image = place.image;
-          const desc = place.locality;
           return {
-            id, active, name, image, desc
+            id: place.id,
+            active: place.active,
+            name: place.name,
+            image: place.image,
+            baseType: BaseType.PLACE,
+            desc: place.locality
           };
         }
       }))

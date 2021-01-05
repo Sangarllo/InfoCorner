@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { formatDistance, subDays } from 'date-fns';
 
-import { Base } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { INewsItem } from '@models/news';
 import { AppointmentsService } from '@services/appointments.service';
 
@@ -45,7 +45,7 @@ export class NewsService {
     );
   }
 
-  getAllNewsBase(): Observable<Base[]> {
+  getAllNewsBase(): Observable<IBase[]> {
     this.newsCollection = this.afs.collection<INewsItem>(
       NEWS_COLLECTION,
       ref => ref.where('active', '==', true)
@@ -55,12 +55,13 @@ export class NewsService {
     return this.newsCollection.valueChanges().pipe(
       map(news => news.map(newsItem => {
         if ( newsItem.active ) {
-          const id = newsItem.id;
-          const active = newsItem.active;
-          const name = newsItem.name;
-          const image = newsItem.image;
           return {
-            id, active, name, image
+            id: newsItem.id,
+            active: newsItem.active,
+            name: newsItem.name,
+            image: newsItem.image,
+            baseType: BaseType.NEWS_ITEM,
+            desc: newsItem.description
           };
         }
       }))

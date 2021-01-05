@@ -4,7 +4,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs';
 
 import { IEntity } from '@models/entity';
-import { Base } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { map } from 'rxjs/operators';
 
 const ENTITIES_COLLECTION = 'entidades';
@@ -38,7 +38,7 @@ export class EntityService {
     );
   }
 
-  getAllEntitiesBase(): Observable<Base[]> {
+  getAllEntitiesBase(): Observable<IBase[]> {
     this.entityCollection = this.afs.collection<IEntity>(
       ENTITIES_COLLECTION,
       ref => ref.where('active', '==', true)
@@ -48,13 +48,13 @@ export class EntityService {
     return this.entityCollection.valueChanges().pipe(
       map(entities => entities.map(entity => {
         if ( entity.active ) {
-          const id = entity.id;
-          const active = entity.active;
-          const name = entity.name;
-          const image = entity.image;
-          const desc = entity.roleDefault;
           return {
-            id, active, name, image, desc
+            id: entity.id,
+            active: entity.active,
+            name: entity.name,
+            image: entity.image,
+            baseType: BaseType.ENTITY,
+            desc: entity.roleDefault
           };
         }
       }))

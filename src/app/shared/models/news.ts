@@ -1,4 +1,4 @@
-import { IBase } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 
@@ -7,6 +7,7 @@ export interface INewsItem {
   active: boolean;
   name: string;
   image: string;
+  baseType: BaseType;
   status: Status;
   focused: boolean;
   categories?: Category[];
@@ -29,6 +30,7 @@ export class NewsItem implements INewsItem, IBase {
     public active: boolean,
     public name: string,
     public image: string,
+    public baseType: BaseType,
     public status: Status,
     public focused: boolean,
     public categories?: Category[],
@@ -43,10 +45,7 @@ export class NewsItem implements INewsItem, IBase {
 
   static InitDefault(): NewsItem {
     return new NewsItem(
-      '0',
-      true,
-      '',
-      NewsItem.IMAGE_DEFAULT,
+      '0', true, '', NewsItem.IMAGE_DEFAULT, BaseType.NEWS_ITEM, // Base
       Status.Visible,
       true,
       [],

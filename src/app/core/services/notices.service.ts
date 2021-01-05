@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { formatDistance, subDays } from 'date-fns';
 
-import { Base } from '@models/base';
+import { IBase, BaseType } from '@models/base';
 import { INotice } from '@models/notice';
 import { AppointmentsService } from '@services/appointments.service';
 
@@ -35,7 +35,7 @@ export class NoticeService {
 
     return this.noticeCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        let data = a.payload.doc.data() as INotice;
+        const data = a.payload.doc.data() as INotice;
         data.timestampDate = ( data.timestamp ) ? new Date(data.timestamp) : null; // subDays(new Date(), 3);
         data.timestampDist =  ( data.timestampDate ) ? 'actualizado hace ' + formatDistance(data.timestampDate, new Date()) : '';
         const id = a.payload.doc.id;
@@ -45,7 +45,7 @@ export class NoticeService {
     );
   }
 
-  getAllNoticesBase(): Observable<Base[]> {
+  getAllNoticesBase(): Observable<IBase[]> {
     this.noticeCollection = this.afs.collection<INotice>(
       NOTICES_COLLECTION,
       ref => ref.where('active', '==', true)
@@ -53,14 +53,15 @@ export class NoticeService {
     );
 
     return this.noticeCollection.valueChanges().pipe(
-      map(places => places.map(place => {
-        if ( place.active ) {
-          const id = place.id;
-          const active = place.active;
-          const name = place.name;
-          const image = place.image;
+      map(notices => notices.map(notice => {
+        if ( notice.active ) {
           return {
-            id, active, name, image
+            id: notice.id,
+            active: notice.active,
+            name: notice.name,
+            image: notice.image,
+            baseType: BaseType.NOTICE,
+            desc: notice.description
           };
         }
       }))
