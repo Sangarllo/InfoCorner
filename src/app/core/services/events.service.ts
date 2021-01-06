@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable, combineLatest, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
 
 import { colors } from '@shared/utils/colors';
@@ -27,8 +27,6 @@ export class EventService {
 
   constructor(
     private afs: AngularFirestore,
-    private entitiesSrv: EntityService,
-    private placesSrv: PlaceService,
     private appointmentSrv: AppointmentsService
   ) {
     this.eventCollection = afs.collection(EVENTS_COLLECTION);
@@ -88,7 +86,6 @@ export class EventService {
     ])
       .pipe(
         map(([events, appointments]) => events.map(event => ({
-          // ...event,
           id: event.id,
           title: event.name,
           color: colors.indigo,

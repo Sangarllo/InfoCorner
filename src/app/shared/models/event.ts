@@ -1,8 +1,6 @@
 import { IBase, BaseType } from '@models/base';
-// import { Audit, AuditType, IAudit } from '@models/audit';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
-import { IUser } from './user';
 
 export interface IEvent {
   id: string;
@@ -15,15 +13,11 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
+  eventItems?: IBase[];
   placeItems?: IBase[];
   entityItems?: IBase[];
   appointmentId?: string;
   auditItems?: IBase[];
-  // createdBy?: string;
-  // createdAt?: string;
-  // updatedBy?: string;
-  // updatedAt?: string;
-  // updatedType?: AuditType;
 }
 
 export class Event implements IEvent, IBase { // IAudit
@@ -47,17 +41,13 @@ export class Event implements IEvent, IBase { // IAudit
     public categories?: Category[],
     public description?: string,
 
+    public eventItems?: IBase[],
     public placeItems?: IBase[],
     public entityItems?: IBase[],
 
     public appointmentId?: string,
 
     public auditItems?: IBase[],
-    // public createdBy?: string,
-    // public createdAt?: string,
-    // public updatedBy?: string,
-    // public updatedAt?: string,
-    // public updatedType?: AuditType,
      ) {
   }
 
@@ -69,10 +59,11 @@ export class Event implements IEvent, IBase { // IAudit
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       BaseType.EVENT, // BaseType
       [], '', // Basics,
+      [], // Event
       [], // Place
       [], // Entity
       null, // Appointment
-      [] // null, null, null, null, null // Audit
+      []  // Audit
     );
   }
 }
