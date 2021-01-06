@@ -30,7 +30,7 @@ export class NewsService {
     this.newsCollection = this.afs.collection<INewsItem>(
       NEWS_COLLECTION,
       ref => ref.where('active', '==', true)
-                .orderBy('name')
+                .orderBy('timestamp', 'desc')
     );
 
     return this.newsCollection.snapshotChanges().pipe(

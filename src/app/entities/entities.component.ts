@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
-import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
 import { IEntity } from '@models/entity';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-entities',
@@ -14,16 +16,39 @@ import Swal from 'sweetalert2';
 })
 export class EntitiesComponent implements OnInit {
 
-  public entities$!: Observable<IEntity[]>;
+
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
+  public loading = true;
+  public entities: IEntity[];
+  public dataSource: MatTableDataSource<IEntity> = new MatTableDataSource();
   displayedColumns: string[] = [ 'image', 'id', 'name', 'place', 'roleDefault', 'actions3'];
 
   constructor(
     private router: Router,
     private entitySrv: EntityService,
-  ) { }
+  ) {
+    this.loading = true;
+  }
 
   ngOnInit(): void {
-    this.entities$ = this.entitySrv.getAllEntities();
+    this.entitySrv.getAllEntities()
+    .subscribe( (entities: IEntity[]) => {
+      this.entities = entities;
+      this.dataSource = new MatTableDataSource(this.entities);
+      this.loading = false;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public gotoEntity(entity: IEntity): void {
@@ -56,7 +81,7 @@ export class EntitiesComponent implements OnInit {
     });
   }
 
-  public addEntity(): void {
+  public addItem(): void {
     this.router.navigate([`entidades/0/editar`]);
   }
 }

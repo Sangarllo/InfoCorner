@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
-import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { AuthService } from '@auth/auth.service';
@@ -16,15 +18,22 @@ import { EventService } from '@services/events.service';
 })
 export class EventsComponent implements OnInit {
 
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
   private currentUser: IUser;
-  public events$!: Observable<IEvent[]>;
+  public loading = true;
+  public events: IEvent[];
+  public dataSource: MatTableDataSource<IEvent> = new MatTableDataSource();
   displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions2'];
 
   constructor(
     private router: Router,
     private authSrv: AuthService,
     private eventSrv: EventService,
-  ) { }
+  ) {
+    this.loading = true;
+  }
 
   ngOnInit(): void {
 
@@ -32,7 +41,22 @@ export class EventsComponent implements OnInit {
       this.currentUser = currentUser;
     });
 
-    this.events$ = this.eventSrv.getAllEvents();
+    this.eventSrv.getAllEvents()
+      .subscribe( (events: IEvent[]) => {
+      this.events = events;
+      this.dataSource = new MatTableDataSource(this.events);
+      this.loading = false;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public gotoItem(event: IEvent): void {

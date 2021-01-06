@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { NewsService } from '@services/news.services';
-import { Observable } from 'rxjs';
 import { INewsItem, NewsItem } from '@shared/models/news';
 import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-news',
@@ -14,8 +15,13 @@ import Swal from 'sweetalert2';
 })
 export class NewsComponent implements OnInit {
 
-  public news$!: Observable<INewsItem[]>;
-  displayedColumns: string[] = [ 'image', 'id', 'name', 'sourceName', 'actions3'];
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
+  public loading = true;
+  public newsItems: INewsItem[];
+  public dataSource: MatTableDataSource<INewsItem> = new MatTableDataSource();
+  displayedColumns: string[] = [ 'image', 'id', 'timestamp', 'name', 'sourceName', 'actions3'];
 
   constructor(
     private router: Router,
@@ -23,7 +29,22 @@ export class NewsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.news$ = this.newsSrv.getAllNews();
+    this.newsSrv.getAllNews()
+      .subscribe( (newsItems: INewsItem[]) => {
+        this.newsItems = newsItems;
+        this.dataSource = new MatTableDataSource(this.newsItems);
+        this.loading = false;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public gotoItem(newsItem: INewsItem): void {

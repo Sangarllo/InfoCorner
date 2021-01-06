@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
-import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 import { IPlace } from '@models/place';
@@ -14,16 +16,38 @@ import { PlaceService } from '@services/places.service';
 })
 export class PlacesComponent implements OnInit {
 
-  public places$!: Observable<IPlace[]>;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
+  public loading = true;
+  public places: IPlace[];
+  public dataSource: MatTableDataSource<IPlace> = new MatTableDataSource();
   displayedColumns: string[] = [ 'image', 'id', 'name', 'locality', 'type', 'actions3'];
 
   constructor(
     private router: Router,
     private placeSrv: PlaceService,
-  ) { }
+  ) {
+    this.loading = true;
+  }
 
   ngOnInit(): void {
-    this.places$ = this.placeSrv.getAllPlaces();
+    this.placeSrv.getAllPlaces()
+    .subscribe( (places: IPlace[]) => {
+      this.places = places;
+      this.dataSource = new MatTableDataSource(this.places);
+      this.loading = false;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public gotoItem(place: IPlace): void {

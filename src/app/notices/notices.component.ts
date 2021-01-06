@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
+import Swal from 'sweetalert2';
 
 import { NoticeService } from '@services/notices.service';
-import { Observable } from 'rxjs';
-import { INotice } from '@shared/models/notice';
-import Swal from 'sweetalert2';
+import { INotice } from '@models/notice';
 
 @Component({
   selector: 'app-notices',
@@ -12,16 +15,38 @@ import Swal from 'sweetalert2';
 })
 export class NoticesComponent implements OnInit {
 
-  public notices$!: Observable<INotice[]>;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+
+  public loading = true;
+  public notices: INotice[];
+  public dataSource: MatTableDataSource<INotice> = new MatTableDataSource();
   displayedColumns: string[] = [ 'image', 'id', 'timestamp', 'name', 'actions3'];
 
   constructor(
     private router: Router,
     private noticeSrv: NoticeService,
-  ) { }
+  ) {
+    this.loading = true;
+  }
 
   ngOnInit(): void {
-    this.notices$ = this.noticeSrv.getAllNotices();
+    this.noticeSrv.getAllNotices()
+      .subscribe( (notices: INotice[]) => {
+        this.notices = notices;
+        this.dataSource = new MatTableDataSource(this.notices);
+        this.loading = false;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+  }
+
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   public gotoItem(notice: INotice): void {
