@@ -9,10 +9,12 @@ import { UserRole } from '@models/user-role.enum';
 import { IEvent, Event } from '@models/event';
 import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
-
-import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
 import { IBase, BaseType } from '@models/base';
 import { SwalMessage, UtilsService } from '@services/utils.service';
+import { EntityService } from '@services/entities.service';
+
+import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
+import { IEntity } from '@models/entity';
 
 @Component({
   selector: 'app-role-options',
@@ -31,6 +33,7 @@ export class RoleOptionsComponent {
     private router: Router,
     private utilsSrv: UtilsService,
     private authSrv: AuthService,
+    private entitiesSrv: EntityService,
     private eventSrv: EventService
   ) {
     this.authSrv.currentUser$.subscribe( (user: any) => {
@@ -63,9 +66,12 @@ export class RoleOptionsComponent {
 
     dialogRef.afterClosed().subscribe((newBase: IBase) => {
       if ( newBase ) {
-        const newEvent = Event.InitDefault();
-        const eventId = this.eventSrv.addEventFromEntity(newEvent, this.currentUser, newBase);
-        this.router.navigate([`eventos/${eventId}`]);
+        this.entitiesSrv.getOneEntity(newBase.id)
+        .subscribe((entity: IEntity) => {
+          const newEvent = Event.InitDefault();
+          const eventId = this.eventSrv.addEventFromEntity(newEvent, this.currentUser, entity, newBase.desc);
+          this.router.navigate([`eventos/${eventId}`]);
+        })
       } else {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }

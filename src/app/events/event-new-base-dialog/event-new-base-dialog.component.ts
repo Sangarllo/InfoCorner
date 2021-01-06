@@ -62,6 +62,7 @@ export class EventNewBaseDialogComponent implements OnInit {
 
   onSelectionChanged(event: any): void {
     this.baseItemSelected = event.value;
+    this.baseItemForm.controls.baseItemDesc.setValue(this.baseItemSelected.desc);
   }
 
   compareFunction(o1: IBase, o2: IBase): boolean {
@@ -81,7 +82,6 @@ export class EventNewBaseDialogComponent implements OnInit {
     } else {
       newBase.baseType = this.data;
       newBase.desc = this.baseItemForm.controls.baseItemDesc.value;
-      console.log(`saving eventDialog: ${JSON.stringify(newBase)}`);
 
       this.dialogRef.close(newBase);
       this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, this.baseItemName);

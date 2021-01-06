@@ -5,12 +5,15 @@ import { Observable, combineLatest, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
 
+import { colors } from '@shared/utils/colors';
 import { BaseType, IBase } from '@models/base';
 import { IEvent } from '@models/event';
 import { IUser } from '@models/user';
 import { AuditItem, AuditType } from '@models/audit';
 import { AppointmentsService } from '@services/appointments.service';
-import { colors } from '@shared/utils/colors';
+import { PlaceService } from '@services/places.service';
+import { EntityService } from '@services/entities.service';
+import { IEntity } from '@models/entity';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -24,6 +27,8 @@ export class EventService {
 
   constructor(
     private afs: AngularFirestore,
+    private entitiesSrv: EntityService,
+    private placesSrv: PlaceService,
     private appointmentSrv: AppointmentsService
   ) {
     this.eventCollection = afs.collection(EVENTS_COLLECTION);
@@ -135,7 +140,7 @@ export class EventService {
     return id;
   }
 
-  addEventFromEntity(event: IEvent, currentUser: IUser, entityBase: IBase): string {
+  addEventFromEntity(event: IEvent, currentUser: IUser, entity: IEntity, role: string): string {
 
     const timeStamp = this.appointmentSrv.getTimestamp();
     const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timeStamp);
@@ -144,20 +149,19 @@ export class EventService {
     const id: string = this.afs.createId();
     event.id = id;
 
-    event.name = `Nuevo evento de ${entityBase.name}`;
-
+    event.name = `Nuevo evento de ${entity.name}`;
     const newEntityItem: IBase = {
-      id: entityBase.id,
+      id: entity.id,
       active: true,
-      name: entityBase.name,
-      image: entityBase.image,
+      name: entity.name,
+      image: entity.image,
       baseType: BaseType.ENTITY,
-      desc: entityBase.desc,
+      desc: role,
     };
     event.entityItems = [ newEntityItem ];
 
     event.images = [];
-    const newImage = entityBase.image;
+    const newImage = entity.image;
     if ( newImage ) {
       event.image = newImage;
       event.images.push(newImage);
@@ -165,8 +169,23 @@ export class EventService {
     event.appointmentId = id;
     this.appointmentSrv.addAppointment(id);
 
+    const place = entity.place;
+    if (place) {
+      const newPlaceItem: IBase = {
+        id: place.id,
+        active: true,
+        name: place.name,
+        image: place.image,
+        baseType: BaseType.PLACE,
+        desc: place.roleDefault ?? '',
+      };
+      event.placeItems = [ newPlaceItem ];
+      event.images.push(place.image);
+    }
+
     const newEvent = { ...event, entityItems: event.entityItems, placeItems: event.placeItems };
     this.eventCollection.doc(event.id).set(newEvent, { merge: true });
+
     return id;
   }
 

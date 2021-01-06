@@ -60,7 +60,6 @@ export class EventImageDialogComponent implements OnInit {
 
 
   onSelectedImage(path: string): void {
-    console.log(`selected image: ${path}`);
     this.imageSelected = path;
     this.data.image = path;
   }
