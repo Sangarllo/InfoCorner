@@ -10,6 +10,7 @@ import { HeaderComponent } from '@shared/layout/header/header.component';
 import { SidenavComponent } from '@shared/layout/sidenav/sidenav.component';
 import { SectionHeaderComponent } from '@shared/layout/section-header/section-header.component';
 import { BaseItemDetailComponent } from '@shared/components/base-item-detail/base-item-detail.component';
+import { LoadingComponent } from '@shared/components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { BaseItemDetailComponent } from '@shared/components/base-item-detail/bas
     SidenavComponent,
     SectionHeaderComponent,
     BaseItemDetailComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { BaseItemDetailComponent } from '@shared/components/base-item-detail/bas
     SidenavComponent,
     SectionHeaderComponent,
     BaseItemDetailComponent,
+    LoadingComponent,
   ]
 })
 export class SharedModule { }
