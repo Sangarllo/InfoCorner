@@ -166,9 +166,12 @@ export class EventViewComponent implements OnInit {
     this.dialogConfig.data = this.event;
     const dialogRef = this.dialog.open(EventAppointmentDialogComponent, this.dialogConfig);
 
-    dialogRef.afterClosed().subscribe((appointmentDialog: IAppointment) => {
-      console.log(`appointment: ${JSON.stringify(appointmentDialog)}`);
-      this.appointmentSrv.updateAppointment(appointmentDialog);
+    dialogRef.afterClosed().subscribe((newAppointment: IAppointment) => {
+      if ( newAppointment ) {
+        this.appointmentSrv.updateAppointment(newAppointment);
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
     });
   }
 }

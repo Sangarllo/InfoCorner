@@ -7,7 +7,7 @@ import { IBase, Base, BaseType } from '@models/base';
 import { IEvent } from '@models/event';
 import { UtilsService, SwalMessage } from '@services/utils.service';
 import { AppointmentsService } from '@services/appointments.service';
-import { IAppointment } from '@models/appointment';
+import { Appointment, IAppointment } from '@models/appointment';
 
 @Component({
   selector: 'app-event-schedule-dialog',
@@ -41,7 +41,7 @@ export class EventScheduleDialogComponent implements OnInit {
       image: [ '', []],
       name: [ '', []],
       dateIni: [ '', []],
-      timeIni: [ '00:00', []],
+      timeIni: [ Appointment.HOUR_DEFAULT, []],
   });
   }
 
