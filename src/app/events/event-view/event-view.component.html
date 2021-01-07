@@ -59,7 +59,7 @@
                         <mat-icon>alarm_add</mat-icon>
                       </button>
 
-                        <app-event-base-items-detail [baseItems]="event.scheduleItems"></app-event-base-items-detail>
+                        <sh-base-items-list [baseItems]="event.scheduleItems"></sh-base-items-list>
 
                     </fieldset>
 
@@ -71,7 +71,7 @@
                           <mat-icon>add_location_alt</mat-icon>
                         </button>
 
-                        <app-event-base-items-detail [baseItems]="event.placeItems"></app-event-base-items-detail>
+                        <sh-base-items-list [baseItems]="event.placeItems"></sh-base-items-list>
 
                     </fieldset>
 
@@ -83,7 +83,7 @@
                           <mat-icon>person_add</mat-icon>
                         </button>
 
-                        <app-event-base-items-detail [baseItems]="event.entityItems"></app-event-base-items-detail>
+                        <sh-base-items-list [baseItems]="event.entityItems"></sh-base-items-list>
 
                     </fieldset>
 
@@ -91,7 +91,7 @@
 
                         <legend>¿Audit?</legend>
 
-                        <app-event-base-items-detail [baseItems]="event.auditItems"></app-event-base-items-detail>
+                        <sh-base-items-list [baseItems]="event.auditItems"></sh-base-items-list>
 
                     </fieldset>
 

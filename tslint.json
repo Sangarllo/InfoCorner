@@ -146,6 +146,7 @@
             true,
             "element",
             "app",
+            "sh",
             "kebab-case"
         ]
     }

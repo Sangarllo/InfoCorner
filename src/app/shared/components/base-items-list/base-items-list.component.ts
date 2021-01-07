@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { IBase } from '@models/base';
 
 @Component({
-  selector: 'app-event-base-items-detail',
-  templateUrl: './event-base-items-detail.component.html'
+  selector: 'sh-base-items-list',
+  templateUrl: './base-items-list.component.html'
 })
-export class EventBaseItemsDetailComponent {
+export class BaseItemsListComponent {
 
   @Input() baseItems: IBase[];
 
