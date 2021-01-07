@@ -16,6 +16,7 @@ import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-
 import { EventImageDetailComponent } from '@app/events/event-image-detail/event-image-detail.component';
 import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
 import { EventBaseItemsDetailComponent } from './event-base-items-detail/event-base-items-detail.component';
+import { EventScheduleDialogComponent } from './event-schedule-dialog/event-schedule-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { EventBaseItemsDetailComponent } from './event-base-items-detail/event-b
     EventImageDetailComponent,
     EventNewBaseDialogComponent,
     EventBaseItemsDetailComponent,
+    EventScheduleDialogComponent,
   ],
   imports: [
     CommonModule,

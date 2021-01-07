@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 import Swal from 'sweetalert2';
 
@@ -8,7 +9,6 @@ import { Base } from '@models/base';
 import { IEvent } from '@models/event';
 import { Appointment, IAppointment } from '@models/appointment';
 import { AppointmentsService } from '@services/appointments.service';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-event-appointment-dialog',
@@ -33,7 +33,6 @@ export class EventAppointmentDialogComponent implements OnInit {
 
     const idAppointment = this.data.appointmentId;
     if ( idAppointment ) {
-      console.log(`id asked ${idAppointment}`);
       this.getDetails(idAppointment);
 
       this.appointmentForm = this.fb.group({
@@ -48,7 +47,6 @@ export class EventAppointmentDialogComponent implements OnInit {
   }
 
   getDetails(idAppointment: string): void {
-    console.log(`id asked ${idAppointment}`);
 
     if ( idAppointment === '0' ) { // TODO: No debería suceder
       this.title = 'Creación de una nueva entidad';
@@ -59,7 +57,6 @@ export class EventAppointmentDialogComponent implements OnInit {
         next: (appointment: IAppointment | undefined) => {
           this.appointment = appointment;
           this.displayAppointment();
-          console.log(JSON.stringify(this.appointment));
         },
         error: err => {
           this.errorMessage = `Error: ${err}`;

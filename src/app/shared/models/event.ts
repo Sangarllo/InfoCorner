@@ -13,7 +13,7 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
-  eventItems?: IBase[];
+  scheduleItems?: IBase[];
   placeItems?: IBase[];
   entityItems?: IBase[];
   appointmentId?: string;
@@ -41,7 +41,7 @@ export class Event implements IEvent, IBase { // IAudit
     public categories?: Category[],
     public description?: string,
 
-    public eventItems?: IBase[],
+    public scheduleItems?: IBase[],
     public placeItems?: IBase[],
     public entityItems?: IBase[],
 

@@ -10,13 +10,14 @@ import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
 import { AppointmentsService } from '@services/appointments.service';
 import { SwalMessage, UtilsService } from '@services/utils.service';
+import { AuditType } from '@models/audit';
 
 import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
 import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
 import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
 import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-image-dialog.component';
 import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
-import { AuditType } from '@app/shared/models/audit';
+import { EventScheduleDialogComponent } from '@app/events/event-schedule-dialog/event-schedule-dialog.component';
 
 @Component({
   selector: 'app-event-view',
@@ -133,7 +134,6 @@ export class EventViewComponent implements OnInit {
     });
   }
 
-
   openEntityDialog(): void {
     this.dialogConfig.data = BaseType.ENTITY;
     const dialogRef = this.dialog.open(EventNewBaseDialogComponent, this.dialogConfig);
@@ -142,6 +142,20 @@ export class EventViewComponent implements OnInit {
       if ( newBase ) {
         this.event.entityItems.push(newBase);
         this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadida entidad');
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
+    });
+  }
+
+  openScheduleDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventScheduleDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((newBase: IBase) => {
+      if ( newBase ) {
+        this.event.scheduleItems.push(newBase);
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadido evento');
       } else {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }

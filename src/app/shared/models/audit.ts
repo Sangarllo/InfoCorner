@@ -74,7 +74,7 @@ export class AuditItem implements IAuditItem, IBase {
       image,
       BaseType.AUDIT,
       auditType,
-      ( descEstra ) ? `${descEstra}, por ${user.displayName}` : `${user.displayName}`
+      ( descEstra ) ? `${user.displayName} (${descEstra})` : `${user.displayName}`
     );
   }
 }

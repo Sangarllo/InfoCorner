@@ -44,10 +44,22 @@
                         <legend>¿Cuándo?</legend>
 
                         <button mat-fab type="button" (click)="openAppointmentDialog()" color="accent">
-                <mat-icon>book_online</mat-icon>
-              </button>
+                          <mat-icon>book_online</mat-icon>
+                        </button>
 
                         <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
+
+                    </fieldset>
+
+                    <fieldset class="event-item-detail type-other">
+
+                        <legend>¿Cómo?</legend>
+
+                        <button mat-fab type="button" (click)="openScheduleDialog()" color="accent">
+                        <mat-icon>alarm_add</mat-icon>
+                      </button>
+
+                        <app-event-base-items-detail [baseItems]="event.scheduleItems"></app-event-base-items-detail>
 
                     </fieldset>
 
