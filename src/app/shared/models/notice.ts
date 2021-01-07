@@ -13,8 +13,6 @@ export interface INotice {
   categories?: Category[];
   description?: string;
   timestamp?: string;
-  timestampDate?: Date;
-  timestampDist?: string;
 }
 
 export class Notice implements INotice, IBase {
@@ -34,8 +32,6 @@ export class Notice implements INotice, IBase {
     public categories?: Category[],
     public description?: string,
     public timestamp?: string,
-    public timestampDate?: Date,
-    public timestampDist?: string,
      ) {
   }
 
@@ -46,7 +42,7 @@ export class Notice implements INotice, IBase {
       true,
       [],
       '',
-      null, null, null // Timestamp
+      null, // Timestamp
     );
   }
 }

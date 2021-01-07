@@ -13,10 +13,11 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
+  timestamp?: string;
+  appointmentId?: string;
   scheduleItems?: IBase[];
   placeItems?: IBase[];
   entityItems?: IBase[];
-  appointmentId?: string;
   auditItems?: IBase[];
 }
 
@@ -40,13 +41,12 @@ export class Event implements IEvent, IBase { // IAudit
 
     public categories?: Category[],
     public description?: string,
+    public timestamp?: string,
+    public appointmentId?: string,
 
     public scheduleItems?: IBase[],
     public placeItems?: IBase[],
     public entityItems?: IBase[],
-
-    public appointmentId?: string,
-
     public auditItems?: IBase[],
      ) {
   }
@@ -59,10 +59,10 @@ export class Event implements IEvent, IBase { // IAudit
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       BaseType.EVENT, // BaseType
       [], '', // Basics,
+      null, null, // Timestamp + Appointment
       [], // Event
       [], // Place
       [], // Entity
-      null, // Appointment
       []  // Audit
     );
   }

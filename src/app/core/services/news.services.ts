@@ -3,7 +3,6 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { formatDistance, subDays } from 'date-fns';
 
 import { IBase, BaseType } from '@models/base';
 import { INewsItem } from '@models/news';
@@ -36,8 +35,6 @@ export class NewsService {
     return this.newsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as INewsItem;
-        data.timestampDate = ( data.timestamp ) ? new Date(data.timestamp) : null; // subDays(new Date(), 3);
-        data.timestampDist =  ( data.timestampDate ) ? 'actualizado hace ' + formatDistance(data.timestampDate, new Date()) : '';
         const id = a.payload.doc.id;
         return { id, ...data };
       })

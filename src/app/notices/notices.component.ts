@@ -4,7 +4,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { formatDistance } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import { NoticeService } from '@services/notices.service';
 import { INotice } from '@models/notice';
@@ -21,7 +24,7 @@ export class NoticesComponent implements OnInit {
   public loading = true;
   public notices: INotice[];
   public dataSource: MatTableDataSource<INotice> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'image', 'id', 'timestamp', 'name', 'actions3'];
+  displayedColumns: string[] =  [ 'status', 'id', 'timestamp', 'image', 'name', 'actions3'];
 
   constructor(
     private router: Router,
@@ -32,10 +35,17 @@ export class NoticesComponent implements OnInit {
 
   ngOnInit(): void {
     this.noticeSrv.getAllNotices()
+      .pipe(
+        map((notices) => notices.map(notice => ({
+          ...notice,
+          timestamp: formatDistance(new Date(notice.timestamp), new Date(), {locale: es})
+        }) as INotice))
+      )
       .subscribe( (notices: INotice[]) => {
         this.notices = notices;
         this.dataSource = new MatTableDataSource(this.notices);
         this.loading = false;
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

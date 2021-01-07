@@ -13,8 +13,6 @@ export interface INewsItem {
   categories?: Category[];
   description?: string;
   timestamp?: string;
-  timestampDate?: Date;
-  timestampDist?: string;
   sourceName?: string;
   sourceUrl?: string;
 }
@@ -36,8 +34,6 @@ export class NewsItem implements INewsItem, IBase {
     public categories?: Category[],
     public description?: string,
     public timestamp?: string,
-    public timestampDate?: Date,
-    public timestampDist?: string,
     public sourceName?: string,
     public sourceUrl?: string,
      ) {
@@ -50,7 +46,7 @@ export class NewsItem implements INewsItem, IBase {
       true,
       [],
       '',
-      null, null, null, // Timestamp
+      null, // Timestamp
       null, null, // Source
     );
   }

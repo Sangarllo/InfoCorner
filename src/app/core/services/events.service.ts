@@ -4,6 +4,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable, combineLatest, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CalendarEvent } from 'angular-calendar';
+import { formatDistance } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import { colors } from '@shared/utils/colors';
 import { BaseType, IBase } from '@models/base';
@@ -11,8 +13,6 @@ import { IEvent } from '@models/event';
 import { IUser } from '@models/user';
 import { AuditItem, AuditType } from '@models/audit';
 import { AppointmentsService } from '@services/appointments.service';
-import { PlaceService } from '@services/places.service';
-import { EntityService } from '@services/entities.service';
 import { IEntity } from '@models/entity';
 
 const EVENTS_COLLECTION = 'eventos';
@@ -36,7 +36,7 @@ export class EventService {
     this.eventCollection = this.afs.collection<IEvent>(
       EVENTS_COLLECTION,
       ref => ref.where('active', '==', true)
-                .orderBy('name')
+                .orderBy('timestamp', 'desc')
     );
 
     return this.eventCollection.snapshotChanges().pipe(
@@ -49,30 +49,20 @@ export class EventService {
     );
   }
 
-  // TODO: paging
-  getAllCalendarEvents(): Observable<CalendarEvent[]> {
-    this.eventCollection = this.afs.collection<IEvent>(
-      EVENTS_COLLECTION,
-      ref => ref.where('active', '==', true)
-                .orderBy('name')
-    );
+  getAllEventsWithAppointments(): Observable<IEvent[]> {
+    const events$ = this.getAllEvents();
+    const appointments$ = this.appointmentSrv.getAllAppointments();
 
-    return this.eventCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IEvent;
-        const id = a.payload.doc.id;
-
-        const newCalendarEvent = {
-          id,
-          title: data.name,
-          start: new Date(),
-          color: colors.indigo,
-          allDay: false
-        };
-
-        return newCalendarEvent;
-      })
-      )
+    return combineLatest([
+      events$,
+      appointments$
+    ])
+      .pipe(
+        map(([events, appointments]) => events.map(event => ({
+          ...event,
+          timestamp: formatDistance(new Date(event.timestamp), new Date(), {locale: es}),
+          dateIni: appointments.find( a => a.id === event.id )?.dateIni,
+        }) as IEvent)),
     );
   }
 
@@ -125,8 +115,10 @@ export class EventService {
 
   addEvent(event: IEvent, currentUser: IUser): string {
 
-    const timeStamp = this.appointmentSrv.getTimestamp();
-    const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timeStamp);
+    const timestamp = this.appointmentSrv.getTimestamp();
+    event.timestamp = timestamp;
+
+    const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timestamp);
     event.auditItems.push({...auditItem});
 
     const id: string = this.afs.createId();
@@ -139,8 +131,10 @@ export class EventService {
 
   addEventFromEntity(event: IEvent, currentUser: IUser, entity: IEntity, role: string): string {
 
-    const timeStamp = this.appointmentSrv.getTimestamp();
-    const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timeStamp);
+    const timestamp = this.appointmentSrv.getTimestamp();
+    event.timestamp = timestamp;
+
+    const auditItem = AuditItem.InitDefault(AuditType.CREATED, currentUser, timestamp);
     event.auditItems.push({...auditItem});
 
     const id: string = this.afs.createId();
@@ -189,6 +183,8 @@ export class EventService {
   updateEvent(event: IEvent, auditType: AuditType, currentUser: IUser, descExtra?: string): void {
 
     const timeStamp = this.appointmentSrv.getTimestamp();
+    event.timestamp = timeStamp;
+
     const auditItem = AuditItem.InitDefault(auditType, currentUser, timeStamp, descExtra);
     event.auditItems.push({...auditItem});
 
@@ -198,7 +194,10 @@ export class EventService {
   }
 
   deleteEvent(event: IEvent, currentUser: IUser): void {
+
     const timeStamp = this.appointmentSrv.getTimestamp();
+    event.timestamp = timeStamp;
+
     const auditItem = AuditItem.InitDefault(AuditType.DELETED, currentUser, timeStamp);
     event.auditItems.push({...auditItem});
 

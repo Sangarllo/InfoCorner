@@ -4,9 +4,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { map } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { formatDistance } from 'date-fns';
+import { es } from 'date-fns/locale';
+
 import { NewsService } from '@services/news.services';
 import { INewsItem, NewsItem } from '@shared/models/news';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-news',
@@ -21,7 +25,7 @@ export class NewsComponent implements OnInit {
   public loading = true;
   public newsItems: INewsItem[];
   public dataSource: MatTableDataSource<INewsItem> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'image', 'id', 'timestamp', 'name', 'sourceName', 'actions3'];
+  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'image', 'name', 'sourceName', 'actions3'];
 
   constructor(
     private router: Router,
@@ -30,10 +34,17 @@ export class NewsComponent implements OnInit {
 
   ngOnInit(): void {
     this.newsSrv.getAllNews()
+    .pipe(
+      map((newsItems) => newsItems.map(newsItem => ({
+        ...newsItem,
+        timestamp: formatDistance(new Date(newsItem.timestamp), new Date(), {locale: es})
+      }) as INewsItem))
+    )
       .subscribe( (newsItems: INewsItem[]) => {
         this.newsItems = newsItems;
         this.dataSource = new MatTableDataSource(this.newsItems);
         this.loading = false;
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

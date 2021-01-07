@@ -6,10 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import Swal from 'sweetalert2';
 
+import { EventService } from '@services/events.service';
 import { AuthService } from '@auth/auth.service';
 import { IEvent } from '@models/event';
 import { IUser } from '@models/user';
-import { EventService } from '@services/events.service';
 
 @Component({
   selector: 'app-events',
@@ -25,7 +25,7 @@ export class EventsComponent implements OnInit {
   public loading = true;
   public events: IEvent[];
   public dataSource: MatTableDataSource<IEvent> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions3'];
+  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'image', 'name', 'dateIni', 'actions3'];
 
   constructor(
     private router: Router,
@@ -41,13 +41,14 @@ export class EventsComponent implements OnInit {
       this.currentUser = currentUser;
     });
 
-    this.eventSrv.getAllEvents()
-      .subscribe( (events: IEvent[]) => {
-      this.events = events;
-      this.dataSource = new MatTableDataSource(this.events);
-      this.loading = false;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.eventSrv.getAllEventsWithAppointments()
+        .subscribe( (events: IEvent[]) => {
+        this.events = events;
+        this.dataSource = new MatTableDataSource(this.events);
+        this.loading = false;
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
     });
   }
 
@@ -59,7 +60,7 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  public gotoItemView(event: IEvent): void {
+  public gotoItem(event: IEvent): void {
     this.router.navigate([`eventos/${event.id}`]);
   }
 

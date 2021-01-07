@@ -16,6 +16,14 @@ table {
     text-transform: uppercase;
 }
 
+td.mat-column-timestamp {
+    color: gray;
+    width: 140px;
+    padding-right: 5px !important;
+    padding-right: 5px !important;
+    font-size: small;
+}
+
 .mat-column-photoURL,
 .mat-column-image {
     text-align: center;
@@ -47,5 +55,35 @@ table {
 td.mat-column-status {
     font-size: smaller;
     text-transform: uppercase;
-    color: red
+    text-align: center;
+    color: black;
+    &.EDITING {
+        background-color: white;
+        div.inside-status {
+            border: 1px solid #856404;
+            background-color: #fff3cd;
+        }
+    }
+    &.VISIBLE {
+        background-color: white;
+        div.inside-status {
+            border: 1px solid darkgreen;
+            background-color: lightgreen;
+        }
+    }
+    &.DELETED {
+        background-color: white;
+        div.inside-status {
+            color: lightgrey !important;
+            border: 1px solid black;
+            background-color: #202020;
+        }
+    }
+    &.BLOCKED {
+        background-color: white;
+        div.inside-status {
+            border: 1px solid darkred;
+            background-color: lightcoral;
+        }
+    }
 }

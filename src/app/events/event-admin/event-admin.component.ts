@@ -170,6 +170,7 @@ export class EventAdminComponent implements OnInit {
     dialogRef.afterClosed().subscribe((newAppointment: IAppointment) => {
       if ( newAppointment ) {
         this.appointmentSrv.updateAppointment(newAppointment);
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Actualizado horario');
       } else {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }
