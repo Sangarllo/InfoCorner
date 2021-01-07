@@ -1,23 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { AuthService } from '@auth/auth.service';
-import { Base, IBase, BaseType } from '@models/base';
-import { IAppointment } from '@models/appointment';
+import { Base } from '@models/base';
 import { IEvent, Event } from '@models/event';
 import { IUser } from '@models/user';
 import { EventService } from '@services/events.service';
-import { AppointmentsService } from '@services/appointments.service';
-import { SwalMessage, UtilsService } from '@services/utils.service';
-import { AuditType } from '@models/audit';
-
-import { EventBasicDialogComponent } from '@app/events/event-basic-dialog/event-basic-dialog.component';
-import { EventStatusDialogComponent } from '@app/events/event-status-dialog/event-status-dialog.component';
-import { EventAppointmentDialogComponent } from '@app/events/event-appointment-dialog/event-appointment-dialog.component';
-import { EventImageDialogComponent } from '@app/events/event-image-dialog/event-image-dialog.component';
-import { EventNewBaseDialogComponent } from '@app/events/event-new-base-dialog/event-new-base-dialog.component';
-import { EventScheduleDialogComponent } from '@app/events/event-schedule-dialog/event-schedule-dialog.component';
+import { UserService } from '@services/users.service';
+import { UserRole } from '@models/user-role.enum';
 
 @Component({
   selector: 'app-event-view',
@@ -26,32 +16,30 @@ import { EventScheduleDialogComponent } from '@app/events/event-schedule-dialog/
 })
 export class EventViewComponent implements OnInit {
 
-  private currentUser: IUser;
+  public userLogged: IUser;
+  public adminAllowed: boolean;
   public event: IEvent;
   public idEvent: string;
   readonly SECTION_BLANK: Base = Base.InitDefault();
-  public dialogConfig = new MatDialogConfig();
 
   constructor(
-    public dialog: MatDialog,
+    public authSvc: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private authSrv: AuthService,
-    private utilsSrv: UtilsService,
+    private userSrv: UserService,
     private eventSrv: EventService,
-    private appointmentSrv: AppointmentsService
   ) {
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
-    this.dialogConfig.width = '500px';
+    this.adminAllowed = false;
+    this.authSvc.afAuth.user.subscribe( (user: any) => {
+      this.userSrv.getOneUser(user.uid).subscribe( (userLogged: any ) => {
+        console.log(`constructor ${JSON.stringify(userLogged)}`);
+        this.userLogged = userLogged;
+        this.adminAllowed = this.canAdmin(this.userLogged);
+      });
+    });
   }
 
   ngOnInit(): void {
-
-    this.authSrv.currentUser$.subscribe( (user: any) => {
-      this.currentUser = user;
-    });
-
     this.idEvent = this.route.snapshot.paramMap.get('id');
     if ( this.idEvent ) {
       this.getDetails(this.idEvent);
@@ -65,113 +53,14 @@ export class EventViewComponent implements OnInit {
     });
   }
 
-  public gotoList(): void {
-    this.router.navigate([`/${Event.PATH_URL}`]);
+  public adminItem(): void {
+    this.router.navigate([`/${Event.PATH_URL}/${this.idEvent}/admin`]);
   }
 
-  public editItem(): void {
-    this.router.navigate([`/${Event.PATH_URL}/${this.idEvent}/editar`]);
-  }
-
-  openEventBasicDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventBasicDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      if ( eventDialog ) {
-        this.event.name = eventDialog.name;
-        this.event.description = eventDialog.description;
-        this.event.categories = eventDialog.categories;
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser);
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
-  openEventImageDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventImageDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      if ( eventDialog ) {
-        this.event.image = eventDialog.image;
-        this.event.images = eventDialog.images;
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Modificada imagen');
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
-  openEventStatusDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventStatusDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((eventDialog: IEvent) => {
-      if ( eventDialog ) {
-        this.event.status = eventDialog.status;
-        this.event.active = eventDialog.active;
-        this.event.focused = eventDialog.focused;
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_STATUS, this.currentUser);
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
-  openPlaceDialog(): void {
-    this.dialogConfig.data = BaseType.PLACE;
-    const dialogRef = this.dialog.open(EventNewBaseDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((newBase: IBase) => {
-      if ( newBase ) {
-        this.event.placeItems.push(newBase);
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadida ubicacíon');
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
-  openEntityDialog(): void {
-    this.dialogConfig.data = BaseType.ENTITY;
-    const dialogRef = this.dialog.open(EventNewBaseDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((newBase: IBase) => {
-      if ( newBase ) {
-        this.event.entityItems.push(newBase);
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadida entidad');
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
-  openScheduleDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventScheduleDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((newBase: IBase) => {
-      if ( newBase ) {
-        this.event.scheduleItems.push(newBase);
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadido evento');
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
-  openAppointmentDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventAppointmentDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((newAppointment: IAppointment) => {
-      if ( newAppointment ) {
-        this.appointmentSrv.updateAppointment(newAppointment);
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
+  private canAdmin(userLogged: IUser): boolean {
+    if ( userLogged.role !== UserRole.Lector) {
+      return true;
+    }
+    return false;
   }
 }

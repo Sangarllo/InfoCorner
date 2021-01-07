@@ -39,14 +39,19 @@
                 <td mat-cell *matCellDef="let event">{{ event.name }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="actions2">
+            <ng-container matColumnDef="actions3">
                 <th mat-header-cell *matHeaderCellDef>Acciones </th>
                 <td mat-cell *matCellDef="let event">
-                    <button mat-icon-button matTooltip="Click to View" class="iconbutton" color="accent" (click)="gotoItem(event)">
-                  <mat-icon aria-label="View">remove_red_eye</mat-icon>
-                </button>
 
-                    <button mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn" (click)="deleteItem(event)">
+                    <button mat-icon-button matTooltip="Click to View" class="iconbutton" color="accent" (click)="gotoItemView(event)">
+                      <mat-icon aria-label="View">remove_red_eye</mat-icon>
+                    </button>
+
+                    <button mat-icon-button matTooltip="Click to Admin" class="iconbutton" color="accent" (click)="gotoItemAdmin(event)">
+                      <mat-icon aria-label="View">build_circle</mat-icon>
+                    </button>
+
+                    <button mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="accent" (click)="deleteItem(event)">
                   <mat-icon aria-label="Delete">delete</mat-icon>
                 </button>
                 </td>

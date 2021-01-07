@@ -69,6 +69,7 @@ export class UserService {
       `${USERS_COLLECTION}/${user.uid}`
     );
 
+    // TODO: if role exists (or entities), don't update!
     const data: IUser = {
       uid: user.uid,
       email: user.email,
@@ -76,7 +77,7 @@ export class UserService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       active: user.active ?? true,
-      role: user.role ?? UserRole.Lector,
+      role: user.role,
       entitiesAdmin: user.entitiesAdmin ?? []
     };
 

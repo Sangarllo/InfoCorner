@@ -25,7 +25,7 @@ export class EventsComponent implements OnInit {
   public loading = true;
   public events: IEvent[];
   public dataSource: MatTableDataSource<IEvent> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions2'];
+  displayedColumns: string[] = [ 'image', 'status', 'id', 'name', 'actions3'];
 
   constructor(
     private router: Router,
@@ -59,8 +59,12 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  public gotoItem(event: IEvent): void {
+  public gotoItemView(event: IEvent): void {
     this.router.navigate([`eventos/${event.id}`]);
+  }
+
+  public gotoItemAdmin(event: IEvent): void {
+    this.router.navigate([`eventos/${event.id}/admin`]);
   }
 
   public deleteItem(event: IEvent): void {

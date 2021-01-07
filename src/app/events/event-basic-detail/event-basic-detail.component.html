@@ -1,8 +1,8 @@
-<h1 style="font-size: xxx-large;">{{ event.name }}</h1>
+<span class="title">{{ event.name }}</span>
 
-<span *ngIf="event.description" style="font-size: smaller;">{{ event.description }}</span>
+<span class="description" *ngIf="event.description">{{ event.description }}</span>
 
-<div *ngIf="event.categories">
+<div *ngIf="event.categories?.length > 0">
     <mat-chip-list aria-label="Categories">
         <mat-chip *ngFor="let category of event.categories">{{ category }} 🥝</mat-chip>
     </mat-chip-list>
