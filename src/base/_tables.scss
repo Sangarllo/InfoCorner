@@ -87,3 +87,46 @@ td.mat-column-status {
         }
     }
 }
+
+td.mat-column-role {
+    font-size: smaller;
+    text-transform: uppercase;
+    text-align: center;
+    color: black;
+    &.LECTOR {
+        background-color: white;
+        div.inside-role {
+            border: 1px solid #856404;
+            background-color: #fff3cd;
+        }
+    }
+    &.AUTOR {
+        background-color: white;
+        div.inside-role {
+            border: 1px solid orangered;
+            background-color: orange;
+        }
+    }
+    &.ADMIN {
+        background-color: white;
+        div.inside-role {
+            border: 1px solid darkred;
+            background-color: lightcoral;
+        }
+    }
+    &.SUPER {
+        background-color: white;
+        div.inside-role {
+            border: 1px solid darkslateblue;
+            background-color: lightsteelblue;
+        }
+    }
+    &.CENSOR {
+        background-color: white;
+        div.inside-role {
+            color: lightgrey !important;
+            border: 1px solid black;
+            background-color: #202020;
+        }
+    }
+}

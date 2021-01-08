@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
   public loading = true;
   public users: IUser[];
   public dataSource: MatTableDataSource<IUser> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'photoURL',  'uid', 'displayName', 'email', 'role' , 'actions3'];
+  displayedColumns: string[] = [ 'role', 'uid', 'photoURL', 'displayName', 'email',  'actions3'];
 
   constructor(
     private router: Router,
@@ -54,7 +54,7 @@ export class UsersComponent implements OnInit {
     this.router.navigate([`usuarios/${user.uid}`]);
   }
 
-  public editUser(user: IUser): void {
+  public gotoItemAdmin(user: IUser): void {
     this.router.navigate([`usuarios/${user.uid}/editar`]);
   }
 
