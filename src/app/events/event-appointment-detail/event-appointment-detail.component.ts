@@ -12,15 +12,15 @@ import { IAppointment } from '@models/appointment';
 })
 export class EventAppointmentDetailComponent implements OnInit {
 
-  @Input() event: IEvent;
-  appointment$: Observable<IAppointment>;
+  @Input() appointment: IAppointment;
+  @Input() showImage: boolean;
 
   constructor(
-    private appointmentSrv: AppointmentsService
+    // private appointmentSrv: AppointmentsService
   ) { }
 
   ngOnInit(): void {
-    const idAppointment = this.event.appointmentId;
-    this.appointment$ = this.appointmentSrv.getOneAppointment(idAppointment);
+    // const idAppointment = this.appointmentId;
+    // this.appointment$ = this.appointmentSrv.getOneAppointment(idAppointment);
   }
 }

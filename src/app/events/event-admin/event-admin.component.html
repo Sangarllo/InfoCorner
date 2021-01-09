@@ -47,7 +47,7 @@
                           <mat-icon>book_online</mat-icon>
                         </button>
 
-                        <app-event-appointment-detail [event]="event"></app-event-appointment-detail>
+                        <app-event-appointment-detail *ngIf="appointment$ | async as appointment" [showImage]="true" [appointment]="appointment"></app-event-appointment-detail>
 
                     </fieldset>
 

@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Observable } from 'rxjs';
+
 import { AuthService } from '@auth/auth.service';
 import { Base } from '@models/base';
 import { IEvent, Event } from '@models/event';
 import { IUser } from '@models/user';
+import { IAppointment } from '@models/appointment';
+import { UserRole } from '@models/user-role.enum';
 import { EventService } from '@services/events.service';
 import { UserService } from '@services/users.service';
-import { UserRole } from '@models/user-role.enum';
+import { AppointmentsService } from '@services/appointments.service';
 
 @Component({
   selector: 'app-event-view',
@@ -20,6 +24,7 @@ export class EventViewComponent implements OnInit {
   public adminAllowed: boolean;
   public event: IEvent;
   public idEvent: string;
+  public appointment$: Observable<IAppointment>;
   readonly SECTION_BLANK: Base = Base.InitDefault();
 
   constructor(
@@ -27,6 +32,7 @@ export class EventViewComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userSrv: UserService,
+    private appointmentSrv: AppointmentsService,
     private eventSrv: EventService,
   ) {
     this.adminAllowed = false;
@@ -41,6 +47,7 @@ export class EventViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.idEvent = this.route.snapshot.paramMap.get('id');
+    this.appointment$ = this.appointmentSrv.getOneAppointment(this.idEvent);
     if ( this.idEvent ) {
       this.getDetails(this.idEvent);
     }

@@ -1,8 +1,17 @@
-<div class="event-item-detail" *ngIf="appointment$ | async as appointment; else noAppointmentTemplate">
-    <img [src]="'assets/images/appointments/default.png'" class="img-thumbnail">
+<div class="event-item-dialog">
+    <div class="event-item-detail" *ngIf="appointment; else noAppointmentTemplate">
 
-    <h2>El evento se celebra {{ appointment.desc }}</h2>
+        <img *ngIf="showImage" [src]="'assets/images/appointments/default.png'" class="img-thumbnail">
 
+        <h2>El evento se celebra {{ appointment.desc }}</h2>
+
+        <!--
+        <pre style="border:1px solid brown;background-color: chocolate;color:white">
+          {{ appointment | json }}
+        </pre>
+        -->
+
+    </div>
 </div>
 
 <ng-template #noAppointmentTemplate>

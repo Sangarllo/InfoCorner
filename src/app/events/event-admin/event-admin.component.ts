@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
+import { Observable } from 'rxjs';
+
 import { AuthService } from '@auth/auth.service';
 import { Base, IBase, BaseType } from '@models/base';
 import { IAppointment } from '@models/appointment';
@@ -29,6 +31,7 @@ export class EventAdminComponent implements OnInit {
   private currentUser: IUser;
   public event: IEvent;
   public idEvent: string;
+  public appointment$: Observable<IAppointment>;
   readonly SECTION_BLANK: Base = Base.InitDefault();
   public dialogConfig = new MatDialogConfig();
 
@@ -43,7 +46,7 @@ export class EventAdminComponent implements OnInit {
   ) {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
-    this.dialogConfig.width = '500px';
+    this.dialogConfig.width = '600px';
   }
 
   ngOnInit(): void {
@@ -53,6 +56,7 @@ export class EventAdminComponent implements OnInit {
     });
 
     this.idEvent = this.route.snapshot.paramMap.get('id');
+    this.appointment$ = this.appointmentSrv.getOneAppointment(this.idEvent);
     if ( this.idEvent ) {
       this.getDetails(this.idEvent);
     }

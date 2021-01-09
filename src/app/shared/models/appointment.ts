@@ -1,9 +1,10 @@
 export interface IAppointment {
   id: string;
   active: boolean;
-  withDetails: boolean;
+  allDay: boolean;
   dateIni: string;
   timeIni?: string;
+  withEnd?: boolean;
   dateEnd?: string;
   timeEnd?: string;
   desc?: string;
@@ -18,9 +19,10 @@ export class Appointment implements IAppointment {
   constructor(
     public id: string,
     public active: boolean,
-    public withDetails: boolean,
+    public allDay: boolean,
     public dateIni: string,
     public timeIni?: string,
+    public withEnd?: boolean,
     public dateEnd?: string,
     public timeEnd?: string,
     public desc?: string
@@ -35,14 +37,47 @@ export class Appointment implements IAppointment {
     const basicAppointment = new Appointment(
       id,
       true,
+      true,
+      todayStr,
+      Appointment.HOUR_DEFAULT,
       false,
       todayStr,
       Appointment.HOUR_DEFAULT,
-      todayStr,
-      Appointment.HOUR_DEFAULT,
-      'Hoy'
+      ''
     );
 
+    basicAppointment.desc = Appointment.computeDesc(basicAppointment);
+
     return basicAppointment;
+  }
+
+  static computeDesc(appointment: IAppointment): string {
+    try {
+      if ( appointment.allDay ) {
+        if ( appointment.withEnd && ( appointment.dateIni !== appointment.dateEnd )) {
+          return `entre los días ${appointment.dateIni} y ${appointment.dateEnd}, ambos incluidos`;
+        } else {
+          return `durante el día ${appointment.dateIni}`;
+        }
+      } else {
+        if ( appointment.withEnd ) {
+          if ( appointment.dateIni === appointment.dateEnd ) {
+            if ( appointment.timeIni === appointment.timeEnd ) {
+              return `el día ${appointment.dateIni} a las ${appointment.timeIni}`;
+            } else {
+              return `el día ${appointment.dateIni}, de las ${appointment.timeIni} a las ${appointment.timeEnd}`;
+            }
+          } else {
+            // tslint:disable-next-line: max-line-length
+            return `desde el día ${appointment.dateIni} a las ${appointment.timeIni}, al día ${appointment.dateEnd} a las ${appointment.timeEnd}`;
+          }
+        } else {
+          return `el día ${appointment.dateIni} a las ${appointment.timeIni}`;
+        }
+      }
+    }
+    catch (exception) {
+      return '# no se ha podido calcular #';
+    }
   }
 }

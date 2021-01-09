@@ -32,9 +32,10 @@ export class AppointmentsService {
     this.appointmentCollection.doc(idAppointment).set({
       id: idAppointment,
       active: newAppointment.active,
-      withDetails: newAppointment.withDetails,
+      allDay: newAppointment.allDay,
       dateIni: newAppointment.dateIni,
       timeIni: newAppointment.timeIni,
+      withEnd: newAppointment.withEnd,
       dateEnd: newAppointment.dateEnd,
       timeEnd: newAppointment.timeEnd,
       desc: newAppointment.desc,

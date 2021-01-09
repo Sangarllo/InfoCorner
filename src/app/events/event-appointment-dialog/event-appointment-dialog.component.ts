@@ -37,11 +37,13 @@ export class EventAppointmentDialogComponent implements OnInit {
 
       this.appointmentForm = this.fb.group({
         id: [ idAppointment, []],
-        withDetails: [ false, []],
+        allDay: [ true, []],
         dateIni: [ '', []],
         timeIni: [ '', []],
+        withEnd: [ false, []],
         dateEnd: [ '', []],
         timeEnd: [ '', []],
+        desc: [ '', []],
       });
     }
   }
@@ -74,25 +76,60 @@ export class EventAppointmentDialogComponent implements OnInit {
     // Update the data on the form
     this.appointmentForm.patchValue({
       id: this.appointment.id,
-      withDetails: this.appointment.withDetails,
+      allDay: this.appointment.allDay,
       dateIni: this.appointment.dateIni,
       timeIni: this.appointment.timeIni,
+      withEnd: this.appointment.withEnd,
       dateEnd: this.appointment.dateEnd,
       timeEnd: this.appointment.timeEnd,
+      desc: this.appointment.desc,
     });
 
-    // tslint:disable-next-line:no-string-literal
-    this.appointmentForm.controls['id'].setValue(this.appointment.id);
+    this.appointmentForm.controls.id.setValue(this.appointment.id);
   }
 
   onDateIniChange(type: string, event: MatDatepickerInputEvent<Date>): void {
     const newDate = this.appointmentSrv.formatDate(event.value);
     this.appointment.dateIni = newDate;
+    this.updateTemporalDesc();
   }
 
   onDateEndChange(type: string, event: MatDatepickerInputEvent<Date>): void {
     const newDate = this.appointmentSrv.formatDate(event.value);
     this.appointment.dateEnd = newDate;
+    this.updateTemporalDesc();
+  }
+
+  public onInputChange(controlName: string): void {
+    switch (controlName) {
+
+      case 'allDay':
+        this.appointment.allDay = this.appointmentForm.controls.allDay.value;
+        break;
+
+      case 'withEnd':
+        this.appointment.withEnd = this.appointmentForm.controls.withEnd.value;
+        break;
+
+      case 'timeIni':
+        this.appointment.timeIni = this.appointmentForm.controls.timeIni.value;
+        break;
+
+      case 'timeEnd':
+        this.appointment.timeEnd = this.appointmentForm.controls.timeEnd.value;
+        break;
+
+      default:
+        break;
+    }
+
+    this.updateTemporalDesc();
+  }
+
+  public updateTemporalDesc(): void {
+
+    this.appointment.desc = Appointment.computeDesc(this.appointment);
+    this.appointmentForm.controls.desc.setValue(this.appointment.desc);
   }
 
   onNoClick(): void {
