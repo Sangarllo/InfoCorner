@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
 import { IEntity } from '@models/entity';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-entities',
@@ -23,7 +24,7 @@ export class EntitiesComponent implements OnInit {
   public loading = true;
   public entities: IEntity[];
   public dataSource: MatTableDataSource<IEntity> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'image', 'id', 'name', 'place', 'roleDefault', 'actions3'];
+  displayedColumns: string[] = [ 'roleDefault', 'id', 'image', 'name', 'categories', 'imagePlace', 'placeName', 'actions3'];
 
   constructor(
     private router: Router,
@@ -34,6 +35,14 @@ export class EntitiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.entitySrv.getAllEntities()
+    .pipe(
+      map(entities => entities.map(entity => {
+        const reducer = (acc, value) => `${acc} ${value.substr(0, value.indexOf(' '))}`;
+
+        entity.description = entity.categories.reduce(reducer, '');
+        return { ...entity };
+      }))
+    )
     .subscribe( (entities: IEntity[]) => {
       this.entities = entities;
       this.dataSource = new MatTableDataSource(this.entities);
@@ -43,7 +52,7 @@ export class EntitiesComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string): void {
+    applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {

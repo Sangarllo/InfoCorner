@@ -36,8 +36,13 @@
             </ng-container>
 
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del evento</th>
                 <td mat-cell *matCellDef="let event">{{ event.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="categories">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Categorías</th>
+                <td mat-cell *matCellDef="let event">{{ event.description }}</td>
             </ng-container>
 
             <ng-container matColumnDef="dateIni">

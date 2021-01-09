@@ -10,6 +10,7 @@ import { EventService } from '@services/events.service';
 import { AuthService } from '@auth/auth.service';
 import { IEvent } from '@models/event';
 import { IUser } from '@models/user';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-events',
@@ -25,7 +26,7 @@ export class EventsComponent implements OnInit {
   public loading = true;
   public events: IEvent[];
   public dataSource: MatTableDataSource<IEvent> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'image', 'name', 'dateIni', 'actions3'];
+  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'image', 'name', 'categories', 'dateIni', 'actions3'];
 
   constructor(
     private router: Router,
@@ -42,6 +43,14 @@ export class EventsComponent implements OnInit {
     });
 
     this.eventSrv.getAllEventsWithAppointments()
+        .pipe(
+          map(events => events.map(event => {
+            const reducer = (acc, value) => `${acc} ${value.substr(0, value.indexOf(' '))}`;
+
+            event.description = ( event.categories ) ? event.categories.reduce(reducer, '') : '';
+            return { ...event };
+          }))
+        )
         .subscribe( (events: IEvent[]) => {
         this.events = events;
         this.dataSource = new MatTableDataSource(this.events);

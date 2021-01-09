@@ -25,6 +25,7 @@ td.mat-column-timestamp {
 }
 
 .mat-column-photoURL,
+.mat-column-imagePlace,
 .mat-column-image {
     text-align: center;
     width: 100px;
@@ -35,6 +36,15 @@ td.mat-column-timestamp {
         min-height: 64px;
         height: 64px;
     }
+}
+
+td.mat-column-categories {
+    text-align: center;
+    width: 140px;
+    font-size: large;
+    line-height: 1.9rem;
+    padding-right: 5px !important;
+    padding-right: 5px !important;
 }
 
 .mat-column-actions {
@@ -88,6 +98,7 @@ td.mat-column-status {
     }
 }
 
+td.mat-column-roleDefault,
 td.mat-column-role {
     font-size: smaller;
     text-transform: uppercase;

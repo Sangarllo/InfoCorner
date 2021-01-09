@@ -174,7 +174,12 @@ export class EventService {
       event.images.push(place.image);
     }
 
-    const newEvent = { ...event, entityItems: event.entityItems, placeItems: event.placeItems };
+    const categories = entity.categories;
+
+    const newEvent = { ...event,
+      categories,
+      entityItems: event.entityItems,
+      placeItems: event.placeItems };
     this.eventCollection.doc(event.id).set(newEvent, { merge: true });
 
     return id;

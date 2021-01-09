@@ -1,5 +1,6 @@
 export enum EntityRole {
   Default = '',
+  Celebra = 'CELEBRA',
   Coordina = 'COORDINA',
   Organiza = 'ORGANIZA',
   Juega = 'JUEGA',
@@ -10,6 +11,7 @@ export enum EntityRole {
 
 const ENTITY_ROLES: EntityRole[] = [
   EntityRole.Default,
+  EntityRole.Celebra,
   EntityRole.Coordina,
   EntityRole.Juega,
   EntityRole.Organiza,

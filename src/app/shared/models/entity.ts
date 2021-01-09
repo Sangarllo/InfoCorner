@@ -10,6 +10,7 @@ export interface IEntity {
   image: string;
   baseType: BaseType;
   categories?: Category[];
+  description?: string;
   place?: Place;
   roleDefault?: EntityRole;
 }
@@ -28,6 +29,7 @@ export class Entity implements IEntity, IBase {
     public image: string,
     public baseType: BaseType,
     public categories?: Category[],
+    public description?: string,
     public place?: Place,
     public roleDefault?: EntityRole,
      ) {
@@ -37,6 +39,7 @@ export class Entity implements IEntity, IBase {
     return new Entity(
       '0', true, Entity.NAME_DEFAULT, Entity.IMAGE_DEFAULT, BaseType.ENTITY, // Base
       [],
+      null,
       null,
       null,
     );
