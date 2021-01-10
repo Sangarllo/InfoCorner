@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
@@ -9,8 +9,7 @@ import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
 import { Entity, IEntity } from '@models/entity';
-import { CATEGORIES, Category } from '@models/category.enum';
-import { Place } from '@models/place';
+import { EVENT_CATEGORIES, Category } from '@models/category.enum';
 import { PlaceService } from '@services/places.service';
 import { Base } from '@models/base';
 import { EntityRole } from '@models/entity-role.enum';
@@ -30,7 +29,7 @@ export class EntityEditComponent implements OnInit {
 
   // public entity$: Observable<IEntity | undefined> | null = null;
   public entity!: IEntity | undefined;
-  public CATEGORIES: Category[] = CATEGORIES;
+  public CATEGORIES: Category[] = EVENT_CATEGORIES;
   public ROLES: EntityRole[] = Entity.ROLES;
 
   placeBaseSelected: Base;

@@ -2,10 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import Swal from 'sweetalert2';
+
 import { Base } from '@models/base';
 import { IEvent } from '@models/event';
-import Swal from 'sweetalert2';
-import { Category, CATEGORIES } from '@models/category.enum';
+import { Category, EVENT_CATEGORIES } from '@models/category.enum';
 
 @Component({
   selector: 'app-event-basic-dialog',
@@ -16,7 +17,7 @@ export class EventBasicDialogComponent implements OnInit {
   title = 'Modifica los datos básicos del evento';
   eventForm: FormGroup;
   eventBaseSelected: Base;
-  public CATEGORIES: Category[] = CATEGORIES;
+  public CATEGORIES: Category[] = EVENT_CATEGORIES;
   readonly SECTION_BLANK: Base = Base.InitDefault();
 
   constructor(

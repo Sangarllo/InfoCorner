@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { CATEGORIES, Category } from '@models/category.enum';
+import { EVENT_CATEGORIES, Category } from '@models/category.enum';
 import { INewsItem, NewsItem } from '@models/news';
 import { Status } from '@models/status.enum';
 import { AppointmentsService } from '@services/appointments.service';
@@ -27,7 +27,7 @@ export class NewsEditComponent implements OnInit {
 
   public newsItem!: INewsItem | undefined;
   public STATUS: Status[] = NewsItem.STATUS;
-  public CATEGORIES: Category[] = CATEGORIES;
+  public CATEGORIES: Category[] = EVENT_CATEGORIES;
 
   constructor(
     private afStorage: AngularFireStorage,

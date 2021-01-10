@@ -19,7 +19,7 @@
         <textarea matInput formControlName="description" placeholder="Descripción"></textarea>
     </mat-form-field>
 
-    <div *ngIf="data.description">
+    <div *ngIf="eventForm.controls.description.value">
         <span class="title">Así se visualizaría la Descripción:</span>
         <div class="preview" [innerHTML]="eventForm.controls.description.value"></div>
     </div>

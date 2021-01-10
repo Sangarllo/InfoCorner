@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 import { AuthService } from '@auth/auth.service';
 import { Event, IEvent } from '@models/event';
 import { Status } from '@models/status.enum';
-import { CATEGORIES, Category } from '@models/category.enum';
+import { EVENT_CATEGORIES, Category } from '@models/category.enum';
 import { IUser } from '@models/user';
 import { AuditType } from '@models/audit';
 import { EventService } from '@services/events.service';
@@ -30,7 +30,7 @@ export class EventEditComponent implements OnInit {
 
   public event!: IEvent | undefined;
   public STATUS: Status[] = Event.STATUS;
-  public CATEGORIES: Category[] = CATEGORIES;
+  public CATEGORIES: Category[] = EVENT_CATEGORIES;
 
   constructor(
     private authSrv: AuthService,

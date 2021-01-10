@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 import { Notice, INotice } from '@models/notice';
 import { Status } from '@models/status.enum';
-import { CATEGORIES, Category } from '@models/category.enum';
+import { NOTICE_CATEGORIES, Category } from '@models/category.enum';
 import { AppointmentsService } from '@services/appointments.service';
 import { NoticeService } from '@services/notices.service';
 
@@ -27,7 +27,7 @@ export class NoticeEditComponent implements OnInit {
 
   public notice!: INotice | undefined;
   public STATUS: Status[] = Notice.STATUS;
-  public CATEGORIES: Category[] = CATEGORIES;
+  public CATEGORIES: Category[] = NOTICE_CATEGORIES;
 
   constructor(
     private afStorage: AngularFireStorage,

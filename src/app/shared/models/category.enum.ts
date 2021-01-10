@@ -26,9 +26,61 @@ export enum Category {
   TerceraEdad = '🧓 TERCERA EDAD',
   Tradicion = '📜 TRADICIÓN',
   Viaje = '🚌 VIAJE',
+
+  Agua = '🚿 AGUA',
+  Aviso = '🔊 AVISO',
+  Campana = '🔔 CAMPANA',
+  Correo = '📭 CORREO',
+  Calendario = '📅 CALENDARIO',
+  Dinero = '💰 DINERO',
+  Documentacion = '📄 DOCUMENTACION',
+  Fuego = '🔥 FUEGO',
+  Horario = '⏰ HORARIO',
+  Informe = '📊 INFORME DE DATOS',
+  Informacion = 'ℹ️ INFORMACIÓN',
+  Luz = '💡 LUZ',
+  Mascarilla = '😷 MASCARILLA',
+  Niños = '🚸 NIÑOS',
+  Nieve = '❄️ NIEVE',
+  Obras = '🚧 OBRAS',
+  OrdenPublico = '👮 ORDEN PUBLICO',
+  Peligro = '⚠️ PELIGRO',
+  RestriccionesAcceso = '⛔ RESTRICCIONES DE ACCESO',
+  Tormenta = '⛈️ TORMENTA',
+  Sol = '☀️ SOL',
+  Tiempo = '🌡️ TIEMPO',
+  Vacuna = '💉 VACUNA',
+  Virus = '🦠 VIRUS',
 }
 
-const CATEGORIES: Category[] = [
+const NOTICE_CATEGORIES: Category[] = [
+  Category.Agua,
+  Category.Aviso,
+  Category.Campana,
+  Category.Correo,
+  Category.Calendario,
+  Category.Dinero,
+  Category.Documentacion,
+  Category.Fuego,
+  Category.Horario,
+  Category.Informacion,
+  Category.Informe,
+  Category.Luz,
+  Category.Mascarilla,
+  Category.Niños,
+  Category.Nieve,
+  Category.Obras,
+  Category.OrdenPublico,
+  Category.Peligro,
+  Category.RestriccionesAcceso,
+  Category.Tormenta,
+  Category.Sol,
+  Category.Tiempo,
+  Category.Vacuna,
+  Category.Virus,
+];
+
+const EVENT_CATEGORIES: Category[] = [
   Category.Atletismo,
   Category.Baloncesto,
   Category.Ciclismo,
@@ -58,4 +110,4 @@ const CATEGORIES: Category[] = [
   Category.Viaje,
 ];
 
-export { CATEGORIES };
+export { EVENT_CATEGORIES, NOTICE_CATEGORIES };

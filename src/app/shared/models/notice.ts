@@ -40,7 +40,7 @@ export class Notice implements INotice, IBase {
       '0', true, '', Notice.IMAGE_DEFAULT, BaseType.NOTICE, // Base
       Status.Visible,
       true,
-      [],
+      [Category.Aviso],
       '',
       null, // Timestamp
     );

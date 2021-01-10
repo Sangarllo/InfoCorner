@@ -24,7 +24,7 @@ export class NoticesComponent implements OnInit {
   public loading = true;
   public notices: INotice[];
   public dataSource: MatTableDataSource<INotice> = new MatTableDataSource();
-  displayedColumns: string[] =  [ 'status', 'id', 'timestamp', 'image', 'name', 'actions3'];
+  displayedColumns: string[] =  [ 'status', 'id', 'timestamp', 'image', 'name', 'categories', 'actions3'];
 
   constructor(
     private router: Router,
@@ -36,10 +36,16 @@ export class NoticesComponent implements OnInit {
   ngOnInit(): void {
     this.noticeSrv.getAllNotices()
       .pipe(
-        map((notices) => notices.map(notice => ({
-          ...notice,
-          timestamp: formatDistance(new Date(notice.timestamp), new Date(), {locale: es})
-        }) as INotice))
+        map((notices: INotice[]) => notices.map(notice => {
+
+          const reducer = (acc, value) => `${acc} ${value.substr(0, value.indexOf(' '))}`;
+
+          notice.description = ( notice.categories ) ? notice.categories.reduce(reducer, '') : '';
+
+          notice.timestamp = formatDistance(new Date(notice.timestamp), new Date(), {locale: es});
+
+          return { ...notice };
+        }))
       )
       .subscribe( (notices: INotice[]) => {
         this.notices = notices;
