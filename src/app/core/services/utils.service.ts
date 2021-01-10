@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import Swal from 'sweetalert2';
+import { formatDistance } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import { IBase } from '@models/base';
 
@@ -41,5 +43,14 @@ export class UtilsService {
       default:
         break;
     }
+  }
+
+  public getDistanceTimestamp(timestamp: string): string {
+    const timestampDate = new Date(timestamp);
+    return formatDistance(
+      timestampDate,
+      new Date(),
+      {locale: es}
+    );
   }
 }

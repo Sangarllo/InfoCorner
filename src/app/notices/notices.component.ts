@@ -6,11 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { formatDistance } from 'date-fns';
-import { es } from 'date-fns/locale';
 
-import { NoticeService } from '@services/notices.service';
 import { INotice } from '@models/notice';
+import { NoticeService } from '@services/notices.service';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
   selector: 'app-notices',
@@ -28,13 +27,14 @@ export class NoticesComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private utilSrv: UtilsService,
     private noticeSrv: NoticeService,
   ) {
     this.loading = true;
   }
 
   ngOnInit(): void {
-    this.noticeSrv.getAllNotices()
+    this.noticeSrv.getAllNotices( true, false, null )
       .pipe(
         map((notices: INotice[]) => notices.map(notice => {
 
@@ -42,7 +42,7 @@ export class NoticesComponent implements OnInit {
 
           notice.description = ( notice.categories ) ? notice.categories.reduce(reducer, '') : '';
 
-          notice.timestamp = formatDistance(new Date(notice.timestamp), new Date(), {locale: es});
+          notice.timestamp = this.utilSrv.getDistanceTimestamp(notice.timestamp);
 
           return { ...notice };
         }))

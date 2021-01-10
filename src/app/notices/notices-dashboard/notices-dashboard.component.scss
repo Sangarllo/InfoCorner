@@ -1,19 +1,31 @@
 div.notices-wrapper {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     background-image: url("../../../assets/images/base/cork.jpg");
     background-repeat: repeat;
     min-height: 400px;
-    justify-content: center;
+    justify-content: left;
     // margin-top: -30px; // TODO: Why it was needed?
     mat-card.notice-item {
         margin: 20px;
         padding: 10px;
+        background-color: #fff3cd;
         max-width: 300px;
         flex-direction: column;
+        div.timestamp {
+            font-size: smaller;
+            text-align: right;
+            span.title {
+                color: black;
+            }
+            span.data {
+                color: #856404;
+            }
+        }
         mat-card-title {
             p {
+                margin-top: 20px;
                 width: 100%;
                 white-space: nowrap;
                 overflow: hidden;
@@ -30,15 +42,10 @@ div.notices-wrapper {
             }
         }
         mat-card-content {
-            color: grey;
+            // color: gray;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             height: 64px;
-            border: 0px solid red;
-            div.timestamp {
-                color: red;
-                text-align: right;
-                margin-bottom: 8px;
-            }
+            margin-bottom: 0px;
             p {
                 height: 100%;
                 white-space: wrap;
@@ -47,8 +54,10 @@ div.notices-wrapper {
             }
         }
         mat-card-actions {
+            display: flex;
+            justify-content: center;
             button {
-                text-align: right;
+                margin: 10px;
             }
         }
     }

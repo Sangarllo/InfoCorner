@@ -25,12 +25,30 @@ export class NoticeService {
     this.noticeCollection = afs.collection(NOTICES_COLLECTION);
   }
 
-  getAllNotices(): Observable<INotice[]> {
-    this.noticeCollection = this.afs.collection<INotice>(
-      NOTICES_COLLECTION,
-      ref => ref.where('active', '==', true)
-                .orderBy('timestamp', 'desc')
-    );
+  getAllNotices(showOnlyActive: boolean, modeDashboard: boolean, sizeDashboard?: number): Observable<INotice[]> {
+
+    if ( modeDashboard ) {
+      this.noticeCollection = this.afs.collection<INotice>(
+        NOTICES_COLLECTION,
+        ref => ref.where('focused', '==', true)
+                  .where('active', '==', true)
+                  .orderBy('timestamp', 'desc')
+                  .limit(sizeDashboard)
+      );
+    } else {
+      if ( showOnlyActive ) {
+        this.noticeCollection = this.afs.collection<INotice>(
+          NOTICES_COLLECTION,
+          ref => ref.where('active', '==', true)
+                    .orderBy('timestamp', 'desc')
+        );
+      } else {
+        this.noticeCollection = this.afs.collection<INotice>(
+          NOTICES_COLLECTION,
+          ref => ref.orderBy('timestamp', 'desc')
+        );
+      }
+    }
 
     return this.noticeCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
