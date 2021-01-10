@@ -6,7 +6,8 @@ export interface IPlace {
   name: string;
   image: string;
   baseType: BaseType;
-  type?: PlaceType[];
+  types?: PlaceType[];
+  description?: string;
   locality?: string;
   roleDefault?: string;
 }
@@ -23,7 +24,8 @@ export class Place implements IPlace, IBase {
     public name: string,
     public image: string,
     public baseType: BaseType,
-    public type?: PlaceType[],
+    public types?: PlaceType[],
+    public description?: string,
     public locality?: string,
     public roleDefault?: string,
      ) {
@@ -32,7 +34,8 @@ export class Place implements IPlace, IBase {
   static InitDefault(): Place {
     return new Place(
       '0', true, '', Place.IMAGE_DEFAULT, BaseType.PLACE, // Base
-      [ PlaceType.Other ],
+      [],
+      null,
       Place.LOCALITY_DEFAULT,
       'SE CELEBRA EN',
     );

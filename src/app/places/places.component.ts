@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { IPlace } from '@models/place';
@@ -22,7 +23,7 @@ export class PlacesComponent implements OnInit {
   public loading = true;
   public places: IPlace[];
   public dataSource: MatTableDataSource<IPlace> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'image', 'id', 'name', 'locality', 'type', 'actions3'];
+  displayedColumns: string[] = [ 'id', 'image', 'name', 'types', 'locality',  'actions3'];
 
   constructor(
     private router: Router,
@@ -33,6 +34,14 @@ export class PlacesComponent implements OnInit {
 
   ngOnInit(): void {
     this.placeSrv.getAllPlaces()
+    .pipe(
+      map(places => places.map(place => {
+        const reducer = (acc, value) => `${acc} ${value.substr(0, value.indexOf(' '))}`;
+
+        place.description = ( place.types ) ? place.types.reduce(reducer, '') : '';
+        return { ...place };
+      }))
+    )
     .subscribe( (places: IPlace[]) => {
       this.places = places;
       this.dataSource = new MatTableDataSource(this.places);
@@ -59,7 +68,6 @@ export class PlacesComponent implements OnInit {
   }
 
   public deleteItem(place: IPlace): void {
-    console.log(`Borrando ${place.id}`);
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'No podrás deshacer esta acción de borrado!',

@@ -4,11 +4,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { EntityService } from '@services/entities.service';
 import { IEntity } from '@models/entity';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-entities',

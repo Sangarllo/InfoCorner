@@ -49,7 +49,7 @@ export class PlaceEditComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50)]],
       image: Place.IMAGE_DEFAULT,
-      type: [],
+      types: [],
       locality: Place.LOCALITY_DEFAULT
     });
 
@@ -95,7 +95,7 @@ export class PlaceEditComponent implements OnInit {
       active: this.place.active,
       name: this.place.name,
       image: this.place.image ?? Place.IMAGE_DEFAULT,
-      type: this.place.type ?? [],
+      types: this.place.types ?? [],
       locality: this.place.locality
     });
 

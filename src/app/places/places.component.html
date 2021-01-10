@@ -12,6 +12,11 @@
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource" matSort>
 
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id.</th>
+                <td mat-cell *matCellDef="let place">{{ place.id }}</td>
+            </ng-container>
+
             <ng-container matColumnDef="image">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
@@ -19,24 +24,19 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef>Id.</th>
-                <td mat-cell *matCellDef="let place">{{ place.id }}</td>
-            </ng-container>
-
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
                 <td mat-cell *matCellDef="let place">{{ place.name }}</td>
             </ng-container>
 
+            <ng-container matColumnDef="types">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+                <td mat-cell *matCellDef="let place">{{ place.description }}</td>
+            </ng-container>
+
             <ng-container matColumnDef="locality">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Localidad</th>
                 <td mat-cell *matCellDef="let place">{{ place.locality }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
-                <td mat-cell *matCellDef="let place">{{ place.type }}</td>
             </ng-container>
 
             <ng-container matColumnDef="actions3">
@@ -46,11 +46,11 @@
                   <mat-icon aria-label="View">remove_red_eye</mat-icon>
                 </button>
 
-                    <button mat-icon-button matTooltip="Click to Edit" class="iconbutton" color="primary" (click)="editItem(place)">
-                  <mat-icon aria-label="Edit">edit</mat-icon>
+                    <button mat-icon-button matTooltip="Click to Edit" class="iconbutton" color="accent" (click)="editItem(place)">
+                  <mat-icon aria-label="Edit">build_circle</mat-icon>
                 </button>
 
-                    <button mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn" (click)="deleteItem(place)">
+                    <button mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="accent" (click)="deleteItem(place)">
                   <mat-icon aria-label="Delete">delete</mat-icon>
                 </button>
                 </td>
@@ -60,7 +60,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" showFirstLastButtons></mat-paginator>
 
     </div>
 
