@@ -25,12 +25,30 @@ export class NewsService {
     this.newsCollection = afs.collection(NEWS_COLLECTION);
   }
 
-  getAllNews(): Observable<INewsItem[]> {
-    this.newsCollection = this.afs.collection<INewsItem>(
-      NEWS_COLLECTION,
-      ref => ref.where('active', '==', true)
-                .orderBy('timestamp', 'desc')
-    );
+  getAllNews(showOnlyActive: boolean, modeDashboard: boolean, sizeDashboard?: number): Observable<INewsItem[]> {
+
+    if ( modeDashboard ) {
+      this.newsCollection = this.afs.collection<INewsItem>(
+        NEWS_COLLECTION,
+        ref => ref.where('focused', '==', true)
+                  .where('active', '==', true)
+                  .orderBy('timestamp', 'desc')
+                  .limit(sizeDashboard)
+      );
+    } else {
+      if ( showOnlyActive ) {
+        this.newsCollection = this.afs.collection<INewsItem>(
+          NEWS_COLLECTION,
+          ref => ref.where('active', '==', true)
+                    .orderBy('timestamp', 'desc')
+        );
+      } else {
+        this.newsCollection = this.afs.collection<INewsItem>(
+          NEWS_COLLECTION,
+          ref => ref.orderBy('timestamp', 'desc')
+        );
+      }
+    }
 
     return this.newsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {

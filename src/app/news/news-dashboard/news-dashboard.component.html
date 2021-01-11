@@ -1,21 +1,23 @@
 <app-section-header *ngIf="showHeader" [title]="'EbroNews'"></app-section-header>
 
-
 <div class="news-wrapper">
 
     <mat-card *ngFor="let newsItem of news$ | async; index as i" class="news-item" routerLink="profile" (click)="gotoNewsItem(newsItem)">
-        <mat-card-title>
-            <p>{{ newsItem.name }}</p>
-        </mat-card-title>
+        <div class="timestamp">
+            <span class="title">Última actualización: </span>
+            <span class="data">{{ newsItem.timestamp }}</span>
+        </div>
         <div class="news-image">
             <img alt="newsItem.name" [src]="'https://picsum.photos/260?random=' + i" class="img-thumbnail" />
         </div>
+        <mat-card-title>
+            <p>{{ newsItem.name }}</p>
+        </mat-card-title>
         <mat-card-content>
-            <div class="timestamp">{{ newsItem.timestampDist }}</div>
-            <p>{{ newsItem.description }}</p>
+            <p [innerHTML]="newsItem.description"></p>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-button>VER</button>
+            <button mat-raised-button color="primary">VER</button>
         </mat-card-actions>
     </mat-card>
 

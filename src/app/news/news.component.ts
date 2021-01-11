@@ -33,7 +33,7 @@ export class NewsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.newsSrv.getAllNews()
+    this.newsSrv.getAllNews(false, false) // TODO param based on userrole
     .pipe(
       map((newsItems) => newsItems.map(newsItem => ({
         ...newsItem,

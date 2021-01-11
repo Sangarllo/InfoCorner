@@ -10,8 +10,7 @@ import { UtilsService } from '@services/utils.service';
 
 @Component({
   selector: 'app-notices-dashboard',
-  templateUrl: './notices-dashboard.component.html',
-  styleUrls: ['./notices-dashboard.component.scss']
+  templateUrl: './notices-dashboard.component.html'
 })
 export class NoticesDashboardComponent implements OnInit {
 
@@ -25,7 +24,7 @@ export class NoticesDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.notices$ = this.noticesSrv.getAllNotices(true, true, 3)
+    this.notices$ = this.noticesSrv.getAllNotices(true, true, 5)
     .pipe(
       map((notices: INotice[]) => notices.map(notice => {
 

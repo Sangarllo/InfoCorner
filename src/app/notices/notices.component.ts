@@ -34,7 +34,7 @@ export class NoticesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.noticeSrv.getAllNotices( true, false, null )
+    this.noticeSrv.getAllNotices( false, false ) // TODO param based on userrole
       .pipe(
         map((notices: INotice[]) => notices.map(notice => {
 

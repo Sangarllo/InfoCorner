@@ -1,6 +1,5 @@
 <app-section-header *ngIf="showHeader" [title]="'La Esquina del tío valero Rinconera'"></app-section-header>
 
-
 <div class="notices-wrapper">
 
     <mat-card *ngFor="let notice of notices$ | async; index as i" class="notice-item" routerLink="profile" (click)="gotoNotice(notice)">
@@ -21,5 +20,4 @@
             <button mat-raised-button color="primary">VER</button>
         </mat-card-actions>
     </mat-card>
-
 </div>
