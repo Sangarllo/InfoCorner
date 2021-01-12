@@ -18,10 +18,6 @@ export class UtilsService {
 
   constructor() { }
 
-  public compareFunction(o1: IBase, o2: IBase): boolean {
-    return (o1.name === o2.name && o1.id === o2.id);
-  }
-
   public swalFire(opt: SwalMessage, extraInfo?: string): void {
     switch (opt) {
       case SwalMessage.NO_CHANGES:

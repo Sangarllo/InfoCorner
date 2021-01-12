@@ -66,7 +66,7 @@ export class EventNewBaseDialogComponent implements OnInit {
   }
 
   compareFunction(o1: IBase, o2: IBase): boolean {
-      return this.utilsSrv.compareFunction(o1, o2);
+    return (o1.name === o2.name && o1.id === o2.id);
   }
 
   onNoClick(): void {

@@ -9,7 +9,6 @@ import Swal from 'sweetalert2';
 
 import { INewsItem, NewsItem } from '@models/news';
 import { Status } from '@models/status.enum';
-import { IBase } from '@models/base';
 import { ISource, DEFAULT_SOURCE, NEWS_SOURCES } from '@models/source';
 import { Category, EVENT_CATEGORIES } from '@models/category.enum';
 import { AppointmentsService } from '@services/appointments.service';
@@ -37,7 +36,6 @@ export class NewsEditComponent implements OnInit {
   constructor(
     private afStorage: AngularFireStorage,
     private fb: FormBuilder,
-    private utilsSrv: UtilsService,
     private route: ActivatedRoute,
     private router: Router,
     private appointmentSrv: AppointmentsService,
@@ -129,7 +127,7 @@ export class NewsEditComponent implements OnInit {
   }
 
   compareFunction(o1: ISource, o2: ISource): boolean {
-    return (o1.id === o2.id);
+    return (o1.name === o2.name && o1.id === o2.id);
   }
 
   onResetForm(): void {
