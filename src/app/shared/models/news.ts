@@ -1,4 +1,5 @@
 import { IBase, BaseType } from '@models/base';
+import { DEFAULT_SOURCE, ISource } from '@models//source';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
 
@@ -13,7 +14,7 @@ export interface INewsItem {
   categories?: Category[];
   description?: string;
   timestamp?: string;
-  sourceName?: string;
+  source?: ISource;
   sourceUrl?: string;
 }
 
@@ -34,7 +35,7 @@ export class NewsItem implements INewsItem, IBase {
     public categories?: Category[],
     public description?: string,
     public timestamp?: string,
-    public sourceName?: string,
+    public source?: ISource,
     public sourceUrl?: string,
      ) {
   }
@@ -47,7 +48,7 @@ export class NewsItem implements INewsItem, IBase {
       [],
       '',
       null, // Timestamp
-      null, null, // Source
+      DEFAULT_SOURCE, null, // Source
     );
   }
 }

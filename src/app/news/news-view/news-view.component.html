@@ -4,7 +4,7 @@
 
         <div class="row">
             <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-                <img [src]="newsItem.image" class="img-thumbnail">
+                <img [src]="newsItem.source.image" class="img-thumbnail">
             </div>
 
             <div class="col-lg-9 col-md-8 col-12">
@@ -29,9 +29,9 @@
                         </mat-chip-list>
                     </div>
 
-                    <div *ngIf="newsItem.sourceName">
+                    <div *ngIf="newsItem.source">
                         <span>Fuente:</span>
-                        <h2>{{ newsItem.sourceName }}</h2>
+                        <h2>{{ newsItem.source.name }}</h2>
                         <h4 routerLink="newsItem.sourceUrl">{{ newsItem.sourceUrl }}</h4>
                     </div>
 

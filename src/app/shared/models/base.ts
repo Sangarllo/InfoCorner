@@ -7,6 +7,7 @@ export enum BaseType {
   NOTICE = 'NOTICE',
   USER = 'USER',
   AUDIT = 'AUDIT',
+  SOURCE = 'SOURCE',
 }
 
 export interface IBase {

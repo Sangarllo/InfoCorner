@@ -7,11 +7,14 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { EVENT_CATEGORIES, Category } from '@models/category.enum';
 import { INewsItem, NewsItem } from '@models/news';
 import { Status } from '@models/status.enum';
+import { IBase } from '@models/base';
+import { ISource, DEFAULT_SOURCE, NEWS_SOURCES } from '@models/source';
+import { Category, EVENT_CATEGORIES } from '@models/category.enum';
 import { AppointmentsService } from '@services/appointments.service';
 import { NewsService } from '@services/news.services';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
   selector: 'app-news-edit',
@@ -23,15 +26,18 @@ export class NewsEditComponent implements OnInit {
   newsItemForm!: FormGroup;
   pageTitle = 'Creación de una nueva noticia';
   errorMessage = '';
+  sourceSelected: ISource;
   uploadPercent: Observable<number>;
 
   public newsItem!: INewsItem | undefined;
   public STATUS: Status[] = NewsItem.STATUS;
   public CATEGORIES: Category[] = EVENT_CATEGORIES;
+  public SOURCES: ISource[] = NEWS_SOURCES;
 
   constructor(
     private afStorage: AngularFireStorage,
     private fb: FormBuilder,
+    private utilsSrv: UtilsService,
     private route: ActivatedRoute,
     private router: Router,
     private appointmentSrv: AppointmentsService,
@@ -45,6 +51,7 @@ export class NewsEditComponent implements OnInit {
       this.getDetails(idNewsItem);
     }
 
+    this.sourceSelected = DEFAULT_SOURCE;
     this.newsItemForm = this.fb.group({
       id: [{value: '0', disabled: true}],
       active: true,
@@ -57,7 +64,7 @@ export class NewsEditComponent implements OnInit {
       categories: null,
       description: '',
       timestamp: null,
-      sourceName: '',
+      source: this.sourceSelected,
       sourceUrl: ['', [Validators.required]]
     });
   }
@@ -83,7 +90,6 @@ export class NewsEditComponent implements OnInit {
     }
   }
 
-
   displayNewsItem(): void {
 
     if (this.newsItemForm) {
@@ -96,6 +102,8 @@ export class NewsEditComponent implements OnInit {
       this.pageTitle = `Editando la noticia ${this.newsItem.name}`;
     }
 
+    this.sourceSelected = this.newsItem.source;
+
     // Update the data on the form
     this.newsItemForm.patchValue({
       id: this.newsItem.id,
@@ -107,12 +115,21 @@ export class NewsEditComponent implements OnInit {
       categories: this.newsItem.categories ?? [],
       description: this.newsItem.description ?? '',
       timestamp: this.newsItem.timestamp ?? '',
-      sourceName: this.newsItem.sourceName ?? '',
+      source: this.sourceSelected ?? DEFAULT_SOURCE,
       sourceUrl: this.newsItem.sourceUrl ?? '',
     });
 
     // tslint:disable-next-line:no-string-literal
     this.newsItemForm.controls['id'].setValue(this.newsItem.id);
+    this.newsItemForm.controls.source.setValue(this.sourceSelected);
+  }
+
+  onSelectionChanged(event: any): void {
+    this.sourceSelected = event.value;
+  }
+
+  compareFunction(o1: ISource, o2: ISource): boolean {
+    return (o1.id === o2.id);
   }
 
   onResetForm(): void {
@@ -123,7 +140,11 @@ export class NewsEditComponent implements OnInit {
     if (this.newsItemForm.valid) {
 
       this.newsItem.timestamp = this.appointmentSrv.getTimestamp();
+      this.newsItem.source = this.sourceSelected;
+      this.newsItem.image = this.sourceSelected.image;
       const newsItem = { ...this.newsItem, ...this.newsItemForm.value };
+
+      console.log(`newsItem: ${JSON.stringify(this.newsItem)}`);
 
       if (newsItem.id === '0') {
           this.newsSrv.addNewsItem(newsItem);

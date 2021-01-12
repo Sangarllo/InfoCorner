@@ -25,7 +25,7 @@ export class NewsComponent implements OnInit {
   public loading = true;
   public newsItems: INewsItem[];
   public dataSource: MatTableDataSource<INewsItem> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'image', 'name', 'sourceName', 'actions3'];
+  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'sourceImage', 'sourceName', 'name', 'actions3'];
 
   constructor(
     private router: Router,

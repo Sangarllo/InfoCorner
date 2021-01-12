@@ -44,6 +44,7 @@ td.mat-column-name {
     padding-right: 5px !important;
 }
 
+.mat-column-sourceImage,
 .mat-column-imagePlace {
     text-align: right;
     width: 60px;
@@ -56,6 +57,7 @@ td.mat-column-name {
     }
 }
 
+td.mat-column-sourceName,
 td.mat-column-placeName {
     width: 100px;
     font-size: smaller;
