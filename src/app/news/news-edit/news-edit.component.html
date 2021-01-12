@@ -7,7 +7,7 @@
         <div class="row">
 
             <div class="col-lg-3 col-md-4 col-12" style="text-align: center;">
-                <img [src]="sourceSelected.image" class="img-thumbnail" />
+                <img *ngIf="sourceSelected" [src]="sourceSelected.image" class="img-thumbnail" />
             </div>
 
             <div class="col-lg-9 col-md-8 col-12">
@@ -51,6 +51,11 @@
                             <legend>Información de la noticia</legend>
 
                             <mat-form-field appearance="outline">
+                                <mat-label>URL original</mat-label>
+                                <input matInput type="text" formControlName="sourceUrl" placeholder="URL de la Noticia">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
                                 <mat-label>Títular de la noticia</mat-label>
                                 <input matInput type="text" formControlName="name" placeholder="Título">
                             </mat-form-field>
@@ -64,11 +69,6 @@
                                 <span class="title">Así se visualizaría la Descripción:</span>
                                 <div class="preview" [innerHTML]="newsItemForm.controls.description.value"></div>
                             </div>
-
-                            <mat-form-field appearance="outline">
-                                <mat-label>URL original</mat-label>
-                                <input matInput type="text" formControlName="sourceUrl" placeholder="URL de la Noticia">
-                            </mat-form-field>
 
                             <mat-form-field class="col-12 col-lg-6" appearance="outline">
                                 <mat-label>Fuente</mat-label>

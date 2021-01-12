@@ -32,6 +32,7 @@ export class NewsEditComponent implements OnInit {
   public STATUS: Status[] = NewsItem.STATUS;
   public CATEGORIES: Category[] = EVENT_CATEGORIES;
   public SOURCES: ISource[] = NEWS_SOURCES;
+  public URL_REGEX = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
   constructor(
     private afStorage: AngularFireStorage,
@@ -63,7 +64,7 @@ export class NewsEditComponent implements OnInit {
       description: '',
       timestamp: null,
       source: this.sourceSelected,
-      sourceUrl: ['', [Validators.required]]
+      sourceUrl: ['', [Validators.required, Validators.pattern(this.URL_REGEX)]]
     });
   }
 
