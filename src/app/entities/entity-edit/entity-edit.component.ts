@@ -124,27 +124,10 @@ export class EntityEditComponent implements OnInit {
 
   compareFunction(o1: any, o2: any): boolean {
     return (o1.name === o2.name && o1.id === o2.id);
-   }
-
-  // deleteCourse(): void {
-  //   if (this.entity.id === '0') {
-  //     // Don't delete, it was never saved.
-  //     this.onSaveComplete();
-  //   } else {
-  //     if (confirm(`Realmente quieres eliminar: ${this.entity.name}?`)) {
-  //       this.entitiesSrv.deleteEntity(this.entity.id);
-  //       /*
-  //         .subscribe({
-  //           next: () => this.onSaveComplete(),
-  //           error: err => this.errorMessage = err
-  //         });
-  //       */
-  //     }
-  //   }
-  // }
+  }
 
   onResetForm(): void {
-     this.entityForm.reset();
+    this.entityForm.reset();
   }
 
   onSaveForm(): void {

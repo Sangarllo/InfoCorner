@@ -1,14 +1,18 @@
 export enum Category {
+  Agricultura = '🍐 AGRICULTURA',
   Atletismo = '🏃🏻‍♂️ ATLETISMO',
   Baloncesto = '🏀 BALONCESTO',
   Ciclismo = '🚵‍♂️ CICLISMO',
   Cine = '📽️ CINE',
   Cultura = '🎭 CULTURA',
   Deporte = '🤸 DEPORTE',
+  Economia = '💵 ECONOMIA',
   Ecuestre = '🐎 ECUESTRE',
   Educativo = '🎓 EDUCATIVO',
+  Entrevista = '🎤 ENTREVISTA',
   Fiesta = '🎉 FESTIVO',
   Fútbol = '⚽ FÚTBOL',
+  GaleriaFotos = '📷 GALERIA DE FOTOS',
   Gastronomia = '🥘 GASTRONOMÍA',
   Hoguera = '🔥 HOGUERA',
   Humor = '🤡 HUMOR',
@@ -20,6 +24,7 @@ export enum Category {
   Naturaleza = '🏞️ NATURALEZA',
   Navidad = '🎄 NAVIDAD',
   Religión = '⛪ RELIGIÓN',
+  Reportaje = '✍️ REPORTAJE',
   Salud = '🩺 SALUD',
   Social = '👨‍👨‍👧‍👦 SOCIAL',
   Taurino = '🐮 TAURINO',
@@ -41,6 +46,7 @@ export enum Category {
   Luz = '💡 LUZ',
   Mascarilla = '😷 MASCARILLA',
   Niños = '🚸 NIÑOS',
+  NoticiaGenerica = '📰 NOTICIA',
   Nieve = '❄️ NIEVE',
   Obras = '🚧 OBRAS',
   OrdenPublico = '👮 ORDEN PUBLICO',
@@ -52,6 +58,28 @@ export enum Category {
   Vacuna = '💉 VACUNA',
   Virus = '🦠 VIRUS',
 }
+
+const NEWS_CATEGORIES: Category[] = [
+  Category.Agricultura,
+  Category.Cultura,
+  Category.Deporte,
+  Category.Economia,
+  Category.Entrevista,
+  Category.GaleriaFotos,
+  Category.Gastronomia,
+  Category.Fiesta,
+  Category.Fútbol,
+  Category.Institutional,
+  Category.Literatura,
+  Category.Música,
+  Category.Navidad,
+  Category.NoticiaGenerica,
+  Category.Religión,
+  Category.Reportaje,
+  Category.Salud,
+  Category.Social,
+  Category.Tradicion,
+];
 
 const NOTICE_CATEGORIES: Category[] = [
   Category.Agua,
@@ -110,4 +138,4 @@ const EVENT_CATEGORIES: Category[] = [
   Category.Viaje,
 ];
 
-export { EVENT_CATEGORIES, NOTICE_CATEGORIES };
+export { EVENT_CATEGORIES, NOTICE_CATEGORIES, NEWS_CATEGORIES };

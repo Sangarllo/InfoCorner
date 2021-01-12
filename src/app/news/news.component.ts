@@ -6,11 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { formatDistance } from 'date-fns';
-import { es } from 'date-fns/locale';
 
+import { INewsItem, NewsItem } from '@models/news';
 import { NewsService } from '@services/news.services';
-import { INewsItem, NewsItem } from '@shared/models/news';
+import { UtilsService } from '@services/utils.service';
 
 @Component({
   selector: 'app-news',
@@ -25,21 +24,27 @@ export class NewsComponent implements OnInit {
   public loading = true;
   public newsItems: INewsItem[];
   public dataSource: MatTableDataSource<INewsItem> = new MatTableDataSource();
-  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'sourceImage', 'sourceName', 'name', 'actions3'];
+  displayedColumns: string[] = [ 'status', 'id', 'timestamp', 'sourceImage', 'sourceName', 'name', 'categories', 'actions4'];
 
   constructor(
     private router: Router,
+    private utilSrv: UtilsService,
     private newsSrv: NewsService,
   ) { }
 
   ngOnInit(): void {
     this.newsSrv.getAllNews(false, false) // TODO param based on userrole
-    .pipe(
-      map((newsItems) => newsItems.map(newsItem => ({
-        ...newsItem,
-        timestamp: formatDistance(new Date(newsItem.timestamp), new Date(), {locale: es})
-      }) as INewsItem))
-    )
+      .pipe(
+        map((newsItems) => newsItems.map(newsItem => {
+          const reducer = (acc, value) => `${acc} ${value.substr(0, value.indexOf(' '))}`;
+
+          newsItem.description = ( newsItem.categories ) ? newsItem.categories.reduce(reducer, '') : '';
+
+          newsItem.timestamp = this.utilSrv.getDistanceTimestamp(newsItem.timestamp);
+
+          return { ...newsItem };
+        }))
+      )
       .subscribe( (newsItems: INewsItem[]) => {
         this.newsItems = newsItems;
         this.dataSource = new MatTableDataSource(this.newsItems);
@@ -60,6 +65,25 @@ export class NewsComponent implements OnInit {
 
   public gotoItem(newsItem: INewsItem): void {
     this.router.navigate([`${NewsItem.PATH_URL}/${newsItem.id}`]);
+  }
+
+  public gotoUrl(newsItem: INewsItem): void {
+
+    const externalUrl = newsItem.sourceUrl;
+
+    Swal.fire({
+      title: '¿Estás seguro?',
+      html: `Si pulsas OK saldrás de la aplicación para ir a una dirección externa:<br/><br/><a href='${externalUrl}' style='color:red'>${externalUrl}</a>`,
+      imageUrl: newsItem.source.image,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, acceder a la noticia'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `${newsItem.sourceUrl}`;
+      }
+    });
   }
 
   public editItem(newsItem: INewsItem): void {

@@ -15,6 +15,7 @@ export class NewsViewComponent implements OnInit {
 
   public newsItem$: Observable<INewsItem | undefined> | null = null;
   public idNewsItem: string;
+  public urlNewsItem: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +34,17 @@ export class NewsViewComponent implements OnInit {
   getDetails(idNewsItem: string): void {
     // console.log(`id asked ${idNewsItem}`);
     this.newsItem$ = this.newsSrv.getOneNewsItem(idNewsItem);
+
+    this.newsItem$
+      .subscribe( ( newsItem: INewsItem ) => {
+        this.urlNewsItem = newsItem.sourceUrl;
+      });
   }
+
+  public gotoUrl(): void {
+    window.location.href = this.urlNewsItem;
+  }
+
 
   public gotoList(): void {
     this.router.navigate([`/${NewsItem.PATH_URL}`]);

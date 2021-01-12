@@ -42,25 +42,37 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="categories">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Categorías</th>
+                <td mat-cell *matCellDef="let newsItem">{{ newsItem.description }}</td>
+            </ng-container>
+
+
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
                 <td mat-cell *matCellDef="let newsItem">{{ newsItem.name }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="actions3">
+            <ng-container matColumnDef="actions4">
                 <th mat-header-cell *matHeaderCellDef>Acciones </th>
                 <td mat-cell *matCellDef="let newsItem">
+
+                    <button mat-icon-button matTooltip="Click to visit news" class="iconbutton" color="accent" (click)="gotoUrl(newsItem)">
+                    <mat-icon aria-label="View">open_in_new</mat-icon>
+                  </button>
+
                     <button [disabled]="newsItem.status !== 'VISIBLE'" mat-icon-button matTooltip="Click to View" class="iconbutton" color="accent" (click)="gotoItem(newsItem)">
-                  <mat-icon aria-label="View">remove_red_eye</mat-icon>
-                </button>
+                      <mat-icon aria-label="View">remove_red_eye</mat-icon>
+                    </button>
 
                     <button mat-icon-button matTooltip="Click to Edit" class="iconbutton" color="accent" (click)="editItem(newsItem)">
-                  <mat-icon aria-label="Edit">build_circle</mat-icon>
-                </button>
+                      <mat-icon aria-label="Edit">build_circle</mat-icon>
+                    </button>
 
                     <button mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="accent" (click)="deleteItem(newsItem)">
-                  <mat-icon aria-label="Delete">delete</mat-icon>
-                </button>
+                      <mat-icon aria-label="Delete">delete</mat-icon>
+                    </button>
+
                 </td>
             </ng-container>
 

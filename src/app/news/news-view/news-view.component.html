@@ -31,8 +31,11 @@
 
                     <div *ngIf="newsItem.source">
                         <span>Fuente:</span>
-                        <h2>{{ newsItem.source.name }}</h2>
-                        <h4 routerLink="newsItem.sourceUrl">{{ newsItem.sourceUrl }}</h4>
+                        <h2>
+                            <button mat-raised-button type="button" (click)="gotoUrl()" color="warn">
+                            <mat-icon>open_in_new</mat-icon>
+                          </button> &nbsp; {{ newsItem.source.name }}
+                        </h2>
                     </div>
 
                 </mat-card-content>

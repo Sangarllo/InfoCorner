@@ -10,10 +10,9 @@ import Swal from 'sweetalert2';
 import { INewsItem, NewsItem } from '@models/news';
 import { Status } from '@models/status.enum';
 import { ISource, DEFAULT_SOURCE, NEWS_SOURCES } from '@models/source';
-import { Category, EVENT_CATEGORIES } from '@models/category.enum';
+import { Category, NEWS_CATEGORIES } from '@models/category.enum';
 import { AppointmentsService } from '@services/appointments.service';
 import { NewsService } from '@services/news.services';
-import { UtilsService } from '@services/utils.service';
 
 @Component({
   selector: 'app-news-edit',
@@ -30,7 +29,7 @@ export class NewsEditComponent implements OnInit {
 
   public newsItem!: INewsItem | undefined;
   public STATUS: Status[] = NewsItem.STATUS;
-  public CATEGORIES: Category[] = EVENT_CATEGORIES;
+  public CATEGORIES: Category[] = NEWS_CATEGORIES;
   public SOURCES: ISource[] = NEWS_SOURCES;
   public URL_REGEX = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
