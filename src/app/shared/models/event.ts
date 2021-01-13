@@ -1,6 +1,7 @@
 import { IBase, BaseType } from '@models/base';
 import { Status, STATUS_MODES } from '@models/status.enum';
 import { Category } from '@models/category.enum';
+import { ScheduleType, SCHEDULE_TYPE_DEFAULT } from '@models/shedule-type.enum';
 
 export interface IEvent {
   id: string;
@@ -13,6 +14,7 @@ export interface IEvent {
   focused: boolean;
   categories?: Category[];
   description?: string;
+  scheduleType?: ScheduleType;
   timestamp?: string;
   appointmentId?: string;
   scheduleItems?: IBase[];
@@ -41,6 +43,7 @@ export class Event implements IEvent, IBase { // IAudit
 
     public categories?: Category[],
     public description?: string,
+    public scheduleType?: ScheduleType,
     public timestamp?: string,
     public appointmentId?: string,
 
@@ -59,6 +62,7 @@ export class Event implements IEvent, IBase { // IAudit
       Event.IMAGE_DEFAULT, [ Event.IMAGE_DEFAULT ], // Image
       BaseType.EVENT, // BaseType
       [], '', // Basics,
+      SCHEDULE_TYPE_DEFAULT, // ScheduleType
       null, null, // Timestamp + Appointment
       [], // Event
       [], // Place

@@ -13,6 +13,7 @@ import { EVENT_CATEGORIES, Category } from '@models/category.enum';
 import { PlaceService } from '@services/places.service';
 import { Base } from '@models/base';
 import { EntityRole } from '@models/entity-role.enum';
+import { ScheduleType, SCHEDULE_TYPES } from '@models/shedule-type.enum';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class EntityEditComponent implements OnInit {
   public entity!: IEntity | undefined;
   public CATEGORIES: Category[] = EVENT_CATEGORIES;
   public ROLES: EntityRole[] = Entity.ROLES;
+  public SCHEDULE_TYPES: ScheduleType[] = SCHEDULE_TYPES;
 
   placeBaseSelected: Base;
   readonly SECTION_BLANK: Base = Base.InitDefault();
@@ -60,6 +62,7 @@ export class EntityEditComponent implements OnInit {
         categories: [],
         place: [this.SECTION_BLANK, [Validators.required]],
         roleDefault: [EntityRole.Default],
+        scheduleTypeDefault: [''],
       });
 
       this.places$ = this.placeSrv.getAllPlacesBase();
@@ -112,6 +115,7 @@ export class EntityEditComponent implements OnInit {
         image: this.entity.place.image
       } : this.SECTION_BLANK,
       roleDefault: this.entity.roleDefault,
+      scheduleTypeDefault: this.entity.scheduleTypeDefault,
     });
 
     // tslint:disable-next-line:no-string-literal
@@ -168,18 +172,6 @@ export class EntityEditComponent implements OnInit {
     this.entityForm.reset();
     this.router.navigate([`/${Entity.PATH_URL}`]);
   }
-
-  // goBack(): void {
-  //   // Reset the form to clear the flags
-  //   this.entityForm.reset();
-  //   this.router.navigate([`/${Course.PATH_URL}/${this.entity.id}`]);
-  // }
-
-  // uploadImage(event): void {
-  //   const file = event.target.files[0];
-  //   const filePath = 'image-path';
-  //   const task = this.storage.upload(filePath, file);
-  // }
 
   uploadImage(event): void {
     const file = event.target.files[0];

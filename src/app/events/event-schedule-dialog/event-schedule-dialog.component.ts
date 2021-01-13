@@ -8,6 +8,7 @@ import { IEvent } from '@models/event';
 import { UtilsService, SwalMessage } from '@services/utils.service';
 import { AppointmentsService } from '@services/appointments.service';
 import { Appointment, IAppointment } from '@models/appointment';
+import { ScheduleType, SCHEDULE_TYPE_DEFAULT } from '@models/shedule-type.enum';
 
 @Component({
   selector: 'app-event-schedule-dialog',
@@ -59,7 +60,7 @@ export class EventScheduleDialogComponent implements OnInit {
     this.imageSelected = this.event.image;
     this.scheduleItemForm.patchValue({
       image: this.imageSelected,
-      name: this.event.name,
+      name: this.event.scheduleType ?? SCHEDULE_TYPE_DEFAULT,
       dateIni: this.appointment.dateIni,
       timeIni: this.appointment.timeIni,
     });

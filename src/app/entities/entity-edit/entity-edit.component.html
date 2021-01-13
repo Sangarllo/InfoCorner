@@ -50,7 +50,7 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline">
+                        <mat-form-field class="col-6" appearance="outline">
                             <mat-label>Rol por defecto</mat-label>
 
                             <mat-select formControlName="roleDefault" [value]="entityForm.get('roleDefault').value">
@@ -62,6 +62,21 @@
                             <mat-hint>Roles posibles ORGANIZA, JUEGA...</mat-hint>
 
                         </mat-form-field>
+
+
+                        <mat-form-field class="col-6" appearance="outline">
+                            <mat-label>Tipo de acto por defecto</mat-label>
+
+                            <mat-select formControlName="scheduleTypeDefault" [value]="entityForm.get('scheduleTypeDefault').value">
+                                <mat-option *ngFor="let scheduleType of SCHEDULE_TYPES" [value]="scheduleType">
+                                    {{scheduleType}}
+                                </mat-option>
+                            </mat-select>
+
+                            <mat-hint>Tipos posibles ACTO, PARTIDO, CONCIERTO...</mat-hint>
+
+                        </mat-form-field>
+
 
                     </mat-card-content>
 

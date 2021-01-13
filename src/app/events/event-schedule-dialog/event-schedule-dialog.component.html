@@ -8,34 +8,26 @@
         </div>
     </div>
 
-    <!--
-    <div class="main-image" *ngIf="imageSelected; else noImageTemplate">
-        <img class="main-image" [src]="imageSelected">
+    <div class="base-container">
+
+        <mat-form-field class="col-6" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre del acto" formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Fecha Inicio</mat-label>
+            <input matInput [matDatepicker]="picker1" placeholder="Fecha de Inicio" formControlName="dateIni" (dateChange)="onDateIniChange('change', $event)">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Hora Inicio</mat-label>
+            <input matInput type="time" formControlName="timeIni" placeholder="Hora de Inicio">
+        </mat-form-field>
+
     </div>
-
-    <ng-template #noImageTemplate>
-        <div>
-            <img class="main-image" alt="Sin imagen definida" [src]="IMAGE_BLANK">
-        </div>
-    </ng-template>
-    -->
-
-    <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre del acto" formControlName="name">
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-        <mat-label>Fecha Inicio</mat-label>
-        <input matInput [matDatepicker]="picker1" placeholder="Fecha de Inicio" formControlName="dateIni" (dateChange)="onDateIniChange('change', $event)">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-        <mat-label>Hora Inicio</mat-label>
-        <input matInput type="time" formControlName="timeIni" placeholder="Hora de Inicio">
-    </mat-form-field>
 
 </mat-dialog-content>
 

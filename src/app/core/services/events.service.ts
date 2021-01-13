@@ -12,8 +12,9 @@ import { BaseType, IBase } from '@models/base';
 import { IEvent } from '@models/event';
 import { IUser } from '@models/user';
 import { AuditItem, AuditType } from '@models/audit';
-import { AppointmentsService } from '@services/appointments.service';
 import { IEntity } from '@models/entity';
+import { ScheduleType } from '@models/shedule-type.enum';
+import { AppointmentsService } from '@services/appointments.service';
 
 const EVENTS_COLLECTION = 'eventos';
 
@@ -168,9 +169,11 @@ export class EventService {
     }
 
     const categories = entity.categories;
+    const scheduleType = entity.scheduleTypeDefault ?? ScheduleType.Acto;
 
     const newEvent = { ...event,
       categories,
+      scheduleType,
       entityItems: event.entityItems,
       placeItems: event.placeItems };
     this.eventCollection.doc(event.id).set(newEvent, { merge: true });
