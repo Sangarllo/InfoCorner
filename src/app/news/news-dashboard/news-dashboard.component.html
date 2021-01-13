@@ -8,7 +8,7 @@
             <span class="data">{{ newsItem.timestamp }}</span>
         </div>
         <div class="news-image">
-            <img alt="newsItem.name" [src]="'https://picsum.photos/260?random=' + i" class="img-thumbnail" />
+            <img alt="newsItem.name" [src]="newsItem.source.image" class="img-thumbnail" />
         </div>
         <mat-card-title>
             <p>{{ newsItem.name }}</p>

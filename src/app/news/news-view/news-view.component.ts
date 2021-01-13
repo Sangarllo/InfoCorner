@@ -42,9 +42,8 @@ export class NewsViewComponent implements OnInit {
   }
 
   public gotoUrl(): void {
-    window.location.href = this.urlNewsItem;
+    window.open(this.urlNewsItem, '_blank');
   }
-
 
   public gotoList(): void {
     this.router.navigate([`/${NewsItem.PATH_URL}`]);
@@ -53,6 +52,4 @@ export class NewsViewComponent implements OnInit {
   public editItem(): void {
     this.router.navigate([`/${NewsItem.PATH_URL}/${this.idNewsItem}/editar`]);
   }
-
-
 }

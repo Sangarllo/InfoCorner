@@ -81,7 +81,7 @@ export class NewsComponent implements OnInit {
       confirmButtonText: 'Sí, acceder a la noticia'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = `${newsItem.sourceUrl}`;
+        window.open(newsItem.sourceUrl, '_blank');
       }
     });
   }
