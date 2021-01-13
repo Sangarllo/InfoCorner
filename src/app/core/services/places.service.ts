@@ -28,14 +28,7 @@ export class PlaceService {
                 .orderBy('name')
     );
 
-    return this.placeCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IPlace;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })
-      )
-    );
+    return this.placeCollection.valueChanges();
   }
 
   getAllPlacesBase(): Observable<IBase[]> {

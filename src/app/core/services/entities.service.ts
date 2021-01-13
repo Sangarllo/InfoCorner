@@ -28,14 +28,7 @@ export class EntityService {
                 .orderBy('name')
     );
 
-    return this.entityCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IEntity;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })
-      )
-    );
+    return this.entityCollection.valueChanges();
   }
 
   getAllEntitiesBase(): Observable<IBase[]> {

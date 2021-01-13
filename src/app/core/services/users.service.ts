@@ -28,14 +28,7 @@ export class UserService {
                 .orderBy('displayName')
     );
 
-    return this.userCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IUser;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })
-      )
-    );
+    return this.userCollection.valueChanges();
   }
 
   getOneUser(uidUser: string): Observable<IUser | undefined> {

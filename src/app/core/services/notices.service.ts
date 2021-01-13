@@ -50,14 +50,7 @@ export class NoticeService {
       }
     }
 
-    return this.noticeCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as INotice;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })
-      )
-    );
+    return this.noticeCollection.valueChanges();
   }
 
   getAllNoticesBase(): Observable<IBase[]> {

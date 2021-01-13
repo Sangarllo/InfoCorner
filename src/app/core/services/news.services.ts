@@ -50,14 +50,7 @@ export class NewsService {
       }
     }
 
-    return this.newsCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as INewsItem;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })
-      )
-    );
+    return this.newsCollection.valueChanges();
   }
 
   getAllNewsBase(): Observable<IBase[]> {

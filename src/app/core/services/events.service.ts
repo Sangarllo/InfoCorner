@@ -39,14 +39,7 @@ export class EventService {
                 .orderBy('timestamp', 'desc')
     );
 
-    return this.eventCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as IEvent;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      })
-      )
-    );
+    return this.eventCollection.valueChanges();
   }
 
   getAllEventsWithAppointments(): Observable<IEvent[]> {
