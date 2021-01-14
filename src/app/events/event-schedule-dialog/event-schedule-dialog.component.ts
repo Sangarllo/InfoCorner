@@ -75,6 +75,24 @@ export class EventScheduleDialogComponent implements OnInit {
     this.dateIni = newDate;
   }
 
+  addScheduleItem(): void {
+
+    const timeIni = this.scheduleItemForm.controls.timeIni.value;
+    const dateIniStr = `${this.dateIni} ${timeIni}`;
+
+    const newBase: IBase = {
+      id: '0',
+      active: true,
+      name: this.scheduleItemForm.controls.name.value,
+      image: this.imageSelected,
+      baseType: BaseType.EVENT,
+      desc: dateIniStr
+    };
+
+    this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, newBase.name);
+    this.scheduleItemForm.reset();
+  }
+
   onNoClick(): void {
     this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
     this.dialogRef.close();

@@ -29,4 +29,16 @@ img.selected-image {
 
 div.base-container {
     margin-top: 20px;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    .mat-form-field.name-field {
+        width: 200px;
+    }
+    .mat-form-field.date-field {
+        width: 130px;
+    }
+    .mat-form-field.time-field {
+        width: 100px;
+    }
 }
