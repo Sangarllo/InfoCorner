@@ -49,4 +49,14 @@ export class UtilsService {
       {locale: es}
     );
   }
+
+  public move(input: IBase[], from: number, to: number): IBase[] {
+    let numberOfDeletedElm = 1;
+
+    const elm = input.splice(from, numberOfDeletedElm)[0];
+
+    numberOfDeletedElm = 0;
+
+    return input.splice(to, numberOfDeletedElm, elm);
+  }
 }

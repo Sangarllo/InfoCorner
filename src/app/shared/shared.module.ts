@@ -12,6 +12,7 @@ import { SectionHeaderComponent } from '@shared/layout/section-header/section-he
 import { LoadingComponent } from '@shared/components/loading/loading.component';
 import { BaseItemDetailComponent } from '@shared/components/base-item-detail/base-item-detail.component';
 import { BaseItemsListComponent } from '@shared/components/base-items-list/base-items-list.component';
+import { BaseItemsTableComponent } from '@shared/components/base-items-table/base-items-table.component';
 import { BaseItemsAdminComponent } from '@shared/components/base-items-admin/base-items-admin.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { BaseItemsAdminComponent } from '@shared/components/base-items-admin/bas
     LoadingComponent,
     BaseItemDetailComponent,
     BaseItemsListComponent,
+    BaseItemsTableComponent,
     BaseItemsAdminComponent,
   ],
   imports: [
@@ -44,6 +46,7 @@ import { BaseItemsAdminComponent } from '@shared/components/base-items-admin/bas
     LoadingComponent,
     BaseItemDetailComponent,
     BaseItemsListComponent,
+    BaseItemsTableComponent,
     BaseItemsAdminComponent,
   ]
 })

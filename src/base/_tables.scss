@@ -2,6 +2,11 @@ table {
     width: 100%;
 }
 
+.mat-column-baseId {
+    color: gray;
+    width: 20px;
+}
+
 .mat-column-id,
 .mat-column-uid {
     color: gray;
@@ -45,6 +50,7 @@ td.mat-column-name {
     padding-right: 5px !important;
 }
 
+.mat-column-baseImage,
 .mat-column-sourceImage,
 .mat-column-imagePlace {
     text-align: right;
@@ -58,6 +64,7 @@ td.mat-column-name {
     }
 }
 
+td.mat-column-baseName,
 td.mat-column-sourceName,
 td.mat-column-placeName {
     width: 100px;
@@ -94,6 +101,15 @@ td.mat-column-categories {
 .mat-column-actions4 {
     width: 220px;
     text-align: center;
+}
+
+.mat-column-baseActions4 {
+    width: 160px;
+    text-align: center;
+    .mat-icon-button {
+        width: 30px;
+        height: 30px;
+    }
 }
 
 td.mat-column-roleDefault,

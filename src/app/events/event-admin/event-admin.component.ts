@@ -153,20 +153,6 @@ export class EventAdminComponent implements OnInit {
     });
   }
 
-  openScheduleDialog(): void {
-    this.dialogConfig.data = this.event;
-    const dialogRef = this.dialog.open(EventScheduleDialogComponent, this.dialogConfig);
-
-    dialogRef.afterClosed().subscribe((newBase: IBase) => {
-      if ( newBase ) {
-        this.event.scheduleItems.push(newBase);
-        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Añadido evento');
-      } else {
-        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
-      }
-    });
-  }
-
   openAppointmentDialog(): void {
     this.dialogConfig.data = this.event;
     const dialogRef = this.dialog.open(EventAppointmentDialogComponent, this.dialogConfig);
@@ -179,5 +165,67 @@ export class EventAdminComponent implements OnInit {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }
     });
+  }
+
+  openScheduleDialog(): void {
+    this.dialogConfig.data = this.event;
+    const dialogRef = this.dialog.open(EventScheduleDialogComponent, this.dialogConfig);
+
+    dialogRef.afterClosed().subscribe((scheduleItem: IBase) => {
+      if ( scheduleItem ) {
+        this.event.scheduleItems.push(scheduleItem);
+        this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Actualizado horario');
+      } else {
+        this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
+      }
+    });
+  }
+
+  changeOrderScheduleItem(base: IBase): void {
+    console.log(`changeOrderScheduleItem ${base.id}`);
+    const baseId =  base.id;
+    const input = baseId.split('|');
+    const id1 = input[0];
+    const change = input[1];
+    let id2: string;
+    this.event.scheduleItems.find(item => item.id === baseId).id = id1;
+
+    if ( change === '+1' ) {
+      console.log(`bajando`);
+      id2 = (+id1 + 1).toString();
+    } else {
+      console.log(`subiendo`);
+      id2 = (+id1 - 1).toString();
+    }
+
+    this.event.scheduleItems.find(item => item.id === id1).id = 'NEW';
+    this.event.scheduleItems.find(item => item.id === id2).id = id1;
+    this.event.scheduleItems.find(item => item.id === 'NEW').id = id2;
+
+    this.event.scheduleItems = this.event.scheduleItems.sort((item1: IBase, item2: IBase) => {
+      if (item1.id > item2.id) { return 1; }
+      if (item1.id < item2.id) { return -1; }
+      return 0;
+    });
+
+    // this.event.scheduleItems = this.event.scheduleItems.sort(this.comparar);
+
+    this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Actualizado horario');
+  }
+
+  addScheduleItem(base: IBase): void {
+    console.log(`addScheduleItem: ${JSON.stringify(base)}`);
+    this.event.scheduleItems.find(item => item.id === base.id).active = true;
+    this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Actualizado horario');
+  }
+
+  deleteScheduleItem(base: IBase): void {
+    console.log(`deleteScheduleItem: ${JSON.stringify(base)}`);
+    this.event.scheduleItems.find(item => item.id === base.id).active = false;
+    this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Actualizado horario');
+  }
+
+  editScheduleItem(base: IBase): void {
+    console.log(`editScheduleItem: ${JSON.stringify(base)}`);
   }
 }

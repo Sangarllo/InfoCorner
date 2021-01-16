@@ -10,9 +10,11 @@
 
     <div class="base-container">
 
+        <!--
         <button (click)="addScheduleItem()" mat-fab aria-label="Añadir nuevo acto">
           <mat-icon>add_circle</mat-icon>
         </button>
+        -->
 
         <mat-form-field class="name-field" appearance="outline">
             <mat-label>Nombre</mat-label>
@@ -30,15 +32,6 @@
             <mat-label>Hora Inicio</mat-label>
             <input matInput type="time" formControlName="timeIni" placeholder="Hora de Inicio">
         </mat-form-field>
-
-    </div>
-
-    <div *ngIf="event.scheduleItems">
-        Lista de items:
-
-        <pre *ngFor="let scheduleItem of event.scheduleItems">
-          {{ scheduleItem | json }}
-        </pre>
 
     </div>
 

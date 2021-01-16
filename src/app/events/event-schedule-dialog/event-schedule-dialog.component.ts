@@ -8,7 +8,7 @@ import { IEvent } from '@models/event';
 import { UtilsService, SwalMessage } from '@services/utils.service';
 import { AppointmentsService } from '@services/appointments.service';
 import { Appointment, IAppointment } from '@models/appointment';
-import { ScheduleType, SCHEDULE_TYPE_DEFAULT } from '@models/shedule-type.enum';
+import { SCHEDULE_TYPE_DEFAULT } from '@models/shedule-type.enum';
 
 @Component({
   selector: 'app-event-schedule-dialog',
@@ -17,9 +17,10 @@ import { ScheduleType, SCHEDULE_TYPE_DEFAULT } from '@models/shedule-type.enum';
 })
 export class EventScheduleDialogComponent implements OnInit {
 
-  title = 'Configura un acto para este evento';
+  title = 'Configura un nuevo acto para este evento';
   appointment: IAppointment;
   scheduleItemForm: FormGroup;
+  orderId: string;
   imageSelected: string;
   dateIni: string;
   readonly IMAGE_BLANK: string = Base.IMAGE_DEFAULT;
@@ -36,9 +37,11 @@ export class EventScheduleDialogComponent implements OnInit {
     const eventId = this.event.id;
     if ( eventId ) {
       this.getDetails(eventId);
+      this.orderId = (this.event.scheduleItems.length + 1).toString();
     }
 
     this.scheduleItemForm = this.fb.group({
+      id: [ '', []],
       image: [ '', []],
       name: [ '', []],
       dateIni: [ '', []],
@@ -57,10 +60,15 @@ export class EventScheduleDialogComponent implements OnInit {
 
   displayDetails(): void {
 
+    const scheduleType = ( this.event.scheduleType ) ?? SCHEDULE_TYPE_DEFAULT;
+    this.title = `Configura un nuevo ${scheduleType} para este evento`;
+
+    const name = `${scheduleType} ${this.orderId}`;
     this.imageSelected = this.event.image;
     this.scheduleItemForm.patchValue({
+      id: this.orderId,
       image: this.imageSelected,
-      name: this.event.scheduleType ?? SCHEDULE_TYPE_DEFAULT,
+      name,
       dateIni: this.appointment.dateIni,
       timeIni: this.appointment.timeIni,
     });
@@ -75,24 +83,6 @@ export class EventScheduleDialogComponent implements OnInit {
     this.dateIni = newDate;
   }
 
-  addScheduleItem(): void {
-
-    const timeIni = this.scheduleItemForm.controls.timeIni.value;
-    const dateIniStr = `${this.dateIni} ${timeIni}`;
-
-    const newBase: IBase = {
-      id: '0',
-      active: true,
-      name: this.scheduleItemForm.controls.name.value,
-      image: this.imageSelected,
-      baseType: BaseType.EVENT,
-      desc: dateIniStr
-    };
-
-    this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, newBase.name);
-    this.scheduleItemForm.reset();
-  }
-
   onNoClick(): void {
     this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
     this.dialogRef.close();
@@ -104,7 +94,7 @@ export class EventScheduleDialogComponent implements OnInit {
     const dateIniStr = `${this.dateIni} ${timeIni}`;
 
     const newBase: IBase = {
-      id: '0',
+      id: this.orderId,
       active: true,
       name: this.scheduleItemForm.controls.name.value,
       image: this.imageSelected,
@@ -112,7 +102,8 @@ export class EventScheduleDialogComponent implements OnInit {
       desc: dateIniStr
     };
 
-    this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, newBase.name);
+    console.log(`saving() -> with ${this.orderId} elements`);
+    // this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, 'x elementos');
     this.dialogRef.close(newBase);
   }
 }
