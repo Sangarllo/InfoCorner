@@ -33,11 +33,14 @@ export class EventScheduleDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public event: IEvent) {
   }
 
+  // Using desc to swich operation:
+  //  '' -> CREATE SCHEDULE ITEM
+  //  'X' -> EDIT SCHEDULE X
+
   ngOnInit(): void {
     const eventId = this.event.id;
     if ( eventId ) {
       this.getDetails(eventId);
-      this.orderId = (this.event.scheduleItems.length + 1).toString();
     }
 
     this.scheduleItemForm = this.fb.group({
@@ -61,10 +64,23 @@ export class EventScheduleDialogComponent implements OnInit {
   displayDetails(): void {
 
     const scheduleType = ( this.event.scheduleType ) ?? SCHEDULE_TYPE_DEFAULT;
-    this.title = `Configura un nuevo ${scheduleType} para este evento`;
+    let name = '';
 
-    const name = `${scheduleType} ${this.orderId}`;
-    this.imageSelected = this.event.image;
+    if ( this.event.description === '' ) {
+      this.orderId = (this.event.scheduleItems.length + 1).toString();
+      this.title = `Configura un nuevo ${scheduleType} para este evento`;
+      name = `${scheduleType} ${this.orderId}`;
+      this.imageSelected = this.event.image;
+    } else {
+      this.orderId = this.event.description;
+      this.title = `Edita el ${scheduleType} número ${this.orderId}`;
+      name = this.event.scheduleItems.find( item => item.id === this.orderId ).name;
+      this.imageSelected = this.event.scheduleItems.find( item => item.id === this.orderId ).image;
+      const datetimeIni = this.event.scheduleItems.find( item => item.id === this.orderId ).desc.split(' ');
+      this.appointment.dateIni = datetimeIni[0];
+      this.appointment.timeIni = datetimeIni[1];
+    }
+
     this.scheduleItemForm.patchValue({
       id: this.orderId,
       image: this.imageSelected,
@@ -102,7 +118,6 @@ export class EventScheduleDialogComponent implements OnInit {
       desc: dateIniStr
     };
 
-    console.log(`saving() -> with ${this.orderId} elements`);
     // this.utilsSrv.swalFire(SwalMessage.OK_CHANGES, 'x elementos');
     this.dialogRef.close(newBase);
   }

@@ -167,14 +167,34 @@ export class EventAdminComponent implements OnInit {
     });
   }
 
-  openScheduleDialog(): void {
+  openScheduleDialog(scheduleItemId: string): void {
+
+    const backupDesc = this.event.description;
+    if ( scheduleItemId === '' ) {
+      this.event.description = ''; // New Item
+    } else {
+      this.event.description = scheduleItemId; // Edit existing item
+    }
+
     this.dialogConfig.data = this.event;
     const dialogRef = this.dialog.open(EventScheduleDialogComponent, this.dialogConfig);
 
     dialogRef.afterClosed().subscribe((scheduleItem: IBase) => {
+
+      this.event.description = backupDesc;
       if ( scheduleItem ) {
-        this.event.scheduleItems.push(scheduleItem);
+
+        console.log(`afterClosed -> ${JSON.stringify(scheduleItem)}`);
+        const index = this.event.scheduleItems.findIndex(item => item.id === scheduleItem.id);
+        console.log(`afterClosed 2 -> ${index}`);
+        if ( index < 0 ) { // Adding new ScheduleItem
+          this.event.scheduleItems.push(scheduleItem);
+        } else {
+          this.event.scheduleItems[index] = scheduleItem;
+        }
+
         this.eventSrv.updateEvent(this.event, AuditType.UPDATED_INFO, this.currentUser, 'Actualizado horario');
+
       } else {
         this.utilsSrv.swalFire(SwalMessage.NO_CHANGES);
       }
@@ -227,5 +247,6 @@ export class EventAdminComponent implements OnInit {
 
   editScheduleItem(base: IBase): void {
     console.log(`editScheduleItem: ${JSON.stringify(base)}`);
+    this.openScheduleDialog(base.id);
   }
 }

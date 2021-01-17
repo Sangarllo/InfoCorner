@@ -60,15 +60,11 @@
 
                         <legend>¿Cómo?</legend>
 
-                        <button mat-fab type="button" (click)="openScheduleDialog()" color="accent">
+                        <button mat-fab type="button" (click)="openScheduleDialog('')" color="accent">
                           <mat-icon>alarm_add</mat-icon>
                         </button>
 
                         <sh-base-items-table [baseItems]="event.scheduleItems" (changeOrderBase)="changeOrderScheduleItem($event)" (addBase)="addScheduleItem($event)" (deleteBase)="deleteScheduleItem($event)" (editBase)="editScheduleItem($event)"></sh-base-items-table>
-
-                        <pre>
-                          {{ event.scheduleItems | json }}
-                        </pre>
 
                     </fieldset>
 
