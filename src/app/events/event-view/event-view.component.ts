@@ -38,7 +38,6 @@ export class EventViewComponent implements OnInit {
     this.adminAllowed = false;
     this.authSvc.afAuth.user.subscribe( (user: any) => {
       this.userSrv.getOneUser(user.uid).subscribe( (userLogged: any ) => {
-        console.log(`constructor ${JSON.stringify(userLogged)}`);
         this.userLogged = userLogged;
         this.adminAllowed = this.canAdmin(this.userLogged);
       });

@@ -32,6 +32,7 @@ export class NoticeService {
         NOTICES_COLLECTION,
         ref => ref.where('focused', '==', true)
                   .where('active', '==', true)
+                  .where('status', '==', 'VISIBLE')
                   .orderBy('timestamp', 'desc')
                   .limit(sizeDashboard)
       );
@@ -40,6 +41,7 @@ export class NoticeService {
         this.noticeCollection = this.afs.collection<INotice>(
           NOTICES_COLLECTION,
           ref => ref.where('active', '==', true)
+                    .where('status', '==', 'VISIBLE')
                     .orderBy('timestamp', 'desc')
         );
       } else {

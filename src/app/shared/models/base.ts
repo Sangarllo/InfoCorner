@@ -17,6 +17,8 @@ export interface IBase {
   image: string;
   baseType: BaseType;
   desc?: string;
+  timestamp?: string;
+  url?: string;
 }
 
 export class Base implements IBase {
@@ -32,6 +34,7 @@ export class Base implements IBase {
     public image: string,
     public baseType: BaseType,
     public desc?: string,
+    public timestamp?: string,
   ) { }
 
 

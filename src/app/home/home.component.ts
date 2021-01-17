@@ -1,43 +1,86 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Observable, combineLatest } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+
+import { EventService } from '@services/events.service';
+import { NewsService } from '@services/news.services';
+import { NoticeService } from '@services/notices.service';
+import { UtilsService } from '@services/utils.service';
+import { INewsItem, NewsItem } from '@models/news';
+import { INotice, Notice } from '@models/notice';
+import { Event, IEvent } from '@models/event';
+import { IBase, BaseType } from '@models/base';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 
-  public MOCK_STORIES = [
-    {
-      image: 'https://firebasestorage.googleapis.com/v0/b/infocorner-2020.appspot.com/o/amigos-del-cine.png?alt=media',
-      name: 'story-1',
-      type: 'event',
-    },
-    {
-      image: 'https://picsum.photos/100?random=11',
-      name: 'story-2',
-      type: 'notice',
-    },
-    {
-      image: 'https://firebasestorage.googleapis.com/v0/b/infocorner-2020.appspot.com/o/128584651_3691962174158037_3854507652565640061_o.jpg?alt=media',
-      name: 'story-3',
-      type: 'news',
-    },
-    {
-      image: 'https://picsum.photos/100?random=12',
-      name: 'story-4',
-      type: 'event',
-    },
-    {
-      image: 'https://firebasestorage.googleapis.com/v0/b/infocorner-2020.appspot.com/o/ca-river-ebro.png?alt=media',
-      name: 'story-5',
-      type: 'news',
-    }
-  ];
+  public news$: Observable<INewsItem[]>;
+  public notices$: Observable<INotice[]>;
+  public events$: Observable<IEvent[]>;
 
+  public realStories$: Observable<IBase[]>;
+  public REAL_STORIES: IBase[];
 
-  constructor() { }
+  constructor(
+    private utilSrv: UtilsService,
+    private noticesSrv: NoticeService,
+    private newsSrv: NewsService,
+    private eventsSrv: EventService,
+  ) { }
 
   ngOnInit(): void {
-  }
 
+    this.news$ = this.newsSrv.getAllNews(true, true, 2);
+    this.notices$ = this.noticesSrv.getAllNotices(true, true, 2);
+    this.events$ = this.eventsSrv.getAllEvents(true, true, 2);
+
+    combineLatest([
+      this.news$,
+      this.notices$,
+      this.events$,
+    ])
+    .subscribe(([news, notices, events]) => {
+
+      this.REAL_STORIES = [];
+
+      news.forEach(newsItem => {
+        this.REAL_STORIES.push({
+          ...newsItem,
+          image: newsItem.source.image,
+          baseType: BaseType.NEWS_ITEM,
+          url: `../${NewsItem.PATH_URL}/${newsItem.id}`
+        });
+        // console.log(`news item story! ${JSON.stringify(newsItem)}`);
+      });
+
+      notices.forEach(notice => {
+        this.REAL_STORIES.push({
+          ...notice,
+          baseType: BaseType.NOTICE,
+          url: `../${Notice.PATH_URL}/${notice.id}`
+        });
+        // console.log(`notice story! ${JSON.stringify(notice)}`);
+      });
+
+      events.forEach(event => {
+        this.REAL_STORIES.push({
+          ...event,
+          baseType: BaseType.EVENT,
+          url: `../${Event.PATH_URL}/${event.id}`
+        });
+        // console.log(`event story! ${JSON.stringify(event)}`);
+      });
+
+      this.REAL_STORIES = this.REAL_STORIES.sort((item1: IBase, item2: IBase) => {
+        if (item1.timestamp > item2.timestamp) { return -1; }
+        if (item1.timestamp < item2.timestamp) { return 1; }
+        return 0;
+      });
+
+    });
+  }
 }

@@ -33,15 +33,15 @@ div.stories-wrapper {
         height: 100px;
         width: 100px;
         padding: 4px;
-        &.news {
+        &.NEWS_ITEM {
             border: 1px solid #856404;
             background-color: #fff3cd;
         }
-        &.notice {
+        &.NOTICE {
             border: 1px solid darkgreen;
             background-color: lightgreen;
         }
-        &.event {
+        &.EVENT {
             border: 1px solid darkred;
             background-color: lightcoral;
         }

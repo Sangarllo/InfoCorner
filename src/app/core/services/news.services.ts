@@ -32,6 +32,7 @@ export class NewsService {
         NEWS_COLLECTION,
         ref => ref.where('focused', '==', true)
                   .where('active', '==', true)
+                  .where('status', '==', 'VISIBLE')
                   .orderBy('timestamp', 'desc')
                   .limit(sizeDashboard)
       );
@@ -40,6 +41,7 @@ export class NewsService {
         this.newsCollection = this.afs.collection<INewsItem>(
           NEWS_COLLECTION,
           ref => ref.where('active', '==', true)
+                    .where('status', '==', 'VISIBLE')
                     .orderBy('timestamp', 'desc')
         );
       } else {

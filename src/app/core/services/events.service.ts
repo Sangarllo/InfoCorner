@@ -33,18 +33,38 @@ export class EventService {
     this.eventCollection = afs.collection(EVENTS_COLLECTION);
   }
 
-  getAllEvents(): Observable<IEvent[]> {
-    this.eventCollection = this.afs.collection<IEvent>(
-      EVENTS_COLLECTION,
-      ref => ref.where('active', '==', true)
-                .orderBy('timestamp', 'desc')
-    );
+  getAllEvents(showOnlyActive: boolean, modeDashboard: boolean, sizeDashboard?: number): Observable<IEvent[]> {
+
+    if ( modeDashboard ) {
+      this.eventCollection = this.afs.collection<IEvent>(
+        EVENTS_COLLECTION,
+        ref => ref.where('focused', '==', true)
+                  .where('active', '==', true)
+                  .where('status', '==', 'VISIBLE')
+                  .orderBy('timestamp', 'desc')
+                  .limit(sizeDashboard)
+      );
+    } else {
+      if ( showOnlyActive ) {
+        this.eventCollection = this.afs.collection<IEvent>(
+          EVENTS_COLLECTION,
+          ref => ref.where('active', '==', true)
+                    .where('status', '==', 'VISIBLE')
+                    .orderBy('timestamp', 'desc')
+        );
+      } else {
+        this.eventCollection = this.afs.collection<IEvent>(
+          EVENTS_COLLECTION,
+          ref => ref.orderBy('timestamp', 'desc')
+        );
+      }
+    }
 
     return this.eventCollection.valueChanges();
   }
 
   getAllEventsWithAppointments(): Observable<IEvent[]> {
-    const events$ = this.getAllEvents();
+    const events$ = this.getAllEvents(false, false, null);
     const appointments$ = this.appointmentSrv.getAllAppointments();
 
     return combineLatest([
@@ -61,7 +81,7 @@ export class EventService {
   }
 
   getAllCalendarEventsAppointments(): Observable<CalendarEvent[]> {
-    const events$ = this.getAllEvents();
+    const events$ = this.getAllEvents(false, false, null);
     const appointments$ = this.appointmentSrv.getAllAppointments();
 
     return combineLatest([
