@@ -5,6 +5,7 @@ import { UsersComponent } from '@app/users/users.component';
 import { UserViewComponent } from '@app/users/user-view/user-view.component';
 import { UserEditComponent } from '@app/users/user-edit/user-edit.component';
 import { UserEntitiesAdminComponent } from '@app/users/user-entities-admin/user-entities-admin.component';
+import { UserAdminEntitiesComponent } from '@app/users/user-admin-entities/user-admin-entities.component';
 
 const routes: Routes = [
   {
@@ -20,8 +21,8 @@ const routes: Routes = [
     component: UserEditComponent,
   },
   {
-    path: ':uid/entidades-admin',
-    component: UserEntitiesAdminComponent
+    path: ':uid/entidades',
+    component: UserAdminEntitiesComponent
   }
 ];
 

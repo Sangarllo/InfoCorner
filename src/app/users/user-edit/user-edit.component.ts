@@ -113,23 +113,6 @@ export class UserEditComponent implements OnInit {
     this.userForm.controls['uid'].setValue(this.user.uid);
   }
 
-  // deleteCourse(): void {
-  //   if (this.entity.id === '0') {
-  //     // Don't delete, it was never saved.
-  //     this.onSaveComplete();
-  //   } else {
-  //     if (confirm(`Realmente quieres eliminar: ${this.entity.name}?`)) {
-  //       this.entitiesSrv.deleteEntity(this.entity.id);
-  //       /*
-  //         .subscribe({
-  //           next: () => this.onSaveComplete(),
-  //           error: err => this.errorMessage = err
-  //         });
-  //       */
-  //     }
-  //   }
-  // }
-
   onResetForm(): void {
      this.userForm.reset();
   }
@@ -169,11 +152,10 @@ export class UserEditComponent implements OnInit {
     this.router.navigate([`/${User.PATH_URL}`]);
   }
 
-  // goBack(): void {
-  //   // Reset the form to clear the flags
-  //   this.entityForm.reset();
-  //   this.router.navigate([`/${Course.PATH_URL}/${this.entity.id}`]);
-  // }
+  gotoAdminEntities(): void {
+    this.userForm.reset();
+    this.router.navigate([`/${User.PATH_URL}/${this.user.uid}/entidades`]);
+  }
 
   uploadImage(event): void {
     const file = event.target.files[0];

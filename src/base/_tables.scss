@@ -50,9 +50,19 @@ td.mat-column-name {
     padding-right: 5px !important;
 }
 
+.mat-column-entities {
+    width: 300px;
+    .img-thumbnail {
+        min-width: 48px;
+        width: 48px;
+        min-height: 48px;
+        height: 48px;
+    }
+}
+
 .mat-column-baseImage,
 .mat-column-sourceImage,
-.mat-column-imagePlace {
+.mat-column-placeImage {
     text-align: right;
     width: 60px;
     .img-thumbnail {

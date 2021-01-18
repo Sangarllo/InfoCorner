@@ -6,20 +6,19 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { IEntity } from '@models/entity';
-import { IUser } from '@models/user';
 import { UserService } from '@services/users.service';
 import { EntityService } from '@services/entities.service';
+import { IUser } from '@models/user';
+import { IEntity } from '@models/entity';
 
 @Component({
-  selector: 'app-user-entities-admin',
-  templateUrl: './user-entities-admin.component.html',
-  styleUrls: ['./user-entities-admin.component.scss']
+  selector: 'app-user-admin-entities',
+  templateUrl: './user-admin-entities.component.html',
+  styleUrls: ['./user-admin-entities.component.scss']
 })
-export class UserEntitiesAdminComponent implements OnInit {
+export class UserAdminEntitiesComponent implements OnInit {
 
-  public uidUser: string;
-  // public user$!: Observable<IUser>;
+  public pageTitle = 'Administración de entides del nuevo usuario';
   public user: IUser;
   public filteredEntities: Observable<IEntity[]>;
 
@@ -28,7 +27,7 @@ export class UserEntitiesAdminComponent implements OnInit {
   entityForm!: FormGroup;
   selectedEntity: IEntity;
 
-  displayedColumns: string[] = [ 'image', 'id', 'name', 'actions3'];
+  displayedColumns: string[] = [ 'image', 'id', 'name', 'actions3' ];
 
   constructor(
     private router: Router,
@@ -36,7 +35,6 @@ export class UserEntitiesAdminComponent implements OnInit {
     private userSrv: UserService,
     private entitySrv: EntityService,
   ) {
-
     this.entitySrv.getAllEntities().subscribe(
       (entities: IEntity[]) => {
         this.entities = entities;
@@ -49,29 +47,27 @@ export class UserEntitiesAdminComponent implements OnInit {
     );
   }
 
-  private _filterEntities(value: string): IEntity[] {
-    const filterValue = value.toLowerCase();
-
-    return this.entities.filter(entity => entity.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   ngOnInit(): void {
-
-    this.uidUser = this.route.snapshot.paramMap.get('uid');
-    if ( this.uidUser ) {
-      this.userSrv.getOneUser(this.uidUser)
-        .subscribe( (user: IUser) => {
-          this.user = user;
-          this.user.entitiesAdmin = this.user.entitiesAdmin ?? [];
-        });
+    const uidUser = this.route.snapshot.paramMap.get('uid');
+    if ( uidUser ) {
+      console.log(`uid asked ${uidUser}`);
+      this.getDetails(uidUser);
     }
   }
 
-  onSelectedOption(entity: IEntity): void {
+  public getDetails(uidUser: string): void {
+      this.userSrv.getOneUser(uidUser)
+        .subscribe( (user: IUser) => {
+          this.user = user;
+          this.pageTitle = `Administración de entidades de ${this.user.displayName}`;
+          // this.user.entitiesAdmin = this.user.entitiesAdmin ?? [];
+      });
+  }
+
+  public onSelectedOption(entity: IEntity): void {
     this.selectedEntity = entity;
     console.log(`onSelectedOption: ${JSON.stringify(entity)}`);
   }
-
 
   public gotoEntity(entity: IEntity): void {
     this.router.navigate([`entidades/${entity.id}`]);
@@ -115,7 +111,13 @@ export class UserEntitiesAdminComponent implements OnInit {
   }
 
   public cancel(): void {
-    console.log(`Asociada!`);
     this.selectedEntity = undefined;
   }
+
+  private _filterEntities(value: string): IEntity[] {
+    const filterValue = value.toLowerCase();
+
+    return this.entities.filter(entity => entity.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
 }
