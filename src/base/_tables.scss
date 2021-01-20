@@ -51,7 +51,24 @@ td.mat-column-name {
 }
 
 .mat-column-entities {
+    text-align: center;
     width: 300px;
+    &.LECTOR {
+        color: red;
+        span {
+            text-transform: uppercase;
+            font-size: smaller;
+        }
+    }
+    &.ADMIN,
+    &.CENSOR,
+    &.SUPER {
+        color: green;
+        span {
+            text-transform: uppercase;
+            font-size: smaller;
+        }
+    }
     .img-thumbnail {
         min-width: 48px;
         width: 48px;
