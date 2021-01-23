@@ -67,7 +67,7 @@ export class ShellComponent {
   async onLogout(): Promise<void> {
     try {
       await this.afAuth.signOut();
-      this.router.navigate(['/login']);
+      this.router.navigate(['/usuarios/login']);
     } catch (error) {
       console.log(error);
     }
