@@ -15,39 +15,36 @@ import { BaseItemsListComponent } from '@shared/components/base-items-list/base-
 import { BaseItemsTableComponent } from '@shared/components/base-items-table/base-items-table.component';
 import { BaseItemsAdminComponent } from '@shared/components/base-items-admin/base-items-admin.component';
 
+const components = [
+  FooterComponent,
+  HeaderComponent,
+  SidenavComponent,
+  SectionHeaderComponent,
+  LoadingComponent,
+  BaseItemDetailComponent,
+  BaseItemsListComponent,
+  BaseItemsTableComponent,
+  BaseItemsAdminComponent,
+];
+
+const modules = [
+  CommonModule,
+  FormsModule,
+  ReactiveFormsModule,
+  MaterialModule,
+  RouterModule,
+];
+
 @NgModule({
   declarations: [
-    FooterComponent,
-    HeaderComponent,
-    SidenavComponent,
-    SectionHeaderComponent,
-    LoadingComponent,
-    BaseItemDetailComponent,
-    BaseItemsListComponent,
-    BaseItemsTableComponent,
-    BaseItemsAdminComponent,
+    ...components
   ],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    RouterModule,
+    ...modules
   ],
   exports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    FooterComponent,
-    HeaderComponent,
-    SidenavComponent,
-    SectionHeaderComponent,
-    LoadingComponent,
-    BaseItemDetailComponent,
-    BaseItemsListComponent,
-    BaseItemsTableComponent,
-    BaseItemsAdminComponent,
+    ...modules,
+    ...components,
   ]
 })
 export class SharedModule { }
