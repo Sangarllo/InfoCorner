@@ -5,9 +5,8 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from '@app/material/material.module';
 
+import { ShellComponent } from '@shared/layout/shell/shell.component';
 import { FooterComponent } from '@shared/layout/footer/footer.component';
-import { HeaderComponent } from '@shared/layout/header/header.component';
-import { SidenavComponent } from '@shared/layout/sidenav/sidenav.component';
 import { SectionHeaderComponent } from '@shared/layout/section-header/section-header.component';
 import { LoadingComponent } from '@shared/components/loading/loading.component';
 import { BaseItemDetailComponent } from '@shared/components/base-item-detail/base-item-detail.component';
@@ -16,9 +15,8 @@ import { BaseItemsTableComponent } from '@shared/components/base-items-table/bas
 import { BaseItemsAdminComponent } from '@shared/components/base-items-admin/base-items-admin.component';
 
 const components = [
+  ShellComponent,
   FooterComponent,
-  HeaderComponent,
-  SidenavComponent,
   SectionHeaderComponent,
   LoadingComponent,
   BaseItemDetailComponent,
@@ -37,7 +35,7 @@ const modules = [
 
 @NgModule({
   declarations: [
-    ...components
+    ...components,
   ],
   imports: [
     ...modules

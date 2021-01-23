@@ -1,18 +1,3 @@
-<mat-sidenav-container class="app-sidenav-container">
-
-    <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall && ( user$ | async )" [mode]="isScreenSmall ? 'over' : 'side'">
-        <app-sidenav></app-sidenav>
-    </mat-sidenav>
-
-    <div class="app-sidenav-content">
-
-        <app-header (toggleSidenav)="sidenav.toggle()"></app-header>
-
-        <div class="container-wrapper">
-            <router-outlet></router-outlet>
-            <app-footer></app-footer>
-        </div>
-
-    </div>
-
-</mat-sidenav-container>
+<app-shell>
+    <router-outlet></router-outlet>
+</app-shell>

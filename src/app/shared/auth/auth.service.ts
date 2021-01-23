@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -10,9 +11,6 @@ import { IUser } from '@models/user';
 import { UserService } from '@services/users.service';
 
 import firebase from 'firebase/app';
-// Add the Firebase products that you want to use
-// import 'firebase/auth';
-// import 'firebase/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService extends RoleValidator {
@@ -22,6 +20,7 @@ export class AuthService extends RoleValidator {
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
+    private router: Router,
     private userSrv: UserService,
   ) {
     super();
@@ -42,8 +41,10 @@ export class AuthService extends RoleValidator {
         new firebase.auth.GoogleAuthProvider()
       );
       this.userSrv.updateUserData(user);
+      this.router.navigate(['/home']);
       return user;
     } catch (error) {
+      this.router.navigate(['/home']);
       console.log(error);
     }
   }
