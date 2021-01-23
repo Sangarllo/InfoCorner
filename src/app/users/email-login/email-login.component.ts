@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
@@ -19,7 +16,11 @@ export class EmailLoginComponent implements OnInit {
 
   serverMessage: string;
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private fb: FormBuilder,
+    private router: Router) {
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -81,6 +82,9 @@ export class EmailLoginComponent implements OnInit {
     try {
       if (this.isLogin) {
         await this.afAuth.signInWithEmailAndPassword(email, password);
+        if ( this.afAuth.user ) {
+          this.router.navigate([`admin`]);
+        }
       }
       if (this.isSignup) {
         await this.afAuth.createUserWithEmailAndPassword(email, password);

@@ -20,7 +20,6 @@ export class AuthService extends RoleValidator {
   constructor(
     public afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router,
     private userSrv: UserService,
   ) {
     super();
@@ -35,31 +34,7 @@ export class AuthService extends RoleValidator {
     );
   }
 
-  async loginGoogle(): Promise<IUser> {
-    try {
-      const { user } = await this.afAuth.signInWithPopup(
-        new firebase.auth.GoogleAuthProvider()
-      );
-      this.userSrv.updateUserData(user);
-      this.router.navigate(['/home']);
-      return user;
-    } catch (error) {
-      this.router.navigate(['/home']);
-      console.log(error);
-    }
-  }
 
-  async resetPassword(email: string): Promise<void> {
-    try {
-      return this.afAuth.sendPasswordResetEmail(email);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async sendVerificationEmail(): Promise<void> {
-    return (await this.afAuth.currentUser).sendEmailVerification();
-  }
 
   async login(email: string, password: string): Promise<IUser> {
     try {
@@ -68,19 +43,6 @@ export class AuthService extends RoleValidator {
         password
       );
       this.userSrv.updateUserData(user);
-      return user;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async register(email: string, password: string): Promise<IUser> {
-    try {
-      const { user } = await this.afAuth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      await this.sendVerificationEmail();
       return user;
     } catch (error) {
       console.log(error);

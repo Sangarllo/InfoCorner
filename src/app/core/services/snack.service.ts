@@ -8,7 +8,10 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SnackService {
-  constructor(private snackBar: MatSnackBar, private router: Router) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private router: Router) {
+  }
 
   // tslint:disable-next-line: typedef
   authError() {

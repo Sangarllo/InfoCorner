@@ -1,5 +1,6 @@
-<div *ngIf="!(afAuth.authState | async)">
-    <h1>Acceder</h1>
+<app-section-header [title]="'Acceder'"></app-section-header>
+
+<div *ngIf="!(afAuth.authState | async)" class="section-wrapper">
 
     <button mat-raised-button appGoogleSignin>
       <img src="/assets/google-logo.svg" /> Acceso con Google

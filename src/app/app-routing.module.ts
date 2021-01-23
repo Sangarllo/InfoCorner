@@ -14,22 +14,23 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'registro',
-    loadChildren: () =>
-      import('./register/register.module').then((m) => m.RegisterModule),
-  },
-  {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
     canActivate: [AuthGuard]
   },
   {
+    path: 'usuarios',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+  },
+  {
     path: 'entidades',
-    loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule)
+    loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'lugares',
-    loadChildren: () => import('./places/places.module').then(m => m.PlacesModule)
+    loadChildren: () => import('./places/places.module').then(m => m.PlacesModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'avisos',
@@ -38,10 +39,6 @@ const routes: Routes = [
   {
     path: 'eventos',
     loadChildren: () => import('./events/events.module').then(m => m.EventsModule)
-  },
-  {
-    path: 'usuarios',
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
   },
   {
     path: 'calendario',
