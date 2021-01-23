@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
+
+import { LoginPageComponent } from '@app/users/login-page/login-page.component';
 import { UsersRoutingModule } from '@app/users/users-routing.module';
 import { UsersComponent } from '@app/users/users.component';
 import { UserViewComponent } from '@app/users/user-view/user-view.component';
@@ -10,6 +12,7 @@ import { UserAdminEntitiesComponent } from '@app/users/user-admin-entities/user-
 
 @NgModule({
   declarations: [
+    LoginPageComponent,
     UsersComponent,
     UserViewComponent,
     UserEditComponent,
