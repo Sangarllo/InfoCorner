@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
+import { SeoService } from '@services/seo.service';
 import { EntityService } from '@services/entities.service';
-import { IEntity, Entity } from '@shared/models/entity';
+import { IEntity, Entity } from '@models/entity';
 
 @Component({
   selector: 'app-entity-view',
@@ -19,6 +21,7 @@ export class EntityViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private seo: SeoService,
     private entitiesSrv: EntityService,
   ) { }
 
@@ -30,7 +33,16 @@ export class EntityViewComponent implements OnInit {
   }
 
   getDetails(idEntity: string): void {
-    this.entity$ = this.entitiesSrv.getOneEntity(idEntity);
+    this.entity$ = this.entitiesSrv.getOneEntity(idEntity)
+      .pipe(
+        tap(entity =>
+          this.seo.generateTags({
+            title: `${entity.name} | Rincón de Soto`,
+            description: entity.description,
+            image: entity.image,
+          })
+        )
+      );
   }
 
   public gotoList(): void {

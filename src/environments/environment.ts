@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  baseUrl: 'http://localhost:4200/',
   firebase: {
     apiKey: 'AIzaSyA9iGfpD2hYjEYS2rBtvfoqqneK1E2okAE',
     authDomain: 'infocorner-2020.firebaseapp.com',

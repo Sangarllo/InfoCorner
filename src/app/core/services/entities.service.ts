@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
+import { SeoService } from '@services/seo.service';
 import { IEntity } from '@models/entity';
 import { IBase, BaseType } from '@models/base';
-import { map } from 'rxjs/operators';
 
 const ENTITIES_COLLECTION = 'entidades';
 
@@ -17,7 +18,10 @@ export class EntityService {
   private entityCollection!: AngularFirestoreCollection<IEntity>;
   private entityDoc!: AngularFirestoreDocument<IEntity>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(
+    private afs: AngularFirestore,
+    private seo: SeoService,
+  ) {
     this.entityCollection = afs.collection(ENTITIES_COLLECTION);
   }
 
@@ -55,7 +59,9 @@ export class EntityService {
   }
 
   getOneEntity(idEntity: string): Observable<IEntity | undefined> {
-    return this.entityCollection.doc(idEntity).valueChanges({ idField: 'id' });
+    return this.entityCollection
+      .doc(idEntity)
+      .valueChanges({ idField: 'id' });
   }
 
   addEntity(entity: IEntity): void {

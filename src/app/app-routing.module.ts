@@ -24,8 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'entidades',
-    loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule),
-    canActivate: [AuthGuard]
+    loadChildren: () => import('./entities/entities.module').then(m => m.EntitiesModule)
   },
   {
     path: 'lugares',
